@@ -8,9 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
-    //    @Bind(R.id.recycle_view)
+    @Bind(R.id.recycle_view)
     RecyclerView mRecyclerView;
 
     MainRecycleViewAdapter mainRecycleViewAdapter;
@@ -19,8 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        ButterKnife.bind(this);
-        mRecyclerView = findViewById(R.id.recycle_view);
+        ButterKnife.bind(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         List<String> list = new ArrayList<>();

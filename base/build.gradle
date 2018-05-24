@@ -37,8 +37,4 @@ dependencies {
     api rootProject.ext.dependencies["recyclerview-v7"]
     api 'com.android.support.constraint:constraint-layout:1.1.0'
     api 'org.greenrobot:eventbus:3.0.0'
-//    compile 'com.jakewharton:butterknife:7.0.1'
-//    annotationProcessor 'com.jakewharton:butterknife:7.0.1'
-//    implementation 'com.jakewharton:butterknife:8.8.1'
-//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
