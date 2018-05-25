@@ -5,10 +5,17 @@ import android.net.Uri;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author john.
@@ -54,6 +61,183 @@ public class FileUtil {
             }
         }
         return Uri.fromFile(outputFile);
+    }
+
+
+    /**
+     * 读取文件内容，并以字符串返回
+     *
+     * @param filePath 被读取的文件的路径
+     * @return 文件的内容
+     */
+    public static String readFile(String filePath) {
+        File file = new File(filePath);
+        StringBuilder content = new StringBuilder("");
+        BufferedReader reader = null;
+        String line;
+        if (file.exists() && file.isFile() && file.canRead()) {
+            try {
+                reader = new BufferedReader(new FileReader(file));
+                while ((line = reader.readLine()) != null) {
+                    content.append(line).append("\n");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return content.toString();
+    }
+
+    /**
+     * 读取文件的内容，并将每一行作为独立的字符串对象封装到容器
+     *
+     * @param filePath 被读取的问题件的路径
+     * @return 装载了每一行字符串的容器
+     */
+    public static List<String> readLines(String filePath) {
+        List<String> lines = new ArrayList<>();
+        File file = new File(filePath);
+        BufferedReader reader = null;
+        String line;
+        if (file.exists() && file.isFile() && file.canRead()) {
+            try {
+                reader = new BufferedReader(new FileReader(file));
+                while ((line = reader.readLine()) != null) {
+                    lines.add(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return lines;
+    }
+
+    /**
+     * 读取获得assets目录下文件的内容
+     *
+     * @param context  上下文对象
+     * @param fileName assets目录下的文件名
+     * @return 文件的内容
+     */
+    public static String getAssets(Context context, String fileName) {
+        String line;
+        InputStream inputStream = null;
+        InputStreamReader inputReader = null;
+        BufferedReader bufReader = null;
+        StringBuilder result = new StringBuilder();
+        try {
+            inputStream = context.getResources().getAssets().open(fileName);
+            inputReader = new InputStreamReader(inputStream, "utf-8");
+            bufReader = new BufferedReader(inputReader);
+            while ((line = bufReader.readLine()) != null) {
+                result.append(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (bufReader != null) {
+                try {
+                    bufReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (inputReader != null) {
+                try {
+                    inputReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result.toString();
+    }
+
+    /**
+     * 将指定的输入流的内容写入到指定的文件
+     *
+     * @param filePath 保存输入流的文件
+     * @param is       输入流
+     */
+    public static void writeFile(String filePath, InputStream is) {
+        File file = new File(filePath);
+        OutputStream os = null;
+        try {
+            if (!file.exists() && !file.createNewFile()) {
+                return;
+            } else if (file.isFile() && file.canWrite()) {
+                os = new FileOutputStream(file);
+                byte[] data = new byte[1024];
+                int length;
+                while ((length = is.read(data)) != -1) {
+                    os.write(data, 0, length);
+                }
+                os.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (os != null) {
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * 将指定的字符串内容追加到指定的文件
+     *
+     * @param filePath 保存追加内容的文件
+     * @param content  追加的内容
+     * @param append   是否在文件的末尾增加追加的内容，true 表示是，false 表示否
+     */
+    public static void writeFile(String filePath, String content, boolean append) {
+        File file = new File(filePath);
+        FileWriter fileWriter = null;
+        try {
+            if (!file.exists() && !file.createNewFile()) {
+                return;
+            } else if (file.isFile() && file.canWrite()) {
+                fileWriter = new FileWriter(filePath, append);
+                fileWriter.write(content);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fileWriter != null) {
+                try {
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }
