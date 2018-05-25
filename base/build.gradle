@@ -41,4 +41,5 @@ dependencies {
         exclude group:'org.slf4j', module: 'slf4j-api'
         transitive = true
     }
+    api 'com.itextpdf:itextg:5.5.10'
 }
