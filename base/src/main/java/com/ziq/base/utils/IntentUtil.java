@@ -48,6 +48,29 @@ public class IntentUtil {
         }
     }
 
+
+    /**
+     * 安装一般的应用
+     *
+     * @param context  上下文
+     * @param filePath 安装包路径
+     * @return 安装包是否存在
+     */
+    public static boolean installNormal(Context context, String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return false;
+        }
+        // TODO: 2018/5/25 7.0 兼容问题需要解决
+        Intent install = new Intent(Intent.ACTION_VIEW);
+        install.setDataAndType(Uri.parse("file://" + filePath), "application/vnd.android.package-archive");
+        install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(install);
+        return true;
+    }
+
+
+
     public static boolean takePhoto(Activity activity, int requestCode, File output) {
         if (activity != null) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
