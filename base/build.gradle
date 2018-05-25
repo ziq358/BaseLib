@@ -37,4 +37,8 @@ dependencies {
     api rootProject.ext.dependencies["recyclerview-v7"]
     api 'com.android.support.constraint:constraint-layout:1.1.0'
     api 'org.greenrobot:eventbus:3.0.0'
+    api ('org.bitbucket.b_c:jose4j:0.5.2'){
+        exclude group:'org.slf4j', module: 'slf4j-api'
+        transitive = true
+    }
 }
