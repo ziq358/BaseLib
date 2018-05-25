@@ -28,15 +28,15 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
 
     protected abstract void initViewType(List<BaseViewType> viewTypesList);
 
-    public List<BaseViewType> getViewTypeList(){
+    public List<BaseViewType> getViewTypeList() {
         return mViewTypes;
     }
 
-    public final Context getContext(){
+    public final Context getContext() {
         return mContext;
     }
 
-    public void setData(List<T> data){
+    public void setData(List<T> data) {
         mData = data;
         notifyDataSetChanged();
     }
@@ -46,25 +46,25 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         notifyDataSetChanged();
     }
 
-    public void addDataList(List<T> data){
+    public void addDataList(List<T> data) {
         mData.addAll(data);
         notifyDataSetChanged();
     }
 
-    public void removeDataList(int index){
-        if(mData != null && mData.size() > index && index >= 0){
+    public void removeDataList(int index) {
+        if (mData != null && mData.size() > index && index >= 0) {
             mData.remove(index);
         }
     }
 
-    public T getItem(int position){
+    public T getItem(int position) {
         return mData.get(position);
     }
 
     @Override
     public int getItemViewType(int position) {
         for (BaseViewType type : mViewTypes) {
-            if(type.isMatchViewType(position)){
+            if (type.isMatchViewType(position)) {
                 return type.getItemViewType();
             }
         }
@@ -74,7 +74,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         for (BaseViewType type : mViewTypes) {
-            if(type.getItemViewType() == viewType){
+            if (type.getItemViewType() == viewType) {
                 return type.onCreateViewHolder(parent);
             }
         }
@@ -84,7 +84,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         for (BaseViewType type : mViewTypes) {
-            if(type.isMatchViewType(position)){
+            if (type.isMatchViewType(position)) {
                 type.onBindViewHolder(holder, position);
                 break;
             }

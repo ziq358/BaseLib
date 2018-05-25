@@ -1,8 +1,14 @@
 package com.ziq.base.utils;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
 /**
  * @author john.
@@ -10,10 +16,7 @@ import android.net.NetworkInfo;
  * Des:
  */
 
-public class NetworkUtils {
-
-
-
+public class NetworkUtil {
     /**
      * 判断网络是否处于已连接状态
      *
@@ -43,9 +46,18 @@ public class NetworkUtils {
      * @param context 上下文
      * @return 当前网络的信息
      */
-    private static NetworkInfo getNetworkInfo(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo();
+    @SuppressLint("MissingPermission")
+    @Nullable
+    public static NetworkInfo getNetworkInfo(Context context) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(context, "需要获取网络状态权限", Toast.LENGTH_SHORT).show();
+        } else {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (cm != null) {
+                return cm.getActiveNetworkInfo();
+            }
+        }
+        return null;
     }
 
 }

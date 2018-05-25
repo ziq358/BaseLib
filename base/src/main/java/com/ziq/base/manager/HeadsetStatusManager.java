@@ -20,6 +20,24 @@ public class HeadsetStatusManager {
     private static HeadsetStatusManager mInstance;
 
     private boolean mIsViable;
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Intent.ACTION_HEADSET_PLUG.equals(action)) {
+                if (intent.hasExtra("state")) {
+                    if (intent.getIntExtra("state", 0) == 0) {
+                        mIsViable = false;
+                    } else if (intent.getIntExtra("state", 0) == 1) {
+                        mIsViable = true;
+                    }
+                }
+                HeadsetStatusChangeEvent headsetStatusChangeEvent = new HeadsetStatusChangeEvent();
+                headsetStatusChangeEvent.isViable = mIsViable;
+                EventBus.getDefault().post(headsetStatusChangeEvent);
+            }
+        }
+    };
 
     private HeadsetStatusManager() {
     }
@@ -45,23 +63,4 @@ public class HeadsetStatusManager {
     public void unregisterReceiver(Context context) {
         context.unregisterReceiver(mReceiver);
     }
-
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (Intent.ACTION_HEADSET_PLUG.equals(action)) {
-                if (intent.hasExtra("state")) {
-                    if (intent.getIntExtra("state", 0) == 0) {
-                        mIsViable = false;
-                    } else if (intent.getIntExtra("state", 0) == 1) {
-                        mIsViable = true;
-                    }
-                }
-                HeadsetStatusChangeEvent headsetStatusChangeEvent = new HeadsetStatusChangeEvent();
-                headsetStatusChangeEvent.isViable = mIsViable;
-                EventBus.getDefault().post(headsetStatusChangeEvent);
-            }
-        }
-    };
 }

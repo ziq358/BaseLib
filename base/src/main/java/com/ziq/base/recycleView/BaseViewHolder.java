@@ -16,16 +16,15 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> mViews = new SparseArray<>();
     private View mRootView;
 
-    public View getRootView() {
-        return mRootView;
-    }
-
     public BaseViewHolder(View rootView) {
         super(rootView);
         this.mRootView = rootView;
         parseViews(rootView);
     }
 
+    public View getRootView() {
+        return mRootView;
+    }
 
     private void parseViews(View view) {
         if (view.getId() != View.NO_ID) {
@@ -42,8 +41,8 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public <T extends View> T getViewById(int viewId){
-        return (T)(mViews.get(viewId));
+    public <T extends View> T getViewById(int viewId) {
+        return (T) (mViews.get(viewId));
     }
 
 }

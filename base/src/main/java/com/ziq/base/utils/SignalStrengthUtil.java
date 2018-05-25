@@ -8,24 +8,21 @@ import java.lang.reflect.Field;
 /**
  * @author john.
  * @since 2018/5/3.
- * Des: 提出Android 源码中的SignalStrength 不公开的方法
+ * Des: 提取Android 源码中的SignalStrength 不公开的方法。获得网络制式，信号强度
  */
 
 public final class SignalStrengthUtil {
-
-    private static final String TAG = "SignalStrengthUtil";
-
-    private static final int RSRP_THRESH_TYPE_STRICT = 0;
-    private static final int[] RSRP_THRESH_STRICT = new int[]{-140, -115, -105, -95, -85, -44};
-    private static final int[] RSRP_THRESH_LENIENT = new int[]{-140, -128, -118, -108, -98, -44};
 
     public static final int SIGNAL_STRENGTH_NONE_OR_UNKNOWN = 0;
     public static final int SIGNAL_STRENGTH_POOR = 1;
     public static final int SIGNAL_STRENGTH_MODERATE = 2;
     public static final int SIGNAL_STRENGTH_GOOD = 3;
     public static final int SIGNAL_STRENGTH_GREAT = 4;
-
     public static final int NETWORK_TYPE_LTE_CA = 19;
+    private static final String TAG = "SignalStrengthUtil";
+    private static final int RSRP_THRESH_TYPE_STRICT = 0;
+    private static final int[] RSRP_THRESH_STRICT = new int[]{-140, -115, -105, -95, -85, -44};
+    private static final int[] RSRP_THRESH_LENIENT = new int[]{-140, -128, -118, -108, -98, -44};
 
 
     private SignalStrengthUtil() {
@@ -238,7 +235,7 @@ public final class SignalStrengthUtil {
 
 
     /**
-     * @param cdmaDbm 信号强度
+     * @param cdmaDbm  信号强度
      * @param cdmaEcio “载干比”，它是指空中模拟电波中的信号与噪声的比值 似于信噪比
      * @return
      */

@@ -22,6 +22,17 @@ public class SIMStatusManager {
     private static SIMStatusManager mInstance;
 
     private boolean mIsViable;
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(ACTION_SIM_STATE_CHANGED)) {
+                mIsViable = hasSimCard(context);
+                SIMStatusChangeEvent simStatusChangeEvent = new SIMStatusChangeEvent();
+                simStatusChangeEvent.isViable = mIsViable;
+                EventBus.getDefault().post(simStatusChangeEvent);
+            }
+        }
+    };
 
     private SIMStatusManager(Context context) {
         mIsViable = hasSimCard(context);
@@ -69,16 +80,4 @@ public class SIMStatusManager {
     public void unregisterReceiver(Context context) {
         context.unregisterReceiver(mReceiver);
     }
-
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(ACTION_SIM_STATE_CHANGED)) {
-                mIsViable = hasSimCard(context);
-                SIMStatusChangeEvent simStatusChangeEvent = new SIMStatusChangeEvent();
-                simStatusChangeEvent.isViable = mIsViable;
-                EventBus.getDefault().post(simStatusChangeEvent);
-            }
-        }
-    };
 }

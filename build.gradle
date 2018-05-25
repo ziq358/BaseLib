@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
         google()
         jcenter()
@@ -35,7 +35,7 @@ ext {
     ]
     //api rootProject.ext.dependencies["appcompat-v7"] 因为有 - 所以用字典型？
     dependencies = [
-            "appcompat-v7"     : "com.android.support:appcompat-v7:27.1.1",
-            "recyclerview-v7"  : "com.android.support:recyclerview-v7:27.1.1"
+            "appcompat-v7"   : "com.android.support:appcompat-v7:27.1.1",
+            "recyclerview-v7": "com.android.support:recyclerview-v7:27.1.1"
     ]
 }

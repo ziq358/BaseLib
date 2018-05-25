@@ -1,5 +1,6 @@
 package com.ziq.base.manager;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,9 +13,8 @@ import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 
-
 import com.ziq.base.event.NetworkChangeEvent;
-import com.ziq.base.utils.NetworkUtils;
+import com.ziq.base.utils.NetworkUtil;
 import com.ziq.base.utils.SignalStrengthUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,15 +27,52 @@ import org.greenrobot.eventbus.EventBus;
 
 public class NetworkStatusManager {
 
-    private Context mContext;
-
     private static NetworkStatusManager mInstance;
+    private Context mContext;
     private WifiManager mWifiManager;
     private TelephonyManager mTelephonyManager;
     private int mLevel = 3;
     private String mNetworkClass = "";
     private String mSignalStrength = "";
     private boolean mIsNetworkConnect = false;
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mIsNetworkConnect = NetworkUtil.isNetworkConnected(context);
+            if (NetworkUtil.isWifiConnected(context)) {
+                WifiInfo wifiInfo = NetworkStatusManager.getInstance(context).getWifiInfo();
+                mSignalStrength = wifiInfo.getRssi() + "db";
+            }
+            NetworkChangeEvent networkChangeEvent = new NetworkChangeEvent();
+            networkChangeEvent.isNetworkConnect = mIsNetworkConnect;
+            networkChangeEvent.level = mLevel;
+            networkChangeEvent.networkClass = mNetworkClass;
+            EventBus.getDefault().post(networkChangeEvent);
+        }
+    };
+    private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
+
+        @Override
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            super.onSignalStrengthsChanged(signalStrength);
+            mIsNetworkConnect = NetworkUtil.isNetworkConnected(mContext);
+            String[] arraySignalStrength = new String[1];
+            mLevel = SignalStrengthUtil.getLevel(signalStrength, arraySignalStrength);
+            mSignalStrength = arraySignalStrength[0] + "db";
+            if (NetworkUtil.isWifiConnected(mContext)) {
+                mNetworkClass = "wifi";
+                WifiInfo wifiInfo = getWifiInfo();
+                mSignalStrength = wifiInfo.getRssi() + "db";
+            } else {
+                mNetworkClass = SignalStrengthUtil.getNetworkClass(mTelephonyManager.getNetworkType());
+            }
+            NetworkChangeEvent networkChangeEvent = new NetworkChangeEvent();
+            networkChangeEvent.isNetworkConnect = mIsNetworkConnect;
+            networkChangeEvent.level = mLevel;
+            networkChangeEvent.networkClass = mNetworkClass;
+            EventBus.getDefault().post(networkChangeEvent);
+        }
+    };
 
     private NetworkStatusManager(Context context) {
         mContext = context;
@@ -65,6 +102,7 @@ public class NetworkStatusManager {
         return mNetworkClass;
     }
 
+    @SuppressLint("MissingPermission")
     public WifiInfo getWifiInfo() {
         return mWifiManager.getConnectionInfo();
     }
@@ -83,45 +121,5 @@ public class NetworkStatusManager {
     public void unregisterReceiver(Context context) {
         context.unregisterReceiver(mReceiver);
     }
-
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            mIsNetworkConnect = NetworkUtils.isNetworkConnected(context);
-            if (NetworkUtils.isWifiConnected(context)) {
-                WifiInfo wifiInfo = NetworkStatusManager.getInstance(context).getWifiInfo();
-                mSignalStrength = wifiInfo.getRssi() + "db";
-            }
-            NetworkChangeEvent networkChangeEvent = new NetworkChangeEvent();
-            networkChangeEvent.isNetworkConnect = mIsNetworkConnect;
-            networkChangeEvent.level = mLevel;
-            networkChangeEvent.networkClass = mNetworkClass;
-            EventBus.getDefault().post(networkChangeEvent);
-        }
-    };
-
-    private PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
-
-        @Override
-        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-            super.onSignalStrengthsChanged(signalStrength);
-            mIsNetworkConnect = NetworkUtils.isNetworkConnected(mContext);
-            String[] arraySignalStrength = new String[1];
-            mLevel = SignalStrengthUtil.getLevel(signalStrength, arraySignalStrength);
-            mSignalStrength = arraySignalStrength[0] + "db";
-            if (NetworkUtils.isWifiConnected(mContext)) {
-                mNetworkClass = "wifi";
-                WifiInfo wifiInfo = getWifiInfo();
-                mSignalStrength = wifiInfo.getRssi() + "db";
-            } else {
-                mNetworkClass = SignalStrengthUtil.getNetworkClass(mTelephonyManager.getNetworkType());
-            }
-            NetworkChangeEvent networkChangeEvent = new NetworkChangeEvent();
-            networkChangeEvent.isNetworkConnect = mIsNetworkConnect;
-            networkChangeEvent.level = mLevel;
-            networkChangeEvent.networkClass = mNetworkClass;
-            EventBus.getDefault().post(networkChangeEvent);
-        }
-    };
 
 }
