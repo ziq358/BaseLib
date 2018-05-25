@@ -18,10 +18,8 @@ import java.util.List;
 public class AppInfoUtil {
 
     private static final String TAG = "AppInfoUtil";
-    private Context mContext;
 
-    public AppInfoUtil(Context context) {
-        this.mContext = context;
+    private AppInfoUtil() {
     }
 
     public static boolean checkInstall(Context context, String packageName) {
@@ -97,11 +95,11 @@ public class AppInfoUtil {
         }
     }
 
-    public String getAppVersionName() {
+    public static String getAppVersionName(Context context) {
         String appVersion = "";
         try {
-            PackageManager manager = mContext.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(mContext.getPackageName(), 0);
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
             appVersion = info.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             LogUtil.e(TAG, "getAppVersion: " + e.getMessage());
@@ -109,11 +107,11 @@ public class AppInfoUtil {
         return appVersion;
     }
 
-    public int getAppVersionCode() {
+    public int getAppVersionCode(Context context) {
         int appVersionCode = 0;
         try {
-            PackageManager manager = mContext.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(mContext.getPackageName(), 0);
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
             appVersionCode = info.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             LogUtil.e(TAG, "getAppVersionCode: " + e.getMessage());

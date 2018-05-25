@@ -1,7 +1,15 @@
 package com.ziq.base.utils;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
+import android.support.v4.content.PermissionChecker;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -24,6 +32,97 @@ import java.util.List;
  */
 
 public class FileUtil {
+
+    /**
+     * 获取内置SD卡路径
+     * @return
+     */
+    public static String getInnerSDCardPath() {
+        return Environment.getExternalStorageDirectory().getPath();
+    }
+
+    /**
+     * 需要申请读写 sd卡 的权限， 不然目录、文件无法建立
+     * @param context
+     * @return
+     */
+    public static String getInnerSDCardAppPath(Context context) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(context, "需要获取SD卡读写权限", Toast.LENGTH_SHORT).show();
+        } else {
+            String path = getInnerSDCardPath() + File.separator + AppInfoUtil.getApplicationName(context, context.getPackageName());
+            File file = new File(path);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            if(file.exists()){
+                return path;
+            }
+        }
+        return "";
+    }
+
+    private static boolean isExistSDCard() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 获取外置SD卡路径
+     * @return  应该就一条记录或空
+     */
+    public static List<String> getExtSDCardPath()
+    {
+        List<String> lResult = new ArrayList<String>();
+        try {
+            Runtime rt = Runtime.getRuntime();
+            Process proc = rt.exec("mount");
+            InputStream is = proc.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.contains("extSdCard"))
+                {
+                    String [] arr = line.split(" ");
+                    String path = arr[1];
+                    File file = new File(path);
+                    if (file.isDirectory())
+                    {
+                        lResult.add(path);
+                    }
+                }
+            }
+            isr.close();
+        } catch (Exception e) {
+        }
+        return lResult;
+    }
+
+    /**
+     * 获取File 方式的Uri，兼容android 7.0
+     *
+     * @param context  上下文
+     * @param filePath 文件路径
+     * @return File uri
+     */
+    public static Uri getFileUri(Context context, String filePath) {
+        Uri fileUri = null;
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return fileUri;
+        }
+        if (Build.VERSION.SDK_INT >= 24) {
+            fileUri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", new File(filePath));
+        } else {
+            fileUri = Uri.parse("file://" + filePath);
+        }
+        return fileUri;
+    }
+
 
     /**
      * fixed the Google Photos App get permission issue

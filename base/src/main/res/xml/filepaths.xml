@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths>
+        <!--分享外部的存储-->
+        <external-path
+            name="BaseLib"
+            path=""/>
+    </paths>
+</resources>

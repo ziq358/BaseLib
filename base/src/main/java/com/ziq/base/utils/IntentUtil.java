@@ -10,6 +10,7 @@ import android.content.pm.LabeledIntent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
@@ -50,7 +51,7 @@ public class IntentUtil {
 
 
     /**
-     * 安装一般的应用
+     * 安装一般的应用, 兼容 7.0
      *
      * @param context  上下文
      * @param filePath 安装包路径
@@ -61,9 +62,12 @@ public class IntentUtil {
         if (!file.exists()) {
             return false;
         }
-        // TODO: 2018/5/25 7.0 兼容问题需要解决
         Intent install = new Intent(Intent.ACTION_VIEW);
-        install.setDataAndType(Uri.parse("file://" + filePath), "application/vnd.android.package-archive");
+        install.setDataAndType(FileUtil.getFileUri(context, filePath), "application/vnd.android.package-archive");
+        if (Build.VERSION.SDK_INT >= 24) {
+            install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            install.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
         install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(install);
         return true;
