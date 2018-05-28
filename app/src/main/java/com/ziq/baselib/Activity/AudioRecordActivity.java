@@ -70,7 +70,6 @@ public class AudioRecordActivity extends BaseActivity implements View.OnClickLis
 
     public String getDataDirPath() {
         String path = this.getApplicationContext().getFilesDir().getAbsolutePath();
-        // TODO: 2018/5/11 方便查看 文件先存在SD卡
         if (FileUtil.isExistSDCard()) {
             path = this.getExternalCacheDir().getAbsolutePath() + File.separator + "Record";
         }

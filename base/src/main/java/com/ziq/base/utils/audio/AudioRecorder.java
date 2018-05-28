@@ -237,6 +237,7 @@ public final class AudioRecorder {
         if (state == State.READY) {
             payloadSize = 0;
             audioRecorder.startRecording();
+            //为了激活监听
             audioRecorder.read(buffer, 0, buffer.length);
             state = State.RECORDING;
             this.startTime = Calendar.getInstance().getTimeInMillis();
