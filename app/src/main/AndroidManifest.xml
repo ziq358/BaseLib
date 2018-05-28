@@ -21,6 +21,7 @@
         </activity>
 
         <activity android:name=".Activity.InstallApkActivity"/>
+        <activity android:name=".Activity.ShellCmdActivity"/>
 
     </application>
 

@@ -9,9 +9,9 @@ import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.LogUtil;
 import com.ziq.base.utils.NetworkUtil;
 import com.ziq.baselib.Activity.InstallApkActivity;
+import com.ziq.baselib.Activity.ShellCmdActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity {
 
     private void initData() {
         dataList.add(new DemoListItem("DEMO-安装apk", InstallApkActivity.class));
+        dataList.add(new DemoListItem("DEMO-Shell命令", ShellCmdActivity.class));
     }
 
     public static class DemoListItem{
