@@ -6,7 +6,7 @@
     android:orientation="vertical"
     >
     <EditText
-        android:id="@+id/input"
+        android:id="@+id/input_install"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
@@ -14,5 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="安装"
+        />
+    <EditText
+        android:id="@+id/input_uninstall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/uninstall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="卸载"
         />
 </LinearLayout>

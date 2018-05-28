@@ -20,23 +20,28 @@ import butterknife.OnClick;
  */
 
 public class InstallApkActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.input)
-    EditText input;
-
+    @Bind(R.id.input_install)
+    EditText inputInstall;
+    @Bind(R.id.input_uninstall)
+    EditText inputUninstall;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_install_apk);
         ButterKnife.bind(this);
-        input.setText(FileUtil.getInnerSDCardAppPath(this) + "/app.apk");
+        inputInstall.setText(FileUtil.getInnerSDCardAppPath(this) + "/app.apk");
+        inputUninstall.setText(getPackageName());
     }
 
-    @OnClick({R.id.install})
+    @OnClick({R.id.install, R.id.uninstall})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.install:
-                IntentUtil.installNormal(this, input.getText().toString());
+                IntentUtil.installNormal(this, inputInstall.getText().toString());
+                break;
+            case R.id.uninstall:
+                IntentUtil.uninstallNormal(this, inputUninstall.getText().toString());
                 break;
         }
     }

@@ -8,13 +8,14 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v4.content.PermissionChecker;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -35,6 +36,7 @@ public class FileUtil {
 
     /**
      * 获取内置SD卡路径
+     *
      * @return
      */
     public static String getInnerSDCardPath() {
@@ -43,6 +45,7 @@ public class FileUtil {
 
     /**
      * 需要申请读写 sd卡 的权限， 不然目录、文件无法建立
+     *
      * @param context
      * @return
      */
@@ -55,7 +58,7 @@ public class FileUtil {
             if (!file.exists()) {
                 file.mkdir();
             }
-            if(file.exists()){
+            if (file.exists()) {
                 return path;
             }
         }
@@ -72,10 +75,10 @@ public class FileUtil {
 
     /**
      * 获取外置SD卡路径
-     * @return  应该就一条记录或空
+     *
+     * @return 应该就一条记录或空
      */
-    public static List<String> getExtSDCardPath()
-    {
+    public static List<String> getExtSDCardPath() {
         List<String> lResult = new ArrayList<String>();
         try {
             Runtime rt = Runtime.getRuntime();
@@ -85,13 +88,11 @@ public class FileUtil {
             BufferedReader br = new BufferedReader(isr);
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.contains("extSdCard"))
-                {
-                    String [] arr = line.split(" ");
+                if (line.contains("extSdCard")) {
+                    String[] arr = line.split(" ");
                     String path = arr[1];
                     File file = new File(path);
-                    if (file.isDirectory())
-                    {
+                    if (file.isDirectory()) {
                         lResult.add(path);
                     }
                 }
@@ -337,6 +338,116 @@ public class FileUtil {
                 }
             }
         }
+    }
+
+    /**
+     * 根据指定的文件路径，删除指定文件
+     *
+     * @param filePath 需要被删除的文件的路径
+     * @return 文件是否删除成功
+     */
+    public static boolean deleteFile(String filePath) {
+        if (TextUtils.isEmpty(filePath)) {
+            return false;
+        }
+        File file = new File(filePath);
+        return file.exists() && file.isFile() && file.delete();
+    }
+
+    /**
+     * 删除指定目录下的所有文件
+     *
+     * @param directory 需要被删除的目录
+     * @return 是否删除成功
+     */
+    public static boolean deleteDirectory(File directory) {
+        if (null == directory || !directory.exists()) {
+            return false;
+        }
+        if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        deleteDirectory(file);
+                    } else if (file.isFile()) {
+                        file.delete();
+                    }
+                }
+            }
+        }
+        return directory.delete();
+    }
+
+    /**
+     * 获取指定文件夹
+     *
+     * @param f
+     * @return
+     * @throws Exception
+     */
+    public static long getFileSizes(File f) throws Exception {
+        long size = 0;
+        File[] files = f.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isDirectory()) {
+                size = size + getFileSizes(files[i]);
+            } else {
+                size = size + getFileSize(files[i]);
+            }
+        }
+        return size;
+    }
+
+
+    /**
+     * 获取指定文件大小
+     *
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    public static long getFileSize(File file) throws Exception {
+        long size = 0;
+        if (file.exists()) {
+            FileInputStream fis = null;
+            fis = new FileInputStream(file);
+            size = fis.available();
+        } else {
+            file.createNewFile();
+        }
+        return size;
+    }
+
+    /**
+     * 获得指定文件的大小
+     *
+     * @param filePath 文件路径
+     * @return 指定文件的大小，如果获取成功，则返回真正的文件大小，否则，返回 -1
+     */
+    public static long getFileSize(String filePath) {
+        if (!TextUtils.isEmpty(filePath)) {
+            File file = new File(filePath);
+            if (file.exists() && file.isFile()) {
+                return file.length();
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 重命名文件/文件夹
+     *
+     * @param oldName 旧名字
+     * @param newName 新名字
+     */
+    public static boolean rename(String oldName, String newName) {
+        if (!TextUtils.isEmpty(oldName) && !TextUtils.isEmpty(newName)) {
+            File oldFile = new File(oldName);
+            File newFile = new File(newName);
+            return oldFile.exists() && oldFile.renameTo(newFile);
+        }
+        return false;
     }
 
 }

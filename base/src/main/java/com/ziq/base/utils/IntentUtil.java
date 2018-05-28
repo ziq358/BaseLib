@@ -74,6 +74,24 @@ public class IntentUtil {
     }
 
 
+    /**
+     * 卸载应用
+     *
+     * @param context     上下文
+     * @param packageName package name of app
+     * @return 是否成功
+     */
+    public static boolean uninstallNormal(Context context, String packageName) {
+        if (packageName == null || packageName.length() == 0) {
+            return false;
+        }
+
+        Intent i = new Intent(Intent.ACTION_DELETE, Uri.parse("package:" + packageName));
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
+        return true;
+    }
+
 
     public static boolean takePhoto(Activity activity, int requestCode, File output) {
         if (activity != null) {
