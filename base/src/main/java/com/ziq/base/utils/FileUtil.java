@@ -65,7 +65,7 @@ public class FileUtil {
         return "";
     }
 
-    private static boolean isExistSDCard() {
+    public static boolean isExistSDCard() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return true;
         } else {

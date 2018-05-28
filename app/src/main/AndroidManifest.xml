@@ -22,6 +22,7 @@
 
         <activity android:name=".Activity.InstallApkActivity"/>
         <activity android:name=".Activity.ShellCmdActivity"/>
+        <activity android:name=".Activity.AudioRecordActivity"/>
 
     </application>
 
