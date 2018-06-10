@@ -24,6 +24,7 @@
         <activity android:name=".Activity.ShellCmdActivity"/>
         <activity android:name=".Activity.AudioRecordActivity"/>
         <activity android:name=".Activity.BluetoothActivity"/>
+        <activity android:name=".Activity.TestActivity"/>
 
     </application>
 

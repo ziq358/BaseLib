@@ -12,6 +12,7 @@ import com.ziq.baselib.Activity.AudioRecordActivity;
 import com.ziq.baselib.Activity.BluetoothActivity;
 import com.ziq.baselib.Activity.InstallApkActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
+import com.ziq.baselib.Activity.TestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,7 @@ public class MainActivity extends BaseActivity {
         dataList.add(new DemoListItem("DEMO-Shell命令", ShellCmdActivity.class));
         dataList.add(new DemoListItem("DEMO-录音", AudioRecordActivity.class));
         dataList.add(new DemoListItem("DEMO-蓝牙", BluetoothActivity.class));
+        dataList.add(new DemoListItem("DEMO-test", TestActivity.class));
     }
 
     public static class DemoListItem{
