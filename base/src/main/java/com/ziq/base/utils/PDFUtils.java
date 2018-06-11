@@ -51,8 +51,7 @@ public class PDFUtils {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
             final PdfDocument document = new PdfDocument();
-            DeviceInfoUtil deviceInfoUtil = new DeviceInfoUtil(context);
-            PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(deviceInfoUtil.getDisplayWidth(), resultHeight, 1).create();
+            PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(DeviceInfoUtil.getDisplayWidth(context), resultHeight, 1).create();
             PdfDocument.Page page = document.startPage(pageInfo);
             parentView.draw(page.getCanvas());
             parentView.requestLayout();
