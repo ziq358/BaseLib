@@ -23,6 +23,8 @@
         <activity android:name=".Activity.InstallApkActivity"/>
         <activity android:name=".Activity.ShellCmdActivity"/>
         <activity android:name=".Activity.AudioRecordActivity"/>
+        <activity android:name=".Activity.DataTranslateTestActivity"/>
+        <activity android:name=".Activity.AesEncryptionActivity"/>
 
     </application>
 

@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.LogUtil;
 import com.ziq.base.utils.NetworkUtil;
+import com.ziq.baselib.Activity.AesEncryptionActivity;
 import com.ziq.baselib.Activity.AudioRecordActivity;
+import com.ziq.baselib.Activity.DataTranslateTestActivity;
 import com.ziq.baselib.Activity.InstallApkActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 
@@ -28,6 +30,7 @@ public class MainActivity extends BaseActivity {
     MainRecycleViewAdapter mainRecycleViewAdapter;
 
     List<DemoListItem> dataList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +51,11 @@ public class MainActivity extends BaseActivity {
         dataList.add(new DemoListItem("DEMO-安装apk", InstallApkActivity.class));
         dataList.add(new DemoListItem("DEMO-Shell命令", ShellCmdActivity.class));
         dataList.add(new DemoListItem("DEMO-录音", AudioRecordActivity.class));
+        dataList.add(new DemoListItem("DEMO-数据转换", DataTranslateTestActivity.class));
+        dataList.add(new DemoListItem("DEMO-数据加密", AesEncryptionActivity.class));
     }
 
-    public static class DemoListItem{
+    public static class DemoListItem {
         public String name;
         public Class cls;
 
