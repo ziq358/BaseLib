@@ -25,6 +25,8 @@
         <activity android:name=".Activity.AudioRecordActivity"/>
         <activity android:name=".Activity.DataTranslateTestActivity"/>
         <activity android:name=".Activity.AesEncryptionActivity"/>
+        <activity android:name=".Activity.BluetoothActivity"/>
+        <activity android:name=".Activity.TestActivity"/>
 
     </application>
 
