@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,6 +30,21 @@
         <activity android:name=".Activity.AesEncryptionActivity"/>
         <activity android:name=".Activity.BluetoothActivity"/>
         <activity android:name=".Activity.TestActivity"/>
+
+        <receiver android:name=".receive.BootBroadcastReceiver" >
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receive.ShutdownBroadcastReceiver" >
+            <intent-filter >
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
+
 
     </application>
 

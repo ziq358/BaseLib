@@ -30,7 +30,7 @@ ext {
     android = [
             compileSdkVersion: 27,
             buildToolsVersion: '27.0.3',
-            minSdkVersion    : 15,
+            minSdkVersion    : 19,
             targetSdkVersion : 27,
     ]
     //api rootProject.ext.dependencies["appcompat-v7"] 因为有 - 所以用字典型？
