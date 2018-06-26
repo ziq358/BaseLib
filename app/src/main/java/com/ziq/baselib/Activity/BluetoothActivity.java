@@ -1,11 +1,16 @@
 package com.ziq.baselib.Activity;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +21,7 @@ import com.ziq.base.manager.BaseBluetoothManager;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.baselib.R;
 import com.ziq.baselib.adapter.BluetoothRecycleViewAdapter;
+import com.ziq.baselib.receive.BluetoothMusicButtonReceiver;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,6 +59,12 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
         mBaseBluetoothManager.registerReceiver(this);
         mBaseBluetoothManager.initBluetoothA2DP(this);
 
+        //使得只有一个 能接受
+        ((AudioManager)getSystemService(AUDIO_SERVICE)).registerMediaButtonEventReceiver(new ComponentName(
+                this,
+                BluetoothMusicButtonReceiver.class));
+
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRvResult.setLayoutManager(linearLayoutManager);
         mBluetoothRecycleViewAdapter = new BluetoothRecycleViewAdapter(this);
@@ -66,8 +78,19 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
         });
     }
 
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.e(TAG, "onKeyDown: " + parseKeyCode(keyCode));
+        return super.onKeyDown(keyCode, event);
+    }
+
     @Override
     protected void onDestroy() {
+        //使得只有一个 能接受
+        ((AudioManager)getSystemService(AUDIO_SERVICE)).unregisterMediaButtonEventReceiver(new ComponentName(
+                this,
+                BluetoothMusicButtonReceiver.class));
         mBaseBluetoothManager.unregisterReceiver(this);
         EventBus.getDefault().unregister(this);
         super.onDestroy();
@@ -86,7 +109,11 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
                 mBaseBluetoothManager.openBluetoothIntent(this);
                 break;
             case R.id.search_start:
-                Log.e(TAG, "搜索: " + mBaseBluetoothManager.startDiscovery(this));
+                if(!mBaseBluetoothManager.startDiscovery(this)){
+                    Uri packageURI = Uri.parse("package:"+ this.getPackageName());
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+                    startActivity(intent);
+                }
                 break;
             case R.id.search_stop:
                 Log.e(TAG, "停止搜索: " + mBaseBluetoothManager.stopDiscovery());
@@ -125,5 +152,89 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
         mBluetoothRecycleViewAdapter.setData(mBaseBluetoothManager.getBluetoothDeviceList());
     }
 
+
+    public static String parseKeyCode(int keyCode) {
+        String ret = "";
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_POWER:
+                // 监控/拦截/屏蔽电源键 这里拦截不了
+                ret = "KEYCODE_POWER(KeyCode:" + keyCode + ")";
+                break;
+            case KeyEvent.KEYCODE_RIGHT_BRACKET:
+                // 监控/拦截/屏蔽返回键
+                ret = "KEYCODE_RIGHT_BRACKET";
+                break;
+            case KeyEvent.KEYCODE_MENU:
+                // 监控/拦截菜单键
+                ret = "KEYCODE_MENU";
+                break;
+            case KeyEvent.KEYCODE_HOME:
+                // 由于Home键为系统键，此处不能捕获
+                ret = "KEYCODE_HOME";
+                break;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                // 监控/拦截/屏蔽上方向键
+                ret = "KEYCODE_DPAD_UP";
+                break;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                // 监控/拦截/屏蔽左方向键
+                ret = "KEYCODE_DPAD_LEFT";
+                break;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                // 监控/拦截/屏蔽右方向键
+                ret = "KEYCODE_DPAD_RIGHT";
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                // 监控/拦截/屏蔽下方向键
+                ret = "KEYCODE_DPAD_DOWN";
+                break;
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+                // 监控/拦截/屏蔽中方向键
+                ret = "KEYCODE_DPAD_CENTER";
+                break;
+            case KeyEvent.FLAG_KEEP_TOUCH_MODE:
+                // 监控/拦截/屏蔽长按
+                ret = "FLAG_KEEP_TOUCH_MODE";
+                break;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                // 监控/拦截/屏蔽下方向键
+                ret = "KEYCODE_VOLUME_DOWN(KeyCode:" + keyCode + ")";
+                break;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                // 监控/拦截/屏蔽中方向键
+                ret = "KEYCODE_VOLUME_UP(KeyCode:" + keyCode + ")";
+                break;
+            case 220:
+                // case KeyEvent.KEYCODE_BRIGHTNESS_DOWN:
+                // 监控/拦截/屏蔽亮度减键
+                ret = "KEYCODE_BRIGHTNESS_DOWN(KeyCode:" + keyCode + ")";
+                break;
+            case 221:
+                // case KeyEvent.KEYCODE_BRIGHTNESS_UP:
+                // 监控/拦截/屏蔽亮度加键
+                ret = "KEYCODE_BRIGHTNESS_UP(KeyCode:" + keyCode + ")";
+                break;
+            case KeyEvent.KEYCODE_MEDIA_PLAY:
+                ret = "KEYCODE_MEDIA_PLAY(KeyCode:" + keyCode + ")";
+                break;
+            case KeyEvent.KEYCODE_MEDIA_PAUSE:
+                ret = "KEYCODE_MEDIA_PAUSE(KeyCode:" + keyCode + ")";
+                break;
+            case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+                ret = "KEYCODE_MEDIA_PREVIOUS(KeyCode:" + keyCode + ")";
+                break;
+            case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+                ret = "KEYCODE_MEDIA_PLAY_PAUSE(KeyCode:" + keyCode + ")";
+                break;
+            case KeyEvent.KEYCODE_MEDIA_NEXT:
+                ret = "KEYCODE_MEDIA_NEXT(KeyCode:" + keyCode + ")";
+                break;
+            default:
+                ret = "keyCode: "
+                        + keyCode;
+                break;
+        }
+        return ret;
+    }
 
 }

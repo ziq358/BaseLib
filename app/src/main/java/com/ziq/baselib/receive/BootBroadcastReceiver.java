@@ -15,8 +15,6 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(ACTION_BOOT)) { //开机启动完成后，要做的事情
             Log.i(TAG, "开机 广播");
-            BaseBluetoothManager mBaseBluetoothManager = new BaseBluetoothManager(context);
-            mBaseBluetoothManager.registerReceiver(context);
         }
     }
 }

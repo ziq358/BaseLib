@@ -85,8 +85,19 @@ public class BaseBluetoothManager {
         return bluetoothAdapter.cancelDiscovery();
     }
 
-
     public void registerReceiver(Context context) {
+        registerBluetoothReceiver(context);
+        registerHomeReceiver(context);
+        registerScreenReceiver(context);
+    }
+
+    public void unregisterReceiver(Context context) {
+        unregisterBluetoothReceiver(context);
+        unregisterHomeReceiver(context);
+        unregisterScreenReceiver(context);
+    }
+
+    private void registerBluetoothReceiver(Context context) {
         IntentFilter intent = new IntentFilter();
         intent.addAction(BluetoothDevice.ACTION_FOUND);//搜索发现设备
         intent.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);//状态改变
@@ -97,7 +108,7 @@ public class BaseBluetoothManager {
         context.registerReceiver(mBluetoothReceiver, intent);
     }
 
-    public void unregisterReceiver(Context context) {
+    private void unregisterBluetoothReceiver(Context context) {
         context.unregisterReceiver(mBluetoothReceiver);
     }
 
@@ -171,6 +182,61 @@ public class BaseBluetoothManager {
         }
     };
 
+    private void registerHomeReceiver(Context context) {
+        IntentFilter intent = new IntentFilter();
+        intent.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);//搜索发现设备
+        context.registerReceiver(mHomePressReceiver, intent);
+    }
+
+    private void unregisterHomeReceiver(Context context) {
+        context.unregisterReceiver(mHomePressReceiver);
+    }
+
+    private final BroadcastReceiver mHomePressReceiver = new BroadcastReceiver() {
+        final String SYSTEM_DIALOG_REASON_KEY = "reason";
+        final String SYSTEM_DIALOG_REASON_HOME_KEY = "homekey";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
+                String reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY);
+                if (reason != null
+                        && reason.equals(SYSTEM_DIALOG_REASON_HOME_KEY)) {
+                    // 自己随意控制程序，关闭...
+                    Log.d(TAG, "home key");
+
+                }
+            }
+        }
+
+    };
+
+    private void registerScreenReceiver(Context context) {
+        IntentFilter intent = new IntentFilter();
+        intent.addAction(Intent.ACTION_SCREEN_OFF);
+        intent.addAction(Intent.ACTION_SCREEN_ON);
+        context.registerReceiver(mScreenStatusReceiver, intent);
+    }
+
+    private void unregisterScreenReceiver(Context context) {
+        context.unregisterReceiver(mScreenStatusReceiver);
+    }
+
+    private final BroadcastReceiver mScreenStatusReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+
+            final String action = intent.getAction();
+            if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                Log.d(TAG, "ACTION_SCREEN_OFF");
+
+            } else if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                Log.d(TAG, "ACTION_SCREEN_ON ");
+            }
+        }
+    };
+
 
     // a2dp
     private BluetoothA2dp mBluetoothA2dp;
@@ -229,7 +295,7 @@ public class BaseBluetoothManager {
         } catch (Exception e) {
             Log.d(TAG, "A2dp 断开连接出错:" + e);
         }
-        Log.d(TAG, "A2dp 断开连接结束 :");
+        Log.d(TAG, "A2dp 断开连接结束:");
     }
 
 
