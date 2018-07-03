@@ -381,7 +381,7 @@ public final class AudioRecorder {
         if (e != null && e.getMessage() != null) {
             message = e.getMessage();
         }
-        Log.e(AudioRecorder.class.getName(), header + message);
+        LogUtil.i(AudioRecorder.class.getName(), header + message);
         throw new Exception(header);
     }
 }

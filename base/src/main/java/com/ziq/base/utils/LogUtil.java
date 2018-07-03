@@ -15,7 +15,7 @@ public class LogUtil {
 
     public static void e(String msg) {
         if (isDebug && !TextUtils.isEmpty(msg)) {
-            Log.e(TAG, msg);
+            LogUtil.i(TAG, msg);
         }
     }
 
@@ -28,7 +28,7 @@ public class LogUtil {
 
     public static void e(String tag, String msg) {
         if (isDebug && !TextUtils.isEmpty(msg)) {
-            Log.e(tag, msg);
+            LogUtil.i(tag, msg);
         }
     }
 

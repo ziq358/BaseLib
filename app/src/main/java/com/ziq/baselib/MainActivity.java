@@ -37,7 +37,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //打开 log
-        LogUtil.isDebug = true;
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

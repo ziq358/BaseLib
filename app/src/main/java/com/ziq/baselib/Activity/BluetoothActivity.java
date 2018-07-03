@@ -19,6 +19,7 @@ import com.ziq.base.event.BluetoothSearchFinishedEvent;
 import com.ziq.base.event.BluetoothSearchStartEvent;
 import com.ziq.base.manager.BaseBluetoothManager;
 import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.utils.LogUtil;
 import com.ziq.baselib.R;
 import com.ziq.baselib.adapter.BluetoothRecycleViewAdapter;
 import com.ziq.baselib.receive.BluetoothMusicButtonReceiver;
@@ -81,7 +82,7 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Log.e(TAG, "onKeyDown: " + parseKeyCode(keyCode));
+        LogUtil.i(TAG, "onKeyDown: " + parseKeyCode(keyCode));
         return super.onKeyDown(keyCode, event);
     }
 
@@ -103,7 +104,7 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.open_blue_tooth:
                 boolean result = mBaseBluetoothManager.openBluetooth();
-                Log.e(TAG, "蓝牙: " + result);
+                LogUtil.i(TAG, "蓝牙: " + result);
                 break;
             case R.id.open_blue_tooth_intent:
                 mBaseBluetoothManager.openBluetoothIntent(this);
@@ -116,7 +117,7 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.search_stop:
-                Log.e(TAG, "停止搜索: " + mBaseBluetoothManager.stopDiscovery());
+                LogUtil.i(TAG, "停止搜索: " + mBaseBluetoothManager.stopDiscovery());
                 break;
             case R.id.connect_a2dp:
                 mBaseBluetoothManager.stopDiscovery();
@@ -132,7 +133,7 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == BaseBluetoothManager.OPEN_BLUE_TOOTH_CODE) {
-            Log.e(TAG, "打开蓝牙: " + mBaseBluetoothManager.isBluetoothOpen());
+            LogUtil.i(TAG, "打开蓝牙: " + mBaseBluetoothManager.isBluetoothOpen());
         }
     }
 

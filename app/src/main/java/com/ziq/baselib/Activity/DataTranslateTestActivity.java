@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.utils.LogUtil;
 import com.ziq.baselib.R;
 
 import butterknife.Bind;
@@ -41,11 +42,11 @@ public class DataTranslateTestActivity extends BaseActivity implements View.OnCl
                 String text = input.getText().toString();
                 byte[] bytes = text.getBytes();
                 for (int i = 0; i < bytes.length; i++) {
-                    Log.e("ziq", "onClick: " + i + "   " + bytes[i]);
+                    LogUtil.i("ziq", "onClick: " + i + "   " + bytes[i]);
                     int tempI=bytes[i] & 0xFF;//byte:8bit,int:32bit;高位相与.
-                    Log.e("ziq", "tempI: " + i + "   " + tempI);
+                    LogUtil.i("ziq", "tempI: " + i + "   " + tempI);
                     String str = Integer.toHexString(tempI);
-                    Log.e("ziq", "str: " + i + "   " + str);
+                    LogUtil.i("ziq", "str: " + i + "   " + str);
                 }
 
 
