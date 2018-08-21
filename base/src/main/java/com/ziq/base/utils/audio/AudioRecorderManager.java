@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.ziq.base.utils.LogUtil;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.Calendar;
 
@@ -44,7 +45,7 @@ public class AudioRecorderManager {
     }
 
     public interface AudioDataCallback {
-        void onRecordCompleted(byte[] data);
+        void onRecordCompleted(byte[] fcmData) throws IOException;
     }
 
     public void setCallback(AudioDataCallback audioDataCallback) {
@@ -143,9 +144,8 @@ public class AudioRecorderManager {
                 //录制结束
                 LogUtil.i(TAG, "录音结束: ");
                 mAudioRecorder.get().stop();
-                byte[] bytes = PcmToWavUtil.converToWav(swapStream.toByteArray(), 16000);// wav 数据
                 if (mAudioDataCallback.get() != null) {
-                    mAudioDataCallback.get().onRecordCompleted(bytes);
+                    mAudioDataCallback.get().onRecordCompleted(swapStream.toByteArray());
                 }
             } catch (Exception e) {
                 LogUtil.e(TAG, "录制结束出错: " + e);
