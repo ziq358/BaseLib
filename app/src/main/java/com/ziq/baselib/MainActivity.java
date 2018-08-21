@@ -12,6 +12,7 @@ import com.ziq.baselib.Activity.AesEncryptionActivity;
 import com.ziq.baselib.Activity.AudioRecordActivity;
 import com.ziq.baselib.Activity.DataTranslateTestActivity;
 import com.ziq.baselib.Activity.BluetoothActivity;
+import com.ziq.baselib.Activity.ImageLoaderTestActivity;
 import com.ziq.baselib.Activity.InstallApkActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 import com.ziq.baselib.Activity.TestActivity;
@@ -56,6 +57,7 @@ public class MainActivity extends BaseActivity {
         dataList.add(new DemoListItem("DEMO-数据加密", AesEncryptionActivity.class));
         dataList.add(new DemoListItem("DEMO-蓝牙", BluetoothActivity.class));
         dataList.add(new DemoListItem("DEMO-test", TestActivity.class));
+        dataList.add(new DemoListItem("DEMO-ImageLoader", ImageLoaderTestActivity.class));
     }
 
     public static class DemoListItem {

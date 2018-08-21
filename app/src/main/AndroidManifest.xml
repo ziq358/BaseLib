@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 
     <application
@@ -26,6 +27,7 @@
         </activity>
 
         <activity android:name=".Activity.InstallApkActivity"/>
+        <activity android:name=".Activity.ImageLoaderTestActivity"/>
         <activity android:name=".Activity.ShellCmdActivity"/>
         <activity android:name=".Activity.AudioRecordActivity"/>
         <activity android:name=".Activity.DataTranslateTestActivity"/>
