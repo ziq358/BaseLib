@@ -14,6 +14,7 @@ import com.ziq.baselib.Activity.DataTranslateTestActivity;
 import com.ziq.baselib.Activity.BluetoothActivity;
 import com.ziq.baselib.Activity.ImageLoaderTestActivity;
 import com.ziq.baselib.Activity.InstallApkActivity;
+import com.ziq.baselib.Activity.MediacodecActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 import com.ziq.baselib.Activity.TestActivity;
 
@@ -52,12 +53,13 @@ public class MainActivity extends BaseActivity {
     private void initData() {
         dataList.add(new DemoListItem("DEMO-安装apk", InstallApkActivity.class));
         dataList.add(new DemoListItem("DEMO-Shell命令", ShellCmdActivity.class));
-        dataList.add(new DemoListItem("DEMO-录音", AudioRecordActivity.class));
         dataList.add(new DemoListItem("DEMO-数据转换", DataTranslateTestActivity.class));
         dataList.add(new DemoListItem("DEMO-数据加密", AesEncryptionActivity.class));
         dataList.add(new DemoListItem("DEMO-蓝牙", BluetoothActivity.class));
         dataList.add(new DemoListItem("DEMO-test", TestActivity.class));
         dataList.add(new DemoListItem("DEMO-ImageLoader", ImageLoaderTestActivity.class));
+        dataList.add(new DemoListItem("DEMO-录音", AudioRecordActivity.class));
+        dataList.add(new DemoListItem("DEMO-解码MediaCodec", MediacodecActivity.class));
     }
 
     public static class DemoListItem {

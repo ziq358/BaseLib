@@ -16,6 +16,7 @@ import com.ziq.base.utils.LogUtil;
 import com.ziq.base.utils.audio.AudioRecorder;
 import com.ziq.base.utils.audio.AudioRecorderManager;
 import com.ziq.base.utils.audio.PcmToWavUtil;
+import com.ziq.baselib.Constants;
 import com.ziq.baselib.R;
 
 import java.io.BufferedInputStream;
@@ -101,14 +102,7 @@ public class AudioRecordActivity extends BaseActivity implements View.OnClickLis
     }
 
     public String getDataDirPath() {
-        String path = this.getApplicationContext().getFilesDir().getAbsolutePath();
-        if (FileUtil.isExistSDCard()) {
-            path = this.getExternalCacheDir().getAbsolutePath() + File.separator + "Record";
-        }
-        File file = new File(path);
-        if (!file.exists()) {
-            file.mkdir();
-        }
+        String path = Constants.getDataDirPath(this, "Record");
         return path;
     }
 
