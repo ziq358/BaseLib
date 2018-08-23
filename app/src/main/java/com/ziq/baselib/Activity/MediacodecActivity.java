@@ -62,7 +62,7 @@ public class MediacodecActivity extends BaseActivity {
         setContentView(R.layout.activity_mediacodec);
         ButterKnife.bind(this);
 
-        videoPath = Constants.getDataDirPath(this, "meidacodec") + File.separator + "gao_bai_qi_qiu.mp4";
+        videoPath = Constants.getDataDirPath(this, "meidacodec") + File.separator + "shape_of_my_heart.mp4";
         BufferedInputStream in = new BufferedInputStream(getResources().openRawResource(R.raw.gao_bai_qi_qiu));
         BufferedOutputStream out;
         try {
@@ -134,7 +134,7 @@ public class MediacodecActivity extends BaseActivity {
                                 videoCodec.queueInputBuffer(inputBufferIndex, 0, 0, 0, MediaCodec.BUFFER_FLAG_END_OF_STREAM);
                                 Log.e(TAG, "到文件末尾");
                             } else {
-                                Log.e(TAG, "写数据进缓存 "+sampleSize);
+                                Log.e(TAG, "写video 数据进缓存 "+sampleSize);
                                 videoCodec.queueInputBuffer(inputBufferIndex, 0, sampleSize, mediaExtractor.getSampleTime(), 0);
                                 mediaExtractor.advance();
                             }
@@ -176,7 +176,6 @@ public class MediacodecActivity extends BaseActivity {
 
     private class AudioThread extends Thread{
         private AudioTrack audioTrack;
-        private int audioInputBufferSize;
 
         @Override
         public void run() {
@@ -195,21 +194,16 @@ public class MediacodecActivity extends BaseActivity {
                         break;
                     }
                 }
-                if(audioTrackIndex >= 0){
 
+                int minBufferSize = 0;
+                if(audioTrackIndex >= 0){
                     int audioChannels = mediaFormat.getInteger(MediaFormat.KEY_CHANNEL_COUNT);
                     int audioSampleRate = mediaFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE);
-
-                    int minBufferSize = AudioTrack.getMinBufferSize(audioSampleRate,
+                    audioSampleRate = 48000;// 告白气球.MP4  的采样 有误
+                    minBufferSize = AudioTrack.getMinBufferSize(audioSampleRate,
                             (audioChannels == 1 ? AudioFormat.CHANNEL_OUT_MONO : AudioFormat.CHANNEL_OUT_STEREO), AudioFormat.ENCODING_PCM_16BIT);
-
-                    int maxInputSize = mediaFormat.getInteger(MediaFormat.KEY_MAX_INPUT_SIZE);
-                    audioInputBufferSize = minBufferSize > 0 ? minBufferSize * 4 : maxInputSize;
-                    int frameSizeInBytes = audioChannels * 2;
-                    audioInputBufferSize = (audioInputBufferSize / frameSizeInBytes) * frameSizeInBytes;
-
                     audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, audioSampleRate,
-                            (audioChannels == 1 ? AudioFormat.CHANNEL_OUT_MONO : AudioFormat.CHANNEL_OUT_STEREO), AudioFormat.ENCODING_PCM_16BIT, audioInputBufferSize, AudioTrack.MODE_STREAM);
+                            (audioChannels == 1 ? AudioFormat.CHANNEL_OUT_MONO : AudioFormat.CHANNEL_OUT_STEREO), AudioFormat.ENCODING_PCM_16BIT, minBufferSize, AudioTrack.MODE_STREAM);
                     audioTrack.play();
 
                     audioCodec = MediaCodec.createDecoderByType(mediaFormat.getString(MediaFormat.KEY_MIME));
@@ -224,29 +218,23 @@ public class MediacodecActivity extends BaseActivity {
 
                 audioCodec.start();
 
-                final ByteBuffer[] buffers = audioCodec.getOutputBuffers();
-                int sz = buffers[0].capacity();
-                if (sz <= 0)
-                    sz = audioInputBufferSize;
-                byte[] mAudioOutTempBuf = new byte[sz];
-
                 MediaCodec.BufferInfo audioBufferInfo = new MediaCodec.BufferInfo();
                 ByteBuffer[] inputBuffers = audioCodec.getInputBuffers();
                 ByteBuffer[] outputBuffers = audioCodec.getOutputBuffers();
-
-
+                long startMs = System.currentTimeMillis();
                 while (!Thread.interrupted()) {
                     //不断读数据 写进 缓存
                     int inputBufferIndex = audioCodec.dequeueInputBuffer(10000);
                     if (inputBufferIndex >= 0) {
                         ByteBuffer inputBuffer = inputBuffers[inputBufferIndex];
+                        inputBuffer.clear();
                         int sampleSize = audioExtractor.readSampleData(inputBuffer, 0);
                         if (sampleSize < 0) {
                             //告诉 解码器 到达 文件 末尾
                             audioCodec.queueInputBuffer(inputBufferIndex, 0, 0, 0, MediaCodec.BUFFER_FLAG_END_OF_STREAM);
                             Log.e(TAG, "到文件末尾");
                         } else {
-                            Log.e(TAG, "写数据进缓存 "+sampleSize);
+                            Log.e(TAG, "写audio  数据进缓存 "+sampleSize);
                             audioCodec.queueInputBuffer(inputBufferIndex, 0, sampleSize, audioExtractor.getSampleTime(), 0);
                             audioExtractor.advance();
                         }
@@ -266,15 +254,14 @@ public class MediacodecActivity extends BaseActivity {
                             Log.e(TAG, "取 缓存 output buffers changed");
                             break;
                         default:
-
+                            sleepRender(audioBufferInfo, startMs);
                             ByteBuffer outputBuffer = outputBuffers[outputBufferIndex];
                             if (audioBufferInfo.size > 0) {
-                                if (mAudioOutTempBuf.length < audioBufferInfo.size) {
-                                    mAudioOutTempBuf = new byte[audioBufferInfo.size];
-                                }
+                                byte[] mAudioOutTempBuf = new byte[audioBufferInfo.size];
                                 outputBuffer.position(0);
                                 outputBuffer.get(mAudioOutTempBuf, 0, audioBufferInfo.size);
                                 outputBuffer.clear();
+                                Log.e(TAG, "取 缓存 "+audioBufferInfo.presentationTimeUs+ "    "+mAudioOutTempBuf.length);
                                 if (audioTrack != null)
                                     audioTrack.write(mAudioOutTempBuf, 0, audioBufferInfo.size);
                             }
