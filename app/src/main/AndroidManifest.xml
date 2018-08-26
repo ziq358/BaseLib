@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ziq.baselib">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -31,6 +34,7 @@
         <activity android:name=".Activity.ShellCmdActivity"/>
         <activity android:name=".Activity.AudioRecordActivity"/>
         <activity android:name=".Activity.MediacodecActivity"/>
+        <activity android:name=".Activity.MuxerActivity"/>
         <activity android:name=".Activity.DataTranslateTestActivity"/>
         <activity android:name=".Activity.AesEncryptionActivity"/>
         <activity android:name=".Activity.BluetoothActivity"/>

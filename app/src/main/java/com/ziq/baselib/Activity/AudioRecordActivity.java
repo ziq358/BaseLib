@@ -101,6 +101,11 @@ public class AudioRecordActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    public void onRead(byte[] fcmData) throws IOException {
+
+    }
+
     public String getDataDirPath() {
         String path = Constants.getDataDirPath(this, "Record");
         return path;

@@ -46,6 +46,7 @@ public class AudioRecorderManager {
 
     public interface AudioDataCallback {
         void onRecordCompleted(byte[] fcmData) throws IOException;
+        void onRead(byte[] fcmData) throws IOException;
     }
 
     public void setCallback(AudioDataCallback audioDataCallback) {
@@ -133,6 +134,9 @@ public class AudioRecorderManager {
                             || AudioRecord.ERROR_BAD_VALUE == readSize
                             || AudioRecord.ERROR_DEAD_OBJECT == readSize) {
                         LogUtil.e(TAG, "读取音频数据失败, errorCode = " + readSize);
+                    }
+                    if (mAudioDataCallback.get() != null) {
+                        mAudioDataCallback.get().onRead(mBuffer);
                     }
                     swapStream.write(mBuffer);
                 } catch (Exception e) {
