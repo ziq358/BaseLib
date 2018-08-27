@@ -75,7 +75,7 @@ public class MuxerThread extends Thread {
 
             if(isMuxerVideoTrackInit() && isMuxerAudioTrackInit()){
                 Log.e(TAG, "addMuxerTrackIndex: mMediaMuxer.start()");
-                mMediaMuxer.start();
+                mMediaMuxer.start();//需要添加  轨道 后 开始
             }
         }
     }
