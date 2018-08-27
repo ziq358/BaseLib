@@ -10,15 +10,14 @@ import com.ziq.base.utils.LogUtil;
 import com.ziq.base.utils.NetworkUtil;
 import com.ziq.baselib.Activity.AesEncryptionActivity;
 import com.ziq.baselib.Activity.AudioRecordActivity;
-import com.ziq.baselib.Activity.DataTranslateTestActivity;
 import com.ziq.baselib.Activity.BluetoothActivity;
+import com.ziq.baselib.Activity.DataTranslateTestActivity;
 import com.ziq.baselib.Activity.ImageLoaderTestActivity;
 import com.ziq.baselib.Activity.InstallApkActivity;
 import com.ziq.baselib.Activity.MediacodecActivity;
-import com.ziq.baselib.Activity.muxer.MuxerActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 import com.ziq.baselib.Activity.TestActivity;
-import com.ziq.baselib.test.MediaMuxerActivity;
+import com.ziq.baselib.Activity.muxer.MuxerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +62,6 @@ public class MainActivity extends BaseActivity {
         dataList.add(new DemoListItem("DEMO-录音", AudioRecordActivity.class));
         dataList.add(new DemoListItem("DEMO-解码MediaCodec", MediacodecActivity.class));
         dataList.add(new DemoListItem("DEMO-Muxer", MuxerActivity.class));
-        dataList.add(new DemoListItem("DEMO-Muxer2", MediaMuxerActivity.class));
     }
 
     public static class DemoListItem {

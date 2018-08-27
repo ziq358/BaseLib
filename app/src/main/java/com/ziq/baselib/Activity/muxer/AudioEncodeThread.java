@@ -56,14 +56,11 @@ public class AudioEncodeThread extends Thread {
                 AudioRecord audioRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
                 audioRecorder.startRecording();
                 while(isRunning){
-                    ByteBuffer buffer = ByteBuffer.allocateDirect(bufferSize);
-                    int readSize = audioRecorder.read(buffer, bufferSize);
+                    byte[] buffer = new byte[bufferSize];
+                    int readSize = audioRecorder.read(buffer, 0, buffer.length);
                     Log.e(TAG, "音频编码 -- 读数据: " + readSize);
                     if(readSize > 0){
                         //写数据
-                        buffer.position(readSize);
-                        buffer.flip();
-
                         ByteBuffer[] inputBuffers = mMediaCodec.getInputBuffers();
                         ByteBuffer[] outputBuffers = mMediaCodec.getOutputBuffers();
                         int inputBufferIndex = mMediaCodec.dequeueInputBuffer(TIME_OUT);
@@ -110,11 +107,11 @@ public class AudioEncodeThread extends Thread {
                                         }
                                         ByteBuffer outputBuffer = outputBuffers[outputBufferIndex];
                                         Log.e(TAG, "音频编码 -- 写数据到muxer: " + audioBufferInfo.size);
-                                        audioBufferInfo.presentationTimeUs = getPTSUs();
+//                                        audioBufferInfo.presentationTimeUs = getPTSUs();//貌似不需要
                                         if(muxerThread != null && muxerThread.isMuxerStart()){
                                             muxerThread.addMuxerData(new MuxerThread.MuxerData(MuxerThread.TRACK_TYPE_AUDIO, outputBuffer, audioBufferInfo));
                                         }
-                                        prevOutputPTSUs = audioBufferInfo.presentationTimeUs;
+//                                        prevOutputPTSUs = audioBufferInfo.presentationTimeUs;//貌似不需要
                                     }
                                     mMediaCodec.releaseOutputBuffer(outputBufferIndex, false);
                                 }

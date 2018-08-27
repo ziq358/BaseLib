@@ -35,7 +35,6 @@
         <activity android:name=".Activity.AudioRecordActivity"/>
         <activity android:name=".Activity.MediacodecActivity"/>
         <activity android:name=".Activity.muxer.MuxerActivity"/>
-        <activity android:name=".test.MediaMuxerActivity"/>
         <activity android:name=".Activity.DataTranslateTestActivity"/>
         <activity android:name=".Activity.AesEncryptionActivity"/>
         <activity android:name=".Activity.BluetoothActivity"/>
