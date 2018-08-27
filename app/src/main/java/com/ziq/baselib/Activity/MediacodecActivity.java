@@ -169,7 +169,7 @@ public class MediacodecActivity extends BaseActivity {
                 }
 
             } catch (Exception e) {
-                Log.e(TAG, "VideoThread "+e.getMessage());
+                Log.e(TAG, "VideoEncodeThread "+e.getMessage());
             }
         }
     }
@@ -281,7 +281,7 @@ public class MediacodecActivity extends BaseActivity {
                 audioTrack.release();
 
             } catch (Exception e) {
-                Log.e(TAG, "VideoThread --- "+e.getMessage());
+                Log.e(TAG, "VideoEncodeThread --- "+e.getMessage());
             }
         }
     }
