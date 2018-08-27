@@ -11,7 +11,7 @@ import java.util.Vector;
 
 public class VideoEncodeThread extends Thread {
 
-    public static final String TAG = "Video Encode";
+    public static final String TAG = "Video Encode-------";
 
     private static final String MIME_TYPE = "video/avc";
     private static final int FRAME_RATE = 25; // 帧率
@@ -75,17 +75,18 @@ public class VideoEncodeThread extends Thread {
                 mMediaCodec.start();
                 while (isRunning) {
                     if (mFrameBytes != null && !mFrameBytes.isEmpty()) {
-
                         ByteBuffer[] inputBuffers = mMediaCodec.getInputBuffers();
                         ByteBuffer[] outputBuffers = mMediaCodec.getOutputBuffers();
                         //写数据
                         int inputBufferIndex = mMediaCodec.dequeueInputBuffer(TIME_OUT);
                         if (inputBufferIndex >= 0) {
                             ByteBuffer inputBuffer = inputBuffers[inputBufferIndex];
+
                             byte[] bytes = this.mFrameBytes.remove(0);
                             byte[] mFrameData = new byte[this.mVideoWidth * this.mVideoHeight * 3 / 2];
                             // 将原始的N21数据转为I420
                             NV21toI420SemiPlanar(bytes, mFrameData, this.mVideoWidth, this.mVideoHeight);
+                            Log.e(TAG, "视频编码 -- 读数据到" + mFrameData.length);
                             inputBuffer.clear();
                             inputBuffer.put(mFrameData);
                             mMediaCodec.queueInputBuffer(inputBufferIndex, 0, mFrameData.length, System.nanoTime() / 1000, 0);
@@ -94,6 +95,7 @@ public class VideoEncodeThread extends Thread {
                         MediaCodec.BufferInfo videoBufferInfo = new MediaCodec.BufferInfo();
                         MediaFormat outputFormat;
                         MuxerThread muxerThread = mWeakMuxerThread.get();
+
                         int outputBufferIndex = mMediaCodec.dequeueOutputBuffer(videoBufferInfo, 10000);
                         switch (outputBufferIndex) {
                             case MediaCodec.INFO_TRY_AGAIN_LATER:
@@ -101,7 +103,7 @@ public class VideoEncodeThread extends Thread {
                                 break;
                             case MediaCodec.INFO_OUTPUT_FORMAT_CHANGED:
                                 outputFormat = mMediaCodec.getOutputFormat();
-                                if (muxerThread != null) {
+                                if(muxerThread != null){
                                     muxerThread.addMuxerTrackIndex(MuxerThread.TRACK_TYPE_VIDEO, outputFormat);
                                 }
                                 Log.e(TAG, "video 取 缓存 format changed");
@@ -112,11 +114,18 @@ public class VideoEncodeThread extends Thread {
                                 break;
                             default:
                                 if (outputBufferIndex < 0) {
-                                        Log.e(TAG, "outputBufferIndex < 0");
+                                    Log.e(TAG, "outputBufferIndex < 0");
                                 } else {
+
+                                    //重要 ！！！！！
+                                    if ((videoBufferInfo.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
+                                        Log.e(TAG, "ignoring BUFFER_FLAG_CODEC_CONFIG");
+                                        videoBufferInfo.size = 0;
+                                    }
+
                                     if (videoBufferInfo.size > 0) {
                                         outputFormat = mMediaCodec.getOutputFormat();
-                                        if (muxerThread != null && muxerThread.isMuxerVideoTrackInit()) {
+                                        if(muxerThread != null){
                                             muxerThread.addMuxerTrackIndex(MuxerThread.TRACK_TYPE_VIDEO, outputFormat);
                                         }
                                         ByteBuffer outputBuffer = outputBuffers[outputBufferIndex];
@@ -124,9 +133,8 @@ public class VideoEncodeThread extends Thread {
                                         //貌似不需要
                                         //outputBuffer.position(videoBufferInfo.offset);
                                         //outputBuffer.limit(videoBufferInfo.offset + videoBufferInfo.size);
-
-                                        if (muxerThread != null) {
-                                            Log.e(TAG, "写数据到muxer: " + videoBufferInfo.size);
+                                        Log.e(TAG, "视频编码 -- 写数据到muxer: " + videoBufferInfo.size);
+                                        if(muxerThread != null && muxerThread.isMuxerStart()){
                                             muxerThread.addMuxerData(new MuxerThread.MuxerData(MuxerThread.TRACK_TYPE_VIDEO, outputBuffer, videoBufferInfo));
                                         }
                                     }
