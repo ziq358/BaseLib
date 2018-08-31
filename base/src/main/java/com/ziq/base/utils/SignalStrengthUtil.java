@@ -66,6 +66,7 @@ public final class SignalStrengthUtil {
 
     /**
      * @param signalStrength 信号
+     * @param arraySignalStrength 信号
      * @return 信号级别
      */
     public static int getLevel(SignalStrength signalStrength, String[] arraySignalStrength) {
@@ -208,10 +209,6 @@ public final class SignalStrengthUtil {
 
     }
 
-    /**
-     * @param asu
-     * @return
-     */
     public static int getGsmLevel(int asu) {
         int level;
 
@@ -237,7 +234,7 @@ public final class SignalStrengthUtil {
     /**
      * @param cdmaDbm  信号强度
      * @param cdmaEcio “载干比”，它是指空中模拟电波中的信号与噪声的比值 似于信噪比
-     * @return
+     * @return int
      */
     public static int getCdmaLevel(int cdmaDbm, int cdmaEcio) {
         int levelDbm;

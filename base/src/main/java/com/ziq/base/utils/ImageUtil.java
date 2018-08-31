@@ -25,8 +25,8 @@ public class ImageUtil {
     /**
      * 获取旋转角度
      *
-     * @param path
-     * @return
+     * @param path 路径
+     * @return 角度
      */
     public static int getRotationForImage(String path) {
         int rotation = 0;

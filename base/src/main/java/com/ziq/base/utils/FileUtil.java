@@ -37,7 +37,7 @@ public class FileUtil {
     /**
      * 获取内置SD卡路径
      *
-     * @return
+     * @return 路径
      */
     public static String getInnerSDCardPath() {
         return Environment.getExternalStorageDirectory().getPath();
@@ -46,8 +46,8 @@ public class FileUtil {
     /**
      * 需要申请读写 sd卡 的权限， 不然目录、文件无法建立
      *
-     * @param context
-     * @return
+     * @param context 上下文
+     * @return 字符
      */
     public static String getInnerSDCardAppPath(Context context) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -127,6 +127,10 @@ public class FileUtil {
 
     /**
      * fixed the Google Photos App get permission issue
+     * @param context 上下文
+     * @param data 上下文
+     * @param outputFile 文件
+     * @return 字符
      */
     public static Uri convertToValidUri(Context context, Uri data, File outputFile) {
         BufferedOutputStream bufferedOutputStream = null;
@@ -382,9 +386,9 @@ public class FileUtil {
     /**
      * 获取指定文件夹
      *
-     * @param f
-     * @return
-     * @throws Exception
+     * @param f 文件
+     * @return 数量
+     * @throws Exception 异常
      */
     public static long getFileSizes(File f) throws Exception {
         long size = 0;
@@ -403,9 +407,9 @@ public class FileUtil {
     /**
      * 获取指定文件大小
      *
-     * @param file
-     * @return
-     * @throws Exception
+     * @param file 文件
+     * @return 大小
+     * @throws Exception 异常
      */
     public static long getFileSize(File file) throws Exception {
         long size = 0;
@@ -440,6 +444,7 @@ public class FileUtil {
      *
      * @param oldName 旧名字
      * @param newName 新名字
+     * @return 是否成功
      */
     public static boolean rename(String oldName, String newName) {
         if (!TextUtils.isEmpty(oldName) && !TextUtils.isEmpty(newName)) {

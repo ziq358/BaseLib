@@ -172,9 +172,7 @@ public final class AudioRecorder {
 
     /**
      * 准备录音
-     *
-     * @return
-     * @throws Exception
+     * @throws Exception kong
      */
     public void prepare() throws Exception {
         try {
@@ -229,9 +227,7 @@ public final class AudioRecorder {
 
     /**
      * 开始录音
-     *
-     * @return
-     * @throws Exception
+     * @throws Exception kong
      */
     public void start() throws Exception {
         if (state == State.READY) {
@@ -251,7 +247,7 @@ public final class AudioRecorder {
      * 停止录音
      *
      * @return 录音时长， 毫秒数
-     * @throws Exception
+     * @throws Exception kong
      */
     public long stop() throws Exception {
         long time = Calendar.getInstance().getTimeInMillis() - this.startTime;
@@ -306,9 +302,7 @@ public final class AudioRecorder {
 
     /**
      * 重置录音
-     *
-     * @return
-     * @throws Exception
+     * @throws Exception kong
      */
     public void reset() throws Exception {
         try {
@@ -348,7 +342,7 @@ public final class AudioRecorder {
 
     /**
      * @param argPath 文件路径
-     * @throws Exception
+     * @throws Exception kong
      */
     public void setOutputFile(String argPath) throws Exception {
         if (state == State.INITIALIZING || state == State.STOPPED) {

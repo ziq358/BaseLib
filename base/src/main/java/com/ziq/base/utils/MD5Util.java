@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * 负责 MD5 相关处理的工具类
  *
- * @author
+ * @author john
  * @since 2015-10-15
  */
 public class MD5Util {

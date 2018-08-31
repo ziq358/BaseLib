@@ -85,7 +85,7 @@ public class DateUtil {
      * 获得 一个月第几天 的后缀， 1st， 2nd
      *
      * @param n 第几天
-     * @return
+     * @return 字符
      */
     public static String getDayOfMonthSuffix(final int n) {
         if (n >= 11 && n <= 13) {
@@ -106,8 +106,8 @@ public class DateUtil {
     /**
      * UTC 时间根据 时区 来 转换本地 时间
      *
-     * @param date
-     * @return
+     * @param date 日期
+     * @return 日期
      */
     public static Date getLocalTimeWithTimeZone(String date) {
         Date messageDate = null;

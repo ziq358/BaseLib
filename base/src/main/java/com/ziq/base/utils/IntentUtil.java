@@ -150,10 +150,10 @@ public class IntentUtil {
      * intent 的一种比较特别的使用方式，学习用
      * createChooser
      *
-     * @param context
-     * @param shareContent
-     * @param imageFile
-     * @param shareLink
+     * @param context 上下文
+     * @param shareContent 内容
+     * @param imageFile 文件
+     * @param shareLink 链接
      */
     public static void sendShareIntent(Context context, String shareContent, File imageFile, String shareLink) {
         Intent targetIntent = new Intent(Intent.ACTION_SEND);

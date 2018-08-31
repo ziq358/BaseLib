@@ -57,7 +57,7 @@ public class AesEncryptionUtil {
     /**
      * 生成加密秘钥
      *
-     * @return
+     * @return key
      */
     private static Key getSecretKey(final String key, int keyLength) throws Exception {
         //返回生成指定算法密钥生成器的 KeyGenerator 对象

@@ -8,7 +8,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 /**
  * 负责读取 AndroidManifest.xml 中的 meta 数据
  *
- * @author
+ * @author john
  */
 public class MetaUtils {
 

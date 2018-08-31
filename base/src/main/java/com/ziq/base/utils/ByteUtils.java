@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 处理Byte与Byte[]相关逻辑的工具类
  *
- * @author
+ * @author john
  * @since 2016 /2/26
  */
 public class ByteUtils {

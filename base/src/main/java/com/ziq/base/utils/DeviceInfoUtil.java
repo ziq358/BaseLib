@@ -56,7 +56,7 @@ public class DeviceInfoUtil {
 
     /**
      * 获取手机IMEI(需要“android.permission.READ_PHONE_STATE”权限)
-     *
+     * @param ctx s
      * @return 手机IMEI
      */
     public static String getIMEI(Context ctx) {
@@ -71,6 +71,8 @@ public class DeviceInfoUtil {
     }
 
     /**
+     *  @param context s
+     *  @return 字符
      * 获取手机IMSI号
      */
     public static String getIMSI(Context context) {
@@ -83,6 +85,8 @@ public class DeviceInfoUtil {
     }
 
     /**
+     * @param context s
+     *  @return 字符
      * 获取手机号
      */
     public static String getPhoneNumber(Context context) {

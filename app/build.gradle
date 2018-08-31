@@ -12,17 +12,27 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
+
+    signingConfigs {
+        config {
+            keyAlias 'zaiqiang'
+            keyPassword 'zaiqiang'
+            storeFile file('../signature.jks')
+            storePassword 'zaiqiang'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':base')
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'

@@ -139,7 +139,7 @@ public class AudioEncodeThread extends Thread {
     /**
      * get next encoding presentationTimeUs
      *
-     * @return
+     * @return long
      */
     private long getPTSUs() {
         long result = System.nanoTime() / 1000L;

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -18,11 +19,25 @@ android {
         }
     }
 
+    signingConfigs {
+        config {
+            keyAlias 'zaiqiang'
+            keyPassword 'zaiqiang'
+            storeFile file('../signature.jks')
+            storePassword 'zaiqiang'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
 }
@@ -35,11 +50,20 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api rootProject.ext.dependencies["appcompat-v7"]
     api rootProject.ext.dependencies["recyclerview-v7"]
-    api 'com.android.support.constraint:constraint-layout:1.1.0'
     api 'org.greenrobot:eventbus:3.0.0'
     api ('org.bitbucket.b_c:jose4j:0.5.2'){
         exclude group:'org.slf4j', module: 'slf4j-api'
         transitive = true
     }
-    api 'com.itextpdf:itextg:5.5.10'
+//    api 'com.itextpdf:itextg:5.5.10'
+}
+
+publish {
+    userOrg = 'zaiqiangxiaohuli'
+    repoName = 'anZhuo'
+    groupId = 'com.ziq.base'
+    artifactId = 'base'
+    publishVersion = '1.0.1'
+    desc = 'zaiqiang base lib for android develop'
+    website = 'https://github.com/ziq358/BaseLib'
 }
