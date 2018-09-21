@@ -1,6 +1,7 @@
 package com.ziq.baselib.Activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 
@@ -26,9 +27,12 @@ public class InstallApkActivity extends BaseActivity implements View.OnClickList
     EditText inputUninstall;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_install_apk);
+    public int initLayoutResourceId() {
+        return R.layout.activity_install_apk;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
         inputInstall.setText(FileUtil.getInnerSDCardAppPath(this) + "/app.apk");
         inputUninstall.setText(getPackageName());

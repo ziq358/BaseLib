@@ -1,6 +1,7 @@
 package com.ziq.baselib.Activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.ziq.base.mvp.BaseActivity;
@@ -24,9 +25,12 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
     TranslateLoadingView mTranslateLoadingView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+    public int initLayoutResourceId() {
+        return R.layout.activity_test;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
         LogUtil.i("ziq", "系统版本: " + DeviceInfoUtil.getSystemVersion());

@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -133,9 +134,12 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blue_tooth);
+    public int initLayoutResourceId() {
+        return R.layout.activity_blue_tooth;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         mBaseBluetoothManager = new BaseBluetoothManager(this);

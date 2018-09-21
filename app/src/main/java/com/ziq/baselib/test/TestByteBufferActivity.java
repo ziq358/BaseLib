@@ -1,6 +1,7 @@
 package com.ziq.baselib.test;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.ziq.base.mvp.BaseActivity;
@@ -22,9 +23,12 @@ public class TestByteBufferActivity extends BaseActivity {
     TextView mTvContent;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_byte_buffer);
+    public int initLayoutResourceId() {
+        return R.layout.activity_test_byte_buffer;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -50,7 +54,6 @@ public class TestByteBufferActivity extends BaseActivity {
         buffer.clear();
         stringBuilder.append(getByteBufferString("clear ", buffer));
         mTvContent.setText(stringBuilder.toString());
-
     }
 
 

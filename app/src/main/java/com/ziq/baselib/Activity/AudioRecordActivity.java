@@ -4,6 +4,7 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -43,9 +44,12 @@ public class AudioRecordActivity extends BaseActivity implements View.OnClickLis
     boolean isPcmPlay;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_audio_record);
+    public int initLayoutResourceId() {
+        return R.layout.activity_audio_record;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
         audioRecorderManager = new AudioRecorderManager(this);
         audioRecorderManager.setCallback(this);

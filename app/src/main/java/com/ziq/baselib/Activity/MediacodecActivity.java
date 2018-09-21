@@ -7,6 +7,7 @@ import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
@@ -45,9 +46,12 @@ public class MediacodecActivity extends BaseActivity {
     String videoPath;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mediacodec);
+    public int initLayoutResourceId() {
+        return R.layout.activity_mediacodec;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
         videoPath = Constants.getDataDirPath(this, "meidacodec") + File.separator + "shape_of_my_heart.mp4";

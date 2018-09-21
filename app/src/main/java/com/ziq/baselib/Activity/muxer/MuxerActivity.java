@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -52,9 +53,12 @@ public class MuxerActivity extends BaseActivity implements Camera.PreviewCallbac
     private boolean isStarted;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_muxer);
+    public int initLayoutResourceId() {
+        return R.layout.activity_muxer;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
@@ -110,6 +114,7 @@ public class MuxerActivity extends BaseActivity implements Camera.PreviewCallbac
             }
         });
     }
+
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {

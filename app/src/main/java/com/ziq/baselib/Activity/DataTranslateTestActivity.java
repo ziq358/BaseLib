@@ -1,6 +1,7 @@
 package com.ziq.baselib.Activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,9 +28,12 @@ public class DataTranslateTestActivity extends BaseActivity implements View.OnCl
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_data_translate);
+    public int initLayoutResourceId() {
+        return R.layout.activity_data_translate;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
     }
 

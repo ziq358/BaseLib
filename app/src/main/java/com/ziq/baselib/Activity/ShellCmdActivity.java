@@ -1,6 +1,7 @@
 package com.ziq.baselib.Activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,9 +28,12 @@ public class ShellCmdActivity extends BaseActivity implements View.OnClickListen
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shell_cmd);
+    public int initLayoutResourceId() {
+        return R.layout.activity_shell_cmd;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
         inputCmd.setText("echo root");
     }

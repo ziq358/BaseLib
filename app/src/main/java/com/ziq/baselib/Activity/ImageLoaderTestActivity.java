@@ -1,6 +1,7 @@
 package com.ziq.baselib.Activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -27,9 +28,12 @@ public class ImageLoaderTestActivity extends BaseActivity {
     RecyclerView mRecyclerView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_loader);
+    public int initLayoutResourceId() {
+        return R.layout.activity_image_loader;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
         //初始化
@@ -41,7 +45,6 @@ public class ImageLoaderTestActivity extends BaseActivity {
 
         ImageLoaderRecycleViewAdapter mainRecycleViewAdapter = new ImageLoaderRecycleViewAdapter(this, getData());
         mRecyclerView.setAdapter(mainRecycleViewAdapter);
-
     }
 
     public List<String> getData() {

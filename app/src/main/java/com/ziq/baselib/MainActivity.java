@@ -2,6 +2,7 @@ package com.ziq.baselib;
 
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -25,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class MainActivity extends BaseActivity {
 
@@ -37,12 +39,16 @@ public class MainActivity extends BaseActivity {
 
     List<DemoListItem> dataList = new ArrayList<>();
 
+    Unbinder unbinder;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //打开 log
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    public int initLayoutResourceId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
+        unbinder = ButterKnife.bind(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         initData();
@@ -77,4 +83,11 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(unbinder != null){
+            unbinder.unbind();
+        }
+    }
 }
