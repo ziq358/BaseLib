@@ -5,13 +5,11 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ziq.base.mvp.BaseActivity;
-import com.ziq.base.utils.FileUtil;
 import com.ziq.base.utils.LogUtil;
 import com.ziq.base.utils.audio.AudioRecorder;
 import com.ziq.base.utils.audio.AudioRecorderManager;
@@ -19,16 +17,13 @@ import com.ziq.base.utils.audio.PcmToWavUtil;
 import com.ziq.baselib.Constants;
 import com.ziq.baselib.R;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Calendar;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -39,12 +34,13 @@ import butterknife.OnClick;
  */
 
 public class AudioRecordActivity extends BaseActivity implements View.OnClickListener, AudioRecorderManager.AudioDataCallback {
-    @Bind(R.id.result)
+    @BindView(R.id.result)
     TextView result;
 
     AudioRecorderManager audioRecorderManager;
     String pcmFilePath;
     String wavFilePath;
+    boolean isPcmPlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,15 +107,14 @@ public class AudioRecordActivity extends BaseActivity implements View.OnClickLis
         return path;
     }
 
-    boolean isPcmPlay;
-    private void playPcm(String fcmPath){
-        if(isPcmPlay){
-            Toast.makeText(this, "播放中",Toast.LENGTH_LONG).show();
+    private void playPcm(String fcmPath) {
+        if (isPcmPlay) {
+            Toast.makeText(this, "播放中", Toast.LENGTH_LONG).show();
             return;
         }
-        if(TextUtils.isEmpty(fcmPath)){
-            Toast.makeText(this, "文件不存在",Toast.LENGTH_LONG).show();
-        }else{
+        if (TextUtils.isEmpty(fcmPath)) {
+            Toast.makeText(this, "文件不存在", Toast.LENGTH_LONG).show();
+        } else {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -127,12 +122,12 @@ public class AudioRecordActivity extends BaseActivity implements View.OnClickLis
                     try {
                         isPcmPlay = true;
                         int bufferSize = AudioTrack.getMinBufferSize(16000, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);
-                        AudioTrack audioTrack= new AudioTrack(AudioManager.STREAM_MUSIC, 16000, AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT, bufferSize, AudioTrack.MODE_STREAM);
+                        AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 16000, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSize, AudioTrack.MODE_STREAM);
                         audioTrack.play();
                         byte[] buffer = new byte[bufferSize];
                         FileInputStream fileInputStream = new FileInputStream(pcmFilePath);
                         int length;
-                        while ( (length = fileInputStream.read(buffer)) > 0) {
+                        while ((length = fileInputStream.read(buffer)) > 0) {
 //                            audioTrack.write(buffer, 0, length);
                             audioTrack.write(buffer, 0, buffer.length);
                         }
@@ -145,7 +140,7 @@ public class AudioRecordActivity extends BaseActivity implements View.OnClickLis
                             @Override
                             public void run() {
                                 isPcmPlay = false;
-                                Toast.makeText(AudioRecordActivity.this, "出错结束",Toast.LENGTH_LONG).show();
+                                Toast.makeText(AudioRecordActivity.this, "出错结束", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -154,10 +149,10 @@ public class AudioRecordActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void playWav(String wavPath){
-        if(TextUtils.isEmpty(wavPath)){
-            Toast.makeText(this, "文件不存在",Toast.LENGTH_LONG).show();
-        }else{
+    private void playWav(String wavPath) {
+        if (TextUtils.isEmpty(wavPath)) {
+            Toast.makeText(this, "文件不存在", Toast.LENGTH_LONG).show();
+        } else {
 
         }
     }

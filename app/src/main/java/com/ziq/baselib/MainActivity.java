@@ -23,14 +23,14 @@ import com.ziq.baselib.test.TestByteBufferActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
 
-    @Bind(R.id.recycle_view)
+    @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
 
     MainRecycleViewAdapter mainRecycleViewAdapter;

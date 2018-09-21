@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+//        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
 
     signingConfigs {
@@ -34,6 +34,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':base')
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    api 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
+    api 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

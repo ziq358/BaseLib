@@ -9,7 +9,7 @@ import com.ziq.baselib.R;
 import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  */
 public class TestByteBufferActivity extends BaseActivity {
 
-    @Bind(R.id.tv_content)
+    @BindView(R.id.tv_content)
     TextView mTvContent;
 
     @Override
@@ -32,7 +32,7 @@ public class TestByteBufferActivity extends BaseActivity {
         stringBuilder.append(getByteBufferString("allocate 10 ", buffer));
 
         for (int i = 1; i < 6; i++) {
-            buffer.put((byte)i);
+            buffer.put((byte) i);
         }
         stringBuilder.append(getByteBufferString("put 5 data ", buffer));
         for (int i = 0; i < 3; i++) {

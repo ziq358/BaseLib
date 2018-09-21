@@ -23,7 +23,7 @@ import com.ziq.baselib.R;
 import java.io.File;
 import java.io.IOException;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -37,11 +37,11 @@ public class MuxerActivity extends BaseActivity implements Camera.PreviewCallbac
 
     public static final String TAG = "Muxer";
     private static final long TIMEOUT_US = 10000;
-    @Bind(R.id.action)
+    @BindView(R.id.action)
     Button mAction;
-    @Bind(R.id.path)
+    @BindView(R.id.path)
     TextView mTvPath;
-    @Bind(R.id.surface_view)
+    @BindView(R.id.surface_view)
     SurfaceView mSurfaceView;
 
     Camera mCamera;

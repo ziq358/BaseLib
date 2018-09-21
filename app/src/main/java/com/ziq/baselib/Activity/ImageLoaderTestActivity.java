@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 
 public class ImageLoaderTestActivity extends BaseActivity {
 
-    @Bind(R.id.recycle_view)
+    @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
 
     @Override

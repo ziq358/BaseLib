@@ -6,12 +6,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ziq.base.mvp.BaseActivity;
-import com.ziq.base.utils.FileUtil;
-import com.ziq.base.utils.IntentUtil;
 import com.ziq.base.utils.ShellUtil;
 import com.ziq.baselib.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -22,9 +20,9 @@ import butterknife.OnClick;
  */
 
 public class ShellCmdActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.input_cmd)
+    @BindView(R.id.input_cmd)
     EditText inputCmd;
-    @Bind(R.id.result)
+    @BindView(R.id.result)
     TextView result;
 
 
@@ -42,16 +40,16 @@ public class ShellCmdActivity extends BaseActivity implements View.OnClickListen
         ShellUtil.CommandResult commandResul = null;
         switch (v.getId()) {
             case R.id.run:
-                commandResul = ShellUtil.execCommand(inputCmd.getText().toString(),false);
-                result.setText("resultId："+ commandResul.result+" \n\n"+
-                                "成功信息："+ commandResul.successMsg+" \n\n"+
-                                "失败信息："+commandResul.errorMsg);
+                commandResul = ShellUtil.execCommand(inputCmd.getText().toString(), false);
+                result.setText("resultId：" + commandResul.result + " \n\n" +
+                        "成功信息：" + commandResul.successMsg + " \n\n" +
+                        "失败信息：" + commandResul.errorMsg);
                 break;
             case R.id.run2:
-                commandResul = ShellUtil.execCommand(inputCmd.getText().toString(),true);
-                result.setText("resultId："+ commandResul.result+" \n\n"+
-                        "成功信息："+ commandResul.successMsg+" \n\n"+
-                        "失败信息："+commandResul.errorMsg);
+                commandResul = ShellUtil.execCommand(inputCmd.getText().toString(), true);
+                result.setText("resultId：" + commandResul.result + " \n\n" +
+                        "成功信息：" + commandResul.successMsg + " \n\n" +
+                        "失败信息：" + commandResul.errorMsg);
                 break;
         }
     }

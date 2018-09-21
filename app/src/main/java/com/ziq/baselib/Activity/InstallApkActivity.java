@@ -9,7 +9,7 @@ import com.ziq.base.utils.FileUtil;
 import com.ziq.base.utils.IntentUtil;
 import com.ziq.baselib.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -20,10 +20,11 @@ import butterknife.OnClick;
  */
 
 public class InstallApkActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.input_install)
+    @BindView(R.id.input_install)
     EditText inputInstall;
-    @Bind(R.id.input_uninstall)
+    @BindView(R.id.input_uninstall)
     EditText inputUninstall;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

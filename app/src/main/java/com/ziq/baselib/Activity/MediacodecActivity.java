@@ -1,6 +1,5 @@
 package com.ziq.baselib.Activity;
 
-import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -8,34 +7,23 @@ import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ziq.base.mvp.BaseActivity;
-import com.ziq.base.utils.FileUtil;
-import com.ziq.base.utils.LogUtil;
-import com.ziq.base.utils.audio.AudioRecorder;
-import com.ziq.base.utils.audio.AudioRecorderManager;
-import com.ziq.base.utils.audio.PcmToWavUtil;
 import com.ziq.baselib.Constants;
 import com.ziq.baselib.R;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
-import java.util.Calendar;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -43,19 +31,19 @@ import butterknife.OnClick;
  * @author john.
  * @since 2018/5/25.
  * Des:
- *
  */
 
 public class MediacodecActivity extends BaseActivity {
 
     public static final String TAG = "Mediacodec";
     private static final long TIMEOUT_US = 10000;
-    @Bind(R.id.path)
+    @BindView(R.id.path)
     TextView pathTextView;
-    @Bind(R.id.surface_view)
+    @BindView(R.id.surface_view)
     SurfaceView mSurfaceView;
 
     String videoPath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,12 +80,24 @@ public class MediacodecActivity extends BaseActivity {
         }
     }
 
-    private void play(){
+    private void play() {
         new VideoThread().start();
         new AudioThread().start();
     }
 
-    private class VideoThread extends Thread{
+    //延迟渲染
+    private void sleepRender(MediaCodec.BufferInfo audioBufferInfo, long startMs) {
+        while (audioBufferInfo.presentationTimeUs / 1000 > System.currentTimeMillis() - startMs) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                break;
+            }
+        }
+    }
+
+    private class VideoThread extends Thread {
         @Override
         public void run() {
             MediaExtractor mediaExtractor = new MediaExtractor();
@@ -114,7 +114,7 @@ public class MediacodecActivity extends BaseActivity {
                         break;
                     }
                 }
-                if(videoTrackIndex >= 0){
+                if (videoTrackIndex >= 0) {
                     videoCodec = MediaCodec.createDecoderByType(mediaFormat.getString(MediaFormat.KEY_MIME));
                     videoCodec.configure(mediaFormat, mSurfaceView.getHolder().getSurface(), null, 0);
                 }
@@ -134,7 +134,7 @@ public class MediacodecActivity extends BaseActivity {
                                 videoCodec.queueInputBuffer(inputBufferIndex, 0, 0, 0, MediaCodec.BUFFER_FLAG_END_OF_STREAM);
                                 Log.e(TAG, "到文件末尾");
                             } else {
-                                Log.e(TAG, "写video 数据进缓存 "+sampleSize);
+                                Log.e(TAG, "写video 数据进缓存 " + sampleSize);
                                 videoCodec.queueInputBuffer(inputBufferIndex, 0, sampleSize, mediaExtractor.getSampleTime(), 0);
                                 mediaExtractor.advance();
                             }
@@ -169,12 +169,12 @@ public class MediacodecActivity extends BaseActivity {
                 }
 
             } catch (Exception e) {
-                Log.e(TAG, "VideoEncodeThread "+e.getMessage());
+                Log.e(TAG, "VideoEncodeThread " + e.getMessage());
             }
         }
     }
 
-    private class AudioThread extends Thread{
+    private class AudioThread extends Thread {
         private AudioTrack audioTrack;
 
         @Override
@@ -196,7 +196,7 @@ public class MediacodecActivity extends BaseActivity {
                 }
 
                 int minBufferSize = 0;
-                if(audioTrackIndex >= 0){
+                if (audioTrackIndex >= 0) {
                     int audioChannels = mediaFormat.getInteger(MediaFormat.KEY_CHANNEL_COUNT);
                     int audioSampleRate = mediaFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE);
                     audioSampleRate = 48000;// 告白气球.MP4  的采样 有误
@@ -234,7 +234,7 @@ public class MediacodecActivity extends BaseActivity {
                             audioCodec.queueInputBuffer(inputBufferIndex, 0, 0, 0, MediaCodec.BUFFER_FLAG_END_OF_STREAM);
                             Log.e(TAG, "到文件末尾");
                         } else {
-                            Log.e(TAG, "写audio  数据进缓存 "+sampleSize);
+                            Log.e(TAG, "写audio  数据进缓存 " + sampleSize);
                             audioCodec.queueInputBuffer(inputBufferIndex, 0, sampleSize, audioExtractor.getSampleTime(), 0);
                             audioExtractor.advance();
                         }
@@ -261,7 +261,7 @@ public class MediacodecActivity extends BaseActivity {
                                 outputBuffer.position(0);
                                 outputBuffer.get(mAudioOutTempBuf, 0, audioBufferInfo.size);
                                 outputBuffer.clear();
-                                Log.e(TAG, "取 缓存 "+audioBufferInfo.presentationTimeUs+ "    "+mAudioOutTempBuf.length);
+                                Log.e(TAG, "取 缓存 " + audioBufferInfo.presentationTimeUs + "    " + mAudioOutTempBuf.length);
                                 if (audioTrack != null)
                                     audioTrack.write(mAudioOutTempBuf, 0, audioBufferInfo.size);
                             }
@@ -281,19 +281,7 @@ public class MediacodecActivity extends BaseActivity {
                 audioTrack.release();
 
             } catch (Exception e) {
-                Log.e(TAG, "VideoEncodeThread --- "+e.getMessage());
-            }
-        }
-    }
-
-    //延迟渲染
-    private void sleepRender(MediaCodec.BufferInfo audioBufferInfo, long startMs) {
-        while (audioBufferInfo.presentationTimeUs / 1000 > System.currentTimeMillis() - startMs) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                break;
+                Log.e(TAG, "VideoEncodeThread --- " + e.getMessage());
             }
         }
     }
