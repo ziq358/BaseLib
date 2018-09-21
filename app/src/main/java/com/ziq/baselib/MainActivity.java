@@ -18,6 +18,7 @@ import com.ziq.baselib.Activity.MediacodecActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 import com.ziq.baselib.Activity.TestActivity;
 import com.ziq.baselib.Activity.muxer.MuxerActivity;
+import com.ziq.baselib.test.TestByteBufferActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,11 +58,13 @@ public class MainActivity extends BaseActivity {
         dataList.add(new DemoListItem("DEMO-数据转换", DataTranslateTestActivity.class));
         dataList.add(new DemoListItem("DEMO-数据加密", AesEncryptionActivity.class));
         dataList.add(new DemoListItem("DEMO-蓝牙", BluetoothActivity.class));
-        dataList.add(new DemoListItem("DEMO-test", TestActivity.class));
         dataList.add(new DemoListItem("DEMO-ImageLoader", ImageLoaderTestActivity.class));
         dataList.add(new DemoListItem("DEMO-录音", AudioRecordActivity.class));
         dataList.add(new DemoListItem("DEMO-解码MediaCodec", MediacodecActivity.class));
         dataList.add(new DemoListItem("DEMO-Muxer", MuxerActivity.class));
+        dataList.add(new DemoListItem("DEMO-test", TestActivity.class));
+        dataList.add(new DemoListItem("DEMO-test-bytebuffer", TestByteBufferActivity.class));
+
     }
 
     public static class DemoListItem {

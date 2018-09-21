@@ -63,7 +63,7 @@ publish {
     repoName = 'anZhuo'
     groupId = 'com.ziq.base'
     artifactId = 'base'
-    publishVersion = '1.0.1'
+    publishVersion = rootProject.ext.android["versionName"]
     desc = 'zaiqiang base lib for android develop'
     website = 'https://github.com/ziq358/BaseLib'
 }
