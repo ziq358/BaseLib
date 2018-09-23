@@ -34,7 +34,6 @@ public class DataTranslateTestActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
     }
 
     @OnClick({R.id.translate})

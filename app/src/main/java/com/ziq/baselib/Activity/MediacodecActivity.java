@@ -52,7 +52,6 @@ public class MediacodecActivity extends BaseActivity {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
 
         videoPath = Constants.getDataDirPath(this, "meidacodec") + File.separator + "shape_of_my_heart.mp4";
         BufferedInputStream in = new BufferedInputStream(getResources().openRawResource(R.raw.gao_bai_qi_qiu));

@@ -59,7 +59,6 @@ public class MuxerActivity extends BaseActivity implements Camera.PreviewCallbac
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ||

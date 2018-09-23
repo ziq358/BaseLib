@@ -11,13 +11,18 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.ziq.base.utils.LogUtil;
 
+import javax.inject.Inject;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * @author john.
  * @since 2018/5/21.
  * Des:
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<P extends IBasePresenter> extends AppCompatActivity {
 //    生命周期
 //    onCreate –> onContentChanged –> onStart –> onPostCreate –> onResume –> onPostResume –> onAttachedToWindow
 //    onPause -> onSaveInstanceState -> onStop 显示后台任务按钮时
@@ -48,17 +53,37 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private FragmentManager mFragmentManager;
 
+    private Unbinder mUnbinder;
+
+    @Inject
+    protected P mPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         LogUtil.isDebug = true;
         super.onCreate(savedInstanceState);
         setContentView(initLayoutResourceId());
+        mUnbinder = ButterKnife.bind(this);
         mFragmentManager = getSupportFragmentManager();
         initData(savedInstanceState);
     }
 
     public abstract @LayoutRes int initLayoutResourceId();
     public abstract void initData(@Nullable Bundle savedInstanceState);
+
+
+    @Override
+    protected void onDestroy() {
+        if(mUnbinder != null){
+            mUnbinder.unbind();
+            mUnbinder = null;
+        }
+        if(mPresenter != null){
+            mPresenter.destory();
+            mPresenter = null;
+        }
+        super.onDestroy();
+    }
 
     public void addFragment(@IdRes int contentId, Fragment fragment, String tag, boolean isAddToBackStack) {
         if (mFragmentManager != null) {

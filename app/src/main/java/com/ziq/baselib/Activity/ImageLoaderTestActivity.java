@@ -34,7 +34,6 @@ public class ImageLoaderTestActivity extends BaseActivity {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
 
         //初始化
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(this);

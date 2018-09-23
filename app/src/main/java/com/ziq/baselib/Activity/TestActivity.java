@@ -31,7 +31,6 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
 
         LogUtil.i("ziq", "系统版本: " + DeviceInfoUtil.getSystemVersion());
         LogUtil.i("ziq", "手机型号: " + DeviceInfoUtil.getSystemModel());

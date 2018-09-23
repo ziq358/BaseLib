@@ -7,8 +7,8 @@ android {
         applicationId "com.ziq.baselib"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 //        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
@@ -34,7 +34,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':base')
-    api 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+    }
     api 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

@@ -34,7 +34,6 @@ public class ShellCmdActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
         inputCmd.setText("echo root");
     }
 

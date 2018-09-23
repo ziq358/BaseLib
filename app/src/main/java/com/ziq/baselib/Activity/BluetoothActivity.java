@@ -140,7 +140,6 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         mBaseBluetoothManager = new BaseBluetoothManager(this);
         mBaseBluetoothManager.registerReceiver(this);

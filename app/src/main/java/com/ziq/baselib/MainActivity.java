@@ -39,8 +39,6 @@ public class MainActivity extends BaseActivity {
 
     List<DemoListItem> dataList = new ArrayList<>();
 
-    Unbinder unbinder;
-
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_main;
@@ -48,7 +46,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        unbinder = ButterKnife.bind(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         initData();
@@ -83,11 +80,4 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(unbinder != null){
-            unbinder.unbind();
-        }
-    }
 }

@@ -29,7 +29,6 @@ public class TestByteBufferActivity extends BaseActivity {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
         StringBuilder stringBuilder = new StringBuilder();
 
         ByteBuffer buffer = ByteBuffer.allocate(10);

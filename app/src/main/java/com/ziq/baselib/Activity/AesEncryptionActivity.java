@@ -56,7 +56,6 @@ public class AesEncryptionActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
     }
 
     @OnClick({R.id.btn_encrypt, R.id.btn_decrypt})

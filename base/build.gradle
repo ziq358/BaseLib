@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -50,11 +50,25 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api rootProject.ext.dependencies["appcompat-v7"]
     api rootProject.ext.dependencies["recyclerview-v7"]
-    api 'org.greenrobot:eventbus:3.0.0'
+    api 'org.greenrobot:eventbus:3.1.1'
     api ('org.bitbucket.b_c:jose4j:0.5.2'){
         exclude group:'org.slf4j', module: 'slf4j-api'
         transitive = true
     }
+
+    //由于 在lib中R 文件的 id 没有定， 所以 无法 通过注解绑定，也就不需要 annotationProcessor了，
+    // 在application项目中 只需要 annotationProcessor 引用 编译规则编译 就行了
+    api(rootProject.ext.dependencies["butterknife"]) {
+        exclude module: 'support-annotations'
+        exclude module: 'support-compat'
+    }
+
+    api rootProject.ext.dependencies["dagger2"]
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+
+//    api rootProject.ext.dependencies["dagger2-android"]
+//    api rootProject.ext.dependencies["dagger2-android-support"]
+//    annotationProcessor rootProject.ext.dependencies["dagger2-android-processor"]
 
 //    api 'com.itextpdf:itextg:5.5.10'
 }

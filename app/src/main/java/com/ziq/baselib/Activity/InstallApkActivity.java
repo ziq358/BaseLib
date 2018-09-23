@@ -33,7 +33,6 @@ public class InstallApkActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
         inputInstall.setText(FileUtil.getInnerSDCardAppPath(this) + "/app.apk");
         inputUninstall.setText(getPackageName());
     }

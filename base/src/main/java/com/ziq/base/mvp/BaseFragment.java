@@ -12,14 +12,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * @author wuyanqiang
  * @date 2018/9/21
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment<P extends IBasePresenter> extends Fragment {
 
     private View mContentView;
     private FragmentManager mChildFragmentManager;
+
+    private Unbinder mUnbinder;
+
+    @Inject
+    protected P mPresenter;
 
     @Nullable
     @Override
@@ -31,6 +41,7 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContentView = view;
+        mUnbinder = ButterKnife.bind(mContentView);
     }
 
     @Override
@@ -43,6 +54,19 @@ public abstract class BaseFragment extends Fragment {
     public abstract @LayoutRes int initLayoutResourceId();
     public abstract void initData(@NonNull View view, @Nullable Bundle savedInstanceState);
 
+
+    @Override
+    public void onDestroy() {
+        if(mUnbinder != null){
+            mUnbinder.unbind();
+            mUnbinder = null;
+        }
+        if(mPresenter != null){
+            mPresenter.destory();
+            mPresenter = null;
+        }
+        super.onDestroy();
+    }
 
     public void addFragment(@IdRes int contentId, Fragment fragment, String tag, boolean isAddToBackStack) {
         if (mChildFragmentManager != null) {

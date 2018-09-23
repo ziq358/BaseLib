@@ -50,7 +50,6 @@ public class AudioRecordActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
         audioRecorderManager = new AudioRecorderManager(this);
         audioRecorderManager.setCallback(this);
     }
