@@ -19,7 +19,6 @@ import butterknife.Unbinder;
 
 /**
  * @author wuyanqiang
- * @date 2018/9/21
  */
 public abstract class BaseFragment<P extends IBasePresenter> extends Fragment {
 
