@@ -40,7 +40,7 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContentView = view;
-        mUnbinder = ButterKnife.bind(mContentView);
+        mUnbinder = ButterKnife.bind(this, mContentView);
     }
 
     @Override

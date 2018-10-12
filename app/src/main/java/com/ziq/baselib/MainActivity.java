@@ -13,6 +13,7 @@ import com.ziq.baselib.Activity.AesEncryptionActivity;
 import com.ziq.baselib.Activity.AudioRecordActivity;
 import com.ziq.baselib.Activity.BluetoothActivity;
 import com.ziq.baselib.Activity.DataTranslateTestActivity;
+import com.ziq.baselib.Activity.FragmentTestActivity;
 import com.ziq.baselib.Activity.ImageLoaderTestActivity;
 import com.ziq.baselib.Activity.InstallApkActivity;
 import com.ziq.baselib.Activity.MediacodecActivity;
@@ -67,6 +68,7 @@ public class MainActivity extends BaseActivity {
         dataList.add(new DemoListItem("DEMO-Muxer", MuxerActivity.class));
         dataList.add(new DemoListItem("DEMO-test", TestActivity.class));
         dataList.add(new DemoListItem("DEMO-test-bytebuffer", TestByteBufferActivity.class));
+        dataList.add(new DemoListItem("FragmentTestActivity", FragmentTestActivity.class));
 
     }
 
