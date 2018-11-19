@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.event.BluetoothFoundEvent;
 import com.ziq.base.event.BluetoothSearchFinishedEvent;
 import com.ziq.base.event.BluetoothSearchStartEvent;
@@ -136,6 +137,11 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_blue_tooth;
+    }
+
+    @Override
+    public void initForInject(AppComponent appComponent) {
+
     }
 
     @Override

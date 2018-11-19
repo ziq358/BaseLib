@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.baselib.Constants;
 import com.ziq.baselib.R;
@@ -48,6 +49,11 @@ public class MediacodecActivity extends BaseActivity {
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_mediacodec;
+    }
+
+    @Override
+    public void initForInject(AppComponent appComponent) {
+
     }
 
     @Override

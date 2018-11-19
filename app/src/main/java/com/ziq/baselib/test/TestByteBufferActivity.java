@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
+import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.baselib.R;
 
@@ -25,6 +26,11 @@ public class TestByteBufferActivity extends BaseActivity {
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_test_byte_buffer;
+    }
+
+    @Override
+    public void initForInject(AppComponent appComponent) {
+
     }
 
     @Override

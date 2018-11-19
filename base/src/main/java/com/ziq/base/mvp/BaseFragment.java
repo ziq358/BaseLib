@@ -1,5 +1,7 @@
 package com.ziq.base.mvp;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -12,6 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+import com.ziq.base.dagger.App;
+import com.ziq.base.dagger.component.AppComponent;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -20,13 +26,13 @@ import butterknife.Unbinder;
 /**
  * @author wuyanqiang
  */
-public abstract class BaseFragment<P extends IBasePresenter> extends Fragment {
+public abstract class BaseFragment<P extends IBasePresenter> extends Fragment implements IBaseView{
 
-    private View mContentView;
-    private FragmentManager mChildFragmentManager;
+    protected View mContentView;
+    protected FragmentManager mChildFragmentManager;
 
     private Unbinder mUnbinder;
-
+    protected KProgressHUD pd;
     @Inject
     protected P mPresenter;
 
@@ -47,12 +53,64 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mChildFragmentManager = getChildFragmentManager();
+        Context context = getContext();
+        if(context != null){
+            Context applicationContext = context.getApplicationContext();
+            if(applicationContext instanceof App){
+                initForInject(((App) applicationContext).getAppComponent());
+            }
+        }
         initData(mContentView, savedInstanceState);
     }
 
     public abstract @LayoutRes int initLayoutResourceId();
+    public abstract void initForInject(AppComponent appComponent);
     public abstract void initData(@NonNull View view, @Nullable Bundle savedInstanceState);
 
+
+    @Override
+    public void showLoading() {
+        initLoadingDialog();
+        pd.setLabel("正在加载中...");
+        if (!pd.isShowing()) {
+            pd.show();
+        }
+    }
+
+    @Override
+    public void showLoading(String msg) {
+        initLoadingDialog();
+        pd.setLabel(msg);
+        if (!pd.isShowing()) {
+            pd.show();
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        if (pd != null) {
+            pd.dismiss();
+        }
+    }
+
+    private void initLoadingDialog() {
+        Context context = getContext();
+        if (pd == null && context != null) {
+            pd = KProgressHUD.create(context)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("正在加载中...")
+                    .setCancellable(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            onCancelProgress();
+                        }
+                    });
+        }
+    }
+
+    public void onCancelProgress() {
+
+    }
 
     @Override
     public void onDestroy() {
@@ -61,7 +119,7 @@ public abstract class BaseFragment<P extends IBasePresenter> extends Fragment {
             mUnbinder = null;
         }
         if(mPresenter != null){
-            mPresenter.destory();
+            mPresenter.destroy();
             mPresenter = null;
         }
         super.onDestroy();

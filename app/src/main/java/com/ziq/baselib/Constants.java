@@ -12,6 +12,9 @@ import java.io.File;
 
 public class Constants {
 
+    public static final String BASE_URL = "http://api.m.panda.tv/";
+
+
     public static String getDataDirPath(Context context, String dir) {
         String path = context.getApplicationContext().getFilesDir().getAbsolutePath() + File.separator + dir;
         if (FileUtil.isExistSDCard()) {

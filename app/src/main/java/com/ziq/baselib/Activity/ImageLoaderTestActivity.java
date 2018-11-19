@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.baselib.R;
 import com.ziq.baselib.adapter.ImageLoaderRecycleViewAdapter;
@@ -30,6 +31,11 @@ public class ImageLoaderTestActivity extends BaseActivity {
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_image_loader;
+    }
+
+    @Override
+    public void initForInject(AppComponent appComponent) {
+
     }
 
     @Override

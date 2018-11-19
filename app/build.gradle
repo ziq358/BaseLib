@@ -34,8 +34,11 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':base')
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
     }
     api 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+
 }

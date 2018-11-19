@@ -1,5 +1,7 @@
 package com.ziq.base.mvp;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -9,6 +11,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+import com.ziq.base.dagger.App;
+import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.utils.LogUtil;
 
 import javax.inject.Inject;
@@ -22,7 +27,7 @@ import butterknife.Unbinder;
  * Des:
  */
 
-public abstract class BaseActivity<P extends IBasePresenter> extends AppCompatActivity {
+public abstract class BaseActivity<P extends IBasePresenter> extends AppCompatActivity implements IBaseView{
 //    生命周期
 //    onCreate –> onContentChanged –> onStart –> onPostCreate –> onResume –> onPostResume –> onAttachedToWindow
 //    onPause -> onSaveInstanceState -> onStop 显示后台任务按钮时
@@ -51,9 +56,9 @@ public abstract class BaseActivity<P extends IBasePresenter> extends AppCompatAc
 //          onConfigurationChanged -> onRestart -> onStart ->  onResume -> onPostResume ->
 //              onStop -> onDestroy -> onDetachedFromWindow
 
-    private FragmentManager mFragmentManager;
-
+    protected FragmentManager mFragmentManager;
     private Unbinder mUnbinder;
+    protected KProgressHUD pd;
 
     @Inject
     protected P mPresenter;
@@ -65,12 +70,60 @@ public abstract class BaseActivity<P extends IBasePresenter> extends AppCompatAc
         setContentView(initLayoutResourceId());
         mUnbinder = ButterKnife.bind(this);
         mFragmentManager = getSupportFragmentManager();
+        Context applicationContext = getApplicationContext();
+        if(applicationContext instanceof App){
+            initForInject(((App) applicationContext).getAppComponent());
+        }
         initData(savedInstanceState);
     }
 
     public abstract @LayoutRes int initLayoutResourceId();
+    public abstract void initForInject(AppComponent appComponent);
     public abstract void initData(@Nullable Bundle savedInstanceState);
 
+
+    @Override
+    public void showLoading() {
+        initLoadingDialog();
+        pd.setLabel("正在加载中...");
+        if (!pd.isShowing()) {
+            pd.show();
+        }
+    }
+
+    @Override
+    public void showLoading(String msg) {
+        initLoadingDialog();
+        pd.setLabel(msg);
+        if (!pd.isShowing()) {
+            pd.show();
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        if (pd != null) {
+            pd.dismiss();
+        }
+    }
+
+    private void initLoadingDialog() {
+        if (pd == null) {
+            pd = KProgressHUD.create(this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("正在加载中...")
+                    .setCancellable(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            onCancelProgress();
+                        }
+                    });
+        }
+    }
+
+    public void onCancelProgress() {
+
+    }
 
     @Override
     protected void onDestroy() {
@@ -79,7 +132,7 @@ public abstract class BaseActivity<P extends IBasePresenter> extends AppCompatAc
             mUnbinder = null;
         }
         if(mPresenter != null){
-            mPresenter.destory();
+            mPresenter.destroy();
             mPresenter = null;
         }
         super.onDestroy();

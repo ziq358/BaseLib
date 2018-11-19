@@ -23,5 +23,7 @@ package com.ziq.base.mvp;
  * @since 2018-04-28
  */
 public interface IBaseView {
-
+    void showLoading();
+    void hideLoading();
+    void showLoading(String msg);
 }

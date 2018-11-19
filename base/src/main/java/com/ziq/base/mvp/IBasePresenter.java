@@ -23,5 +23,5 @@ package com.ziq.base.mvp;
  * @since 2018-04-28
  */
 public interface IBasePresenter {
-    void destory();
+    void destroy();
 }

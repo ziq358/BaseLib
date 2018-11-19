@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 
+import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.FileUtil;
 import com.ziq.base.utils.IntentUtil;
@@ -29,6 +30,11 @@ public class InstallApkActivity extends BaseActivity implements View.OnClickList
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_install_apk;
+    }
+
+    @Override
+    public void initForInject(AppComponent appComponent) {
+
     }
 
     @Override

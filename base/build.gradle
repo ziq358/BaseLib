@@ -65,12 +65,25 @@ dependencies {
 
     api rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-
 //    api rootProject.ext.dependencies["dagger2-android"]
 //    api rootProject.ext.dependencies["dagger2-android-support"]
 //    annotationProcessor rootProject.ext.dependencies["dagger2-android-processor"]
 
 //    api 'com.itextpdf:itextg:5.5.10'
+
+    api rootProject.ext.dependencies["retrofit"]
+    api rootProject.ext.dependencies["rxjava2"]// 必要rxjava2依赖
+    api rootProject.ext.dependencies["rxandroid"]// 必要rxandrroid依赖，切线程时需要用到
+    api rootProject.ext.dependencies["adapter-rxjava2"] // 必要依赖，和Rxjava结合必须用到，下面会提到
+    api rootProject.ext.dependencies["converter-gson"]// 必要依赖，解析json字符所用
+    api rootProject.ext.dependencies["logging-interceptor"] //非必要依赖， log依赖，如果需要打印OkHttpLog需要添加
+
+    api rootProject.ext.dependencies["baseRecyclerViewAdapterHelper"]
+    api (rootProject.ext.dependencies["glide"]){
+        exclude group: "com.android.support"
+    }
+    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+    api rootProject.ext.dependencies["kprogresshud"]
 }
 
 publish {

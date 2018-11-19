@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.encryption.AesEncryptionUtil;
 import com.ziq.baselib.R;
@@ -52,6 +53,11 @@ public class AesEncryptionActivity extends BaseActivity implements View.OnClickL
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_aes_encryption;
+    }
+
+    @Override
+    public void initForInject(AppComponent appComponent) {
+
     }
 
     @Override

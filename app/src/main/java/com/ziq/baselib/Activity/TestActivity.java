@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.DeviceInfoUtil;
 import com.ziq.base.utils.LogUtil;
@@ -27,6 +28,11 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_test;
+    }
+
+    @Override
+    public void initForInject(AppComponent appComponent) {
+
     }
 
     @Override

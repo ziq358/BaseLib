@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.LogUtil;
 import com.ziq.base.utils.NetworkUtil;
@@ -17,6 +18,7 @@ import com.ziq.baselib.Activity.FragmentTestActivity;
 import com.ziq.baselib.Activity.ImageLoaderTestActivity;
 import com.ziq.baselib.Activity.InstallApkActivity;
 import com.ziq.baselib.Activity.MediacodecActivity;
+import com.ziq.baselib.Activity.RetrofitActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 import com.ziq.baselib.Activity.TestActivity;
 import com.ziq.baselib.Activity.muxer.MuxerActivity;
@@ -46,6 +48,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    public void initForInject(AppComponent appComponent) {
+
+    }
+
+    @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -69,6 +76,7 @@ public class MainActivity extends BaseActivity {
         dataList.add(new DemoListItem("DEMO-test", TestActivity.class));
         dataList.add(new DemoListItem("DEMO-test-bytebuffer", TestByteBufferActivity.class));
         dataList.add(new DemoListItem("FragmentTestActivity", FragmentTestActivity.class));
+        dataList.add(new DemoListItem("测试retrofit", RetrofitActivity.class));
 
     }
 

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
+import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.mvp.BaseFragment;
 import com.ziq.baselib.R;
@@ -24,6 +25,11 @@ public class FragmentTestActivity extends BaseActivity {
     }
 
     @Override
+    public void initForInject(AppComponent appComponent) {
+
+    }
+
+    @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         addFragment(R.id.content, new MyFragment(), "ff", false);
     }
@@ -37,6 +43,11 @@ public class FragmentTestActivity extends BaseActivity {
         @Override
         public int initLayoutResourceId() {
             return R.layout.activity_fragment_ff;
+        }
+
+        @Override
+        public void initForInject(AppComponent appComponent) {
+
         }
 
         @Override

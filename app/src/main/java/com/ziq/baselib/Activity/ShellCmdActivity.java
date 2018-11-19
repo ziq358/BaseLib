@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.ShellUtil;
 import com.ziq.baselib.R;
@@ -30,6 +31,11 @@ public class ShellCmdActivity extends BaseActivity implements View.OnClickListen
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_shell_cmd;
+    }
+
+    @Override
+    public void initForInject(AppComponent appComponent) {
+
     }
 
     @Override
