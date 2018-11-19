@@ -27,7 +27,7 @@ import butterknife.Unbinder;
  * Des:
  */
 
-public abstract class BaseActivity<P extends IBasePresenter> extends AppCompatActivity implements IBaseView{
+public abstract class BaseActivity<P extends IBasePresenter> extends BaseRxActivity implements IBaseView{
 //    生命周期
 //    onCreate –> onContentChanged –> onStart –> onPostCreate –> onResume –> onPostResume –> onAttachedToWindow
 //    onPause -> onSaveInstanceState -> onStop 显示后台任务按钮时

@@ -2,6 +2,7 @@ package com.ziq.baselib.presenter;
 
 import android.util.Log;
 
+import com.ziq.base.mvp.BasePresenter;
 import com.ziq.base.mvp.IBasePresenter;
 import com.ziq.base.mvp.IBaseView;
 import com.ziq.base.utils.RetrofitUtil;
@@ -9,10 +10,14 @@ import com.ziq.baselib.model.PandaTvDataBean;
 import com.ziq.baselib.model.VideoHttpResult;
 import com.ziq.baselib.service.VideoService;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -22,13 +27,42 @@ import io.reactivex.schedulers.Schedulers;
  * author: wuyanqiang
  * 2018/11/19
  */
-public class RetrofitActivityPresenter implements IBasePresenter {
+public class RetrofitActivityPresenter extends BasePresenter {
 
     @Inject
     RetrofitActivityPresenter.View mView;
 
     @Inject
     public RetrofitActivityPresenter() {
+    }
+
+    public void testLifecycle(){
+        Log.e("ziq", "getVideo: "+getLifecycleTransformer());
+        Observable.interval(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(getLifecycleTransformer())
+                .subscribe(new Observer<Long>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        Log.e("ziq", "onSubscribe: ");
+                    }
+
+                    @Override
+                    public void onNext(@NonNull Long aLong) {
+                        Log.e("ziq", String.valueOf(aLong));
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("ziq", "onError: ");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.e("ziq", "onComplete: ");
+                    }
+                });
     }
 
     public void getVideo(){
@@ -52,6 +86,7 @@ public class RetrofitActivityPresenter implements IBasePresenter {
                         mView.hideLoading();
                     }
                 })
+                .compose(getLifecycleTransformer())
                 .subscribe(new Observer<VideoHttpResult<PandaTvDataBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {

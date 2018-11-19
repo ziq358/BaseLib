@@ -26,7 +26,7 @@ import butterknife.Unbinder;
 /**
  * @author wuyanqiang
  */
-public abstract class BaseFragment<P extends IBasePresenter> extends Fragment implements IBaseView{
+public abstract class BaseFragment<P extends IBasePresenter> extends BaseRxFragment implements IBaseView{
 
     protected View mContentView;
     protected FragmentManager mChildFragmentManager;

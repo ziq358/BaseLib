@@ -45,7 +45,6 @@ ext {
             "butterknife"                   : "com.jakewharton:butterknife:${version["butterknifeSdkVersion"]}",
             "butterknife-compiler"          : "com.jakewharton:butterknife-compiler:${version["butterknifeSdkVersion"]}",
             "retrofit"                      : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
-            "retrofit"                      : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
             "rxjava2"                       : "io.reactivex.rxjava2:rxjava:${version["rxjava2SdkVersion"]}",
             "rxandroid"                     : "io.reactivex.rxjava2:rxandroid:${version["rxandroidSdkVersion"]}",
             "adapter-rxjava2"               : "com.squareup.retrofit2:adapter-rxjava2:${version["adapterRxjava2SdkVersion"]}",
@@ -55,6 +54,9 @@ ext {
             "glide-compiler"                : "com.github.bumptech.glide:compiler:${version["glideSdkVersion"]}",
             "baseRecyclerViewAdapterHelper" : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30",
             "kprogresshud"                  : "com.kaopiz:kprogresshud:1.2.0",
+            "rxlifecycle"                   : "com.trello.rxlifecycle2:rxlifecycle:2.2.2",
+            "rxlifecycle-android"           : "com.trello.rxlifecycle2:rxlifecycle-android:2.2.2",
+            "rxlifecycle-components"        : "com.trello.rxlifecycle2:rxlifecycle-components:2.2.2",
     ]
 
 
