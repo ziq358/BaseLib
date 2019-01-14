@@ -21,6 +21,7 @@ import com.ziq.baselib.Activity.MediacodecActivity;
 import com.ziq.baselib.Activity.RetrofitActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 import com.ziq.baselib.Activity.TestActivity;
+import com.ziq.baselib.Activity.UIBlockCheckActivity;
 import com.ziq.baselib.Activity.muxer.MuxerActivity;
 import com.ziq.baselib.test.TestByteBufferActivity;
 
@@ -77,6 +78,7 @@ public class MainActivity extends BaseActivity {
         dataList.add(new DemoListItem("DEMO-test-bytebuffer", TestByteBufferActivity.class));
         dataList.add(new DemoListItem("FragmentTestActivity", FragmentTestActivity.class));
         dataList.add(new DemoListItem("测试retrofit", RetrofitActivity.class));
+        dataList.add(new DemoListItem("卡顿检测", UIBlockCheckActivity.class));
 
     }
 
