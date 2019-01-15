@@ -24,8 +24,6 @@ public class NetSpeedUtil {
 
     public NetSpeedUtil(Context context) {
         mContext = context;
-        preDownLoadRxBytes = getRcvTraffic(getUid());
-        preUpLoadRxBytes = getSndTraffic(getUid());
     }
 
     /**
@@ -48,6 +46,9 @@ public class NetSpeedUtil {
      */
     public double getIntervalToTalRxKB() {
         long curBytes = getNetworkRxBytes();
+        if(preDownLoadRxBytes == 0){
+            preDownLoadRxBytes = curBytes;
+        }
         long bytes = curBytes - preDownLoadRxBytes;
         preDownLoadRxBytes = curBytes;
         double kb = (double)bytes / (double)1024;
@@ -60,6 +61,9 @@ public class NetSpeedUtil {
      */
     public double getIntervalToTalTxKB() {
         long curBytes = getNetworkTxBytes();
+        if(preUpLoadRxBytes == 0){
+            preUpLoadRxBytes = curBytes;
+        }
         long bytes = curBytes - preUpLoadRxBytes;
         preUpLoadRxBytes = curBytes;
         double kb = (double)bytes / (double)1024;
@@ -72,6 +76,9 @@ public class NetSpeedUtil {
      */
     public double getIntervalRxKB(int uid) {
         long curBytes = getRcvTraffic(uid);
+        if(preDownLoadRxBytes == 0){
+            preDownLoadRxBytes = curBytes;
+        }
         long bytes = curBytes - preDownLoadRxBytes;
         preDownLoadRxBytes = curBytes;
         double kb = (double)bytes / (double)1024;
@@ -84,6 +91,9 @@ public class NetSpeedUtil {
      */
     public double getIntervalTxKB(int uid) {
         long curBytes = getSndTraffic(uid);
+        if(preUpLoadRxBytes == 0){
+            preUpLoadRxBytes = curBytes;
+        }
         long bytes = curBytes - preUpLoadRxBytes;
         preUpLoadRxBytes = curBytes;
         double kb = (double)bytes / (double)1024;
