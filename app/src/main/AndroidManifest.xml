@@ -41,6 +41,7 @@
         <activity android:name=".Activity.AesEncryptionActivity"/>
         <activity android:name=".Activity.BluetoothActivity"/>
         <activity android:name=".Activity.TestActivity"/>
+        <activity android:name=".Activity.NetSpeedActivity"/>
         <activity android:name=".Activity.FragmentTestActivity"/>
         <activity android:name=".Activity.RetrofitActivity"/>
         <activity android:name=".test.TestByteBufferActivity"/>

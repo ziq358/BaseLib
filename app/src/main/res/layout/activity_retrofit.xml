@@ -18,4 +18,17 @@
         android:text="test_lifecycle 看log"
         />
 
+    <Button
+        android:id="@+id/btn_download_speed"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="下载速度"
+        />
+    <Button
+        android:id="@+id/btn_upload_speed"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="上传速度"
+        />
+
 </LinearLayout>

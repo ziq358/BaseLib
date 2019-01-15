@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application>
         <!-- 适配 7.0 exported:要求必须为false，为true则会报安全异常。grantUriPermissions:true，表示授予 URI 临时访问权限-->
         <provider
@@ -25,5 +27,6 @@
                 android:resource="@xml/filepaths"/>
         </provider>
 
+        <service android:name=".service.NetSpeedService"/>
     </application>
 </manifest>
