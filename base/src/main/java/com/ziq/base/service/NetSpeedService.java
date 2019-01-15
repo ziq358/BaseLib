@@ -41,7 +41,6 @@ public class NetSpeedService extends Service {
     WindowManager windowManager;
     WindowManager.LayoutParams wmParams;
     Handler mHandler;
-    Handler mTimerHandler;
     NetSpeedUtil netSpeedUtil;
     int uid;
 
@@ -62,7 +61,6 @@ public class NetSpeedService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mTimerHandler = new Handler();
         mHandler = new NetSpeedHandler(this);
         netSpeedUtil = new NetSpeedUtil(getApplicationContext());
         uid = netSpeedUtil.getUid();
@@ -180,11 +178,11 @@ public class NetSpeedService extends Service {
                 @Override
                 public void run() {
                     mHandler.sendEmptyMessage(1);
-                    mTimerHandler.postDelayed(timerRunnable, 1000);
+                    mHandler.postDelayed(timerRunnable, 1000);
                 }
             };
         }
-        mTimerHandler.post(timerRunnable);
+        mHandler.post(timerRunnable);
     }
 
 
