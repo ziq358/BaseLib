@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 /**
  * @author wuyanqiang
- * @date 2019/1/15
+ * 2019/1/15
  */
 public class NetSpeedUtil {
     private static final String LOG_TAG = "NetSpeedUtil";

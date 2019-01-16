@@ -31,7 +31,7 @@ import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
 
 /**
  * @author wuyanqiang
- * @date 2019/1/15
+ * 2019/1/15
  */
 public class NetSpeedService extends Service {
 
