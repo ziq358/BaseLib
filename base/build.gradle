@@ -69,7 +69,7 @@ dependencies {
 //    api rootProject.ext.dependencies["dagger2-android-support"]
 //    annotationProcessor rootProject.ext.dependencies["dagger2-android-processor"]
 
-//    api 'com.itextpdf:itextg:5.5.10'
+    api 'com.itextpdf:itextg:5.5.10'
 
     api rootProject.ext.dependencies["retrofit"]
     api rootProject.ext.dependencies["rxjava2"]// 必要rxjava2依赖
