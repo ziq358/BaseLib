@@ -93,10 +93,11 @@ public class NetSpeedService extends Service {
             wmParams = new WindowManager.LayoutParams();
             if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1 && Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT){
                 wmParams.type =  WindowManager.LayoutParams.TYPE_TOAST;
+            }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                wmParams.type =  WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
             }else{
                 wmParams.type =  WindowManager.LayoutParams.TYPE_PHONE;
             }
-            wmParams.type =  WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
             wmParams.flags = FLAG_NOT_TOUCH_MODAL|FLAG_NOT_FOCUSABLE|FLAG_LAYOUT_NO_LIMITS;
 
             wmParams.gravity = Gravity.LEFT | Gravity.TOP;
