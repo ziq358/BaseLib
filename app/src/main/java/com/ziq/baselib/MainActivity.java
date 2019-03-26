@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity {
     public void initData(@Nullable Bundle savedInstanceState) {
 
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         initData();
         mainRecycleViewAdapter = new MainRecycleViewAdapter(this, dataList);

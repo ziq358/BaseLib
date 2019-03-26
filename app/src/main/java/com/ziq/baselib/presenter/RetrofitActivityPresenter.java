@@ -2,6 +2,7 @@ package com.ziq.baselib.presenter;
 
 import android.util.Log;
 
+import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.ziq.base.mvp.BasePresenter;
 import com.ziq.base.mvp.IBasePresenter;
 import com.ziq.base.mvp.IBaseView;
@@ -37,11 +38,11 @@ public class RetrofitActivityPresenter extends BasePresenter {
     }
 
     public void testLifecycle(){
-        Log.e("ziq", "getVideo: "+getLifecycleTransformer());
+        Log.e("ziq", "getVideo: "+getLifecycleProvider());
         Observable.interval(1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .compose(getLifecycleTransformer())
+                .compose(getLifecycleProvider().bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Observer<Long>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -86,7 +87,7 @@ public class RetrofitActivityPresenter extends BasePresenter {
                         mView.hideLoading();
                     }
                 })
-                .compose(getLifecycleTransformer())
+                .compose(getLifecycleProvider().bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Observer<VideoHttpResult<PandaTvDataBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {

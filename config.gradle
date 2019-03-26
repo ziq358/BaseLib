@@ -28,7 +28,6 @@ ext {
             //support
             "appcompat-v7"                  : "androidx.appcompat:appcompat:1.0.0-beta01",
             "recyclerview-v7"               : "androidx.recyclerview:recyclerview:1.0.0-beta01",
-            "constraint-layout"             : "com.android.support.constraint:constraint-layout:1.1.2",
 
             "dagger2"                       : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",
             "dagger2-compiler"              : "com.google.dagger:dagger-compiler:${version["dagger2SdkVersion"]}",

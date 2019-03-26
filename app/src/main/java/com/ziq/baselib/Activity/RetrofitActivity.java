@@ -2,13 +2,12 @@ package com.ziq.baselib.Activity;
 
 import android.app.Application;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.ziq.base.dagger.component.AppComponent;
-import com.ziq.base.dagger.module.RxLifecycleModule;
+import com.ziq.base.dagger.module.LifecycleProviderModule;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.NetSpeedUtil;
 import com.ziq.baselib.R;
@@ -18,6 +17,7 @@ import com.ziq.baselib.presenter.RetrofitActivityPresenter;
 
 import javax.inject.Inject;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -45,7 +45,7 @@ public class RetrofitActivity extends BaseActivity<RetrofitActivityPresenter> im
     public void initForInject(AppComponent appComponent) {
         DaggerRetrofitComponent
                 .builder()
-                .rxLifecycleModule(new RxLifecycleModule(bindToLifecycle()))
+                .lifecycleProviderModule(new LifecycleProviderModule(this))
                 .retrofitModule(new RetrofitModule(this))
                 .appComponent(appComponent)
                 .build()
