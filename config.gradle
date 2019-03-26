@@ -4,8 +4,8 @@ ext {
             buildToolsVersion: "28.0.3",
             minSdkVersion    : 19,
             targetSdkVersion : 28,
-            versionCode      : 312,
-            versionName      : "3.1.2"
+            versionCode      : 313,
+            versionName      : "3.1.3"
     ]
 
     version = [
@@ -14,7 +14,7 @@ ext {
             butterknifeSdkVersion             : "8.8.1",
             rxlifecycleSdkVersion             : "1.0",
             rxlifecycle2SdkVersion            : "2.2.1",
-            dagger2SdkVersion                 : "2.17",
+            dagger2SdkVersion                 : "2.21",
             espressoSdkVersion                : "3.0.1",
             canarySdkVersion                  : "1.5.4",
             retrofitSdkVersion                : "2.5.0",
