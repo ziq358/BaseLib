@@ -2,16 +2,12 @@ package com.ziq.base.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Rect;
-import android.support.annotation.NonNull;
-import android.support.v4.util.ArrayMap;
+
+import androidx.annotation.NonNull;
+
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SoftKeyboardUtil {
 

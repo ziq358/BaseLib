@@ -1,7 +1,7 @@
 package com.ziq.baselib.Activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 
 import com.ziq.base.dagger.component.AppComponent;
@@ -12,7 +12,6 @@ import com.ziq.baselib.R;
 import com.ziq.baselib.widget.TranslateLoadingView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

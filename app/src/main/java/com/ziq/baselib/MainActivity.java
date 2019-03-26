@@ -2,15 +2,13 @@ package com.ziq.baselib;
 
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ziq.base.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.LogUtil;
-import com.ziq.base.utils.NetSpeedUtil;
 import com.ziq.base.utils.NetworkUtil;
 import com.ziq.baselib.Activity.AesEncryptionActivity;
 import com.ziq.baselib.Activity.AudioRecordActivity;
@@ -32,8 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class MainActivity extends BaseActivity {
 

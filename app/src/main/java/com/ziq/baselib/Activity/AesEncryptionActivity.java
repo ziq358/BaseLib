@@ -1,7 +1,7 @@
 package com.ziq.baselib.Activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +16,6 @@ import com.ziq.base.utils.encryption.AesEncryptionUtil;
 import com.ziq.baselib.R;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

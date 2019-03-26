@@ -1,7 +1,7 @@
 package com.ziq.base.recycleView.adapter;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
+import androidx.annotation.LayoutRes;
 
 import com.ziq.base.recycleView.BaseAdapter;
 import com.ziq.base.recycleView.BaseViewHolder;

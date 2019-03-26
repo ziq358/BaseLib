@@ -15,7 +15,7 @@ import com.ziq.baselib.R;
  * @since 2018/5/3.
  * Des:
  */
-public class TranslateLoadingView extends android.support.v7.widget.AppCompatImageView {
+public class TranslateLoadingView extends androidx.appcompat.widget.AppCompatImageView {
 
     private UIHandler mHandler;
 

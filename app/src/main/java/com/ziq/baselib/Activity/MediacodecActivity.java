@@ -7,7 +7,7 @@ import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

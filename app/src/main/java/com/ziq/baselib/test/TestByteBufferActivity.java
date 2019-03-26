@@ -1,7 +1,7 @@
 package com.ziq.baselib.test;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.widget.TextView;
 
 import com.ziq.base.dagger.component.AppComponent;
@@ -12,7 +12,6 @@ import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @author wuyanqiang
