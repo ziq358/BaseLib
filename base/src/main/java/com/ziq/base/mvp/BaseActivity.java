@@ -9,11 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.ziq.base.dagger.App;
-import com.ziq.base.dagger.component.AppComponent;
+import com.ziq.base.mvp.dagger.App;
+import com.ziq.base.mvp.dagger.component.AppComponent;
 import com.ziq.base.utils.LogUtil;
 
 import javax.inject.Inject;

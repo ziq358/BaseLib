@@ -1,4 +1,4 @@
-package com.ziq.base.dagger.component;
+package com.ziq.base.mvp.dagger.component;
 
 import android.app.Application;
 

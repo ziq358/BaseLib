@@ -3,13 +3,10 @@ package com.ziq.base.mvp;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.widget.Toast;
 
-import com.ziq.base.dagger.App;
-import com.ziq.base.dagger.component.AppComponent;
-import com.ziq.base.dagger.component.DaggerAppComponent;
-import com.ziq.base.utils.performance.BlockDetectByChoreographer;
-import com.ziq.base.utils.performance.UIBlockMonitor;
+import com.ziq.base.mvp.dagger.App;
+import com.ziq.base.mvp.dagger.component.AppComponent;
+import com.ziq.base.mvp.dagger.component.DaggerAppComponent;
 
 /**
  * author: wuyanqiang

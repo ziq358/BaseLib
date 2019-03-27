@@ -1,7 +1,7 @@
 package com.ziq.baselib.dagger.component;
 
-import com.ziq.base.dagger.component.AppComponent;
-import com.ziq.base.dagger.module.LifecycleProviderModule;
+import com.ziq.base.mvp.dagger.component.AppComponent;
+import com.ziq.base.mvp.dagger.module.LifecycleProviderModule;
 import com.ziq.baselib.Activity.RetrofitActivity;
 import com.ziq.baselib.dagger.module.RetrofitModule;
 

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import android.widget.TextView;
 
-import com.ziq.base.dagger.component.AppComponent;
+import com.ziq.base.mvp.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.baselib.R;
 

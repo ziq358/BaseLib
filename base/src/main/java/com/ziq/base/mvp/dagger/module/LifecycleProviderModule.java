@@ -1,8 +1,6 @@
-package com.ziq.base.dagger.module;
+package com.ziq.base.mvp.dagger.module;
 
 import com.trello.rxlifecycle2.LifecycleProvider;
-import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import dagger.Module;
 import dagger.Provides;

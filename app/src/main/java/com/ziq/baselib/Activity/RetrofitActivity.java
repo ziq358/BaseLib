@@ -6,8 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.ziq.base.dagger.component.AppComponent;
-import com.ziq.base.dagger.module.LifecycleProviderModule;
+import com.ziq.base.mvp.dagger.component.AppComponent;
+import com.ziq.base.mvp.dagger.module.LifecycleProviderModule;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.NetSpeedUtil;
 import com.ziq.baselib.R;

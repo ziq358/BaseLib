@@ -10,7 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ziq.base.dagger.component.AppComponent;
+import com.ziq.base.mvp.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.encryption.AesEncryptionUtil;
 import com.ziq.baselib.R;

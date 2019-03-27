@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 
-import com.ziq.base.dagger.component.AppComponent;
+import com.ziq.base.mvp.dagger.component.AppComponent;
 import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.FileUtil;
 import com.ziq.base.utils.IntentUtil;

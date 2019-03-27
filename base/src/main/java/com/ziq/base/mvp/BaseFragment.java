@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.ziq.base.dagger.App;
-import com.ziq.base.dagger.component.AppComponent;
+import com.ziq.base.mvp.dagger.App;
+import com.ziq.base.mvp.dagger.component.AppComponent;
 
 import javax.inject.Inject;
 

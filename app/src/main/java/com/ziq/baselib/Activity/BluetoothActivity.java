@@ -14,7 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ziq.base.dagger.component.AppComponent;
+import com.ziq.base.mvp.dagger.component.AppComponent;
 import com.ziq.base.event.BluetoothFoundEvent;
 import com.ziq.base.event.BluetoothSearchFinishedEvent;
 import com.ziq.base.event.BluetoothSearchStartEvent;
