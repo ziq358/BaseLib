@@ -2,6 +2,7 @@ package com.ziq.base.mvp;
 
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.ziq.base.utils.LifecycleUtil;
 
 import javax.inject.Inject;
 
@@ -13,10 +14,7 @@ public abstract class BasePresenter implements IBasePresenter{
     @Inject
     protected LifecycleProvider lifecycleProvider;
 
-    public LifecycleProvider getLifecycleProvider() {
-        if(lifecycleProvider == null){
-            throw new RuntimeException("LifecycleProvider 为空");
-        }
-        return lifecycleProvider;
+    public <T> LifecycleTransformer<T> getDestroyLifecycleTransformer() {
+        return LifecycleUtil.bindToDestroy(lifecycleProvider);
     }
 }

@@ -20,7 +20,7 @@ import io.reactivex.subjects.BehaviorSubject;
  * author: wuyanqiang
  * 2018/11/19
  */
-public class BaseRxActivity extends AppCompatActivity implements LifecycleProvider<ActivityEvent> {
+public class BaseRxActivity extends AppCompatActivity implements ActivityLifecycleProvider {
 
     private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
 

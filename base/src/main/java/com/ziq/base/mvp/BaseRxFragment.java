@@ -20,7 +20,7 @@ import io.reactivex.subjects.BehaviorSubject;
  * author: wuyanqiang
  * 2018/11/19
  */
-public class BaseRxFragment extends Fragment implements LifecycleProvider<FragmentEvent> {
+public class BaseRxFragment extends Fragment implements FragmentLifecycleProvider {
 
     private final BehaviorSubject<FragmentEvent> lifecycleSubject = BehaviorSubject.create();
 

@@ -15,8 +15,8 @@ public class LifecycleProviderModule {
 
     private LifecycleProvider lifecycleProvider;
 
-    public LifecycleProviderModule(LifecycleProvider lifecycleTransformer) {
-        this.lifecycleProvider = lifecycleTransformer;
+    public LifecycleProviderModule(LifecycleProvider lifecycleProvider) {
+        this.lifecycleProvider = lifecycleProvider;
     }
 
     @Provides

@@ -38,11 +38,11 @@ public class RetrofitActivityPresenter extends BasePresenter {
     }
 
     public void testLifecycle(){
-        Log.e("ziq", "getVideo: "+getLifecycleProvider());
+        Log.e("ziq", "getVideo: "+getDestroyLifecycleTransformer());
         Observable.interval(1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .compose(getLifecycleProvider().bindUntilEvent(ActivityEvent.DESTROY))
+                .compose(getDestroyLifecycleTransformer())
                 .subscribe(new Observer<Long>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -87,7 +87,7 @@ public class RetrofitActivityPresenter extends BasePresenter {
                         mView.hideLoading();
                     }
                 })
-                .compose(getLifecycleProvider().bindUntilEvent(ActivityEvent.DESTROY))
+                .compose(getDestroyLifecycleTransformer())
                 .subscribe(new Observer<VideoHttpResult<PandaTvDataBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
