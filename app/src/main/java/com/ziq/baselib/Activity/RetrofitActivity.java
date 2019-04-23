@@ -6,9 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.dagger.module.LifecycleProviderModule;
-import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.mvp.MvpBaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
+import com.ziq.base.baserx.dagger.module.LifecycleProviderModule;
 import com.ziq.base.utils.NetSpeedUtil;
 import com.ziq.baselib.R;
 import com.ziq.baselib.dagger.component.DaggerRetrofitComponent;
@@ -25,7 +25,7 @@ import butterknife.OnClick;
  * @author wuyanqiang
  * @date 2018/10/12
  */
-public class RetrofitActivity extends BaseActivity<RetrofitActivityPresenter> implements RetrofitActivityPresenter.View{
+public class RetrofitActivity extends MvpBaseActivity<RetrofitActivityPresenter> implements RetrofitActivityPresenter.View{
 
     @BindView(R.id.btn_get_video)
     Button mBtn;

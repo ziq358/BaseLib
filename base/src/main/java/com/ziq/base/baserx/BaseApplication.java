@@ -1,12 +1,12 @@
-package com.ziq.base.mvp;
+package com.ziq.base.baserx;
 
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
-import com.ziq.base.mvp.dagger.App;
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.dagger.component.DaggerAppComponent;
+import com.ziq.base.baserx.dagger.App;
+import com.ziq.base.baserx.dagger.component.AppComponent;
+import com.ziq.base.baserx.dagger.component.DaggerAppComponent;
 
 /**
  * author: wuyanqiang
@@ -14,20 +14,38 @@ import com.ziq.base.mvp.dagger.component.DaggerAppComponent;
  */
 public class BaseApplication extends Application implements App {
 
-    AppComponent mAppComponent;
+    private AppDelegate mAppDelegate;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        if (mAppDelegate == null){
+            this.mAppDelegate = new AppDelegate(base);
+            this.mAppDelegate.attachBaseContext(base);
+        }
+    }
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mAppComponent = DaggerAppComponent
-                .builder()
-                .application(this)//提供application
-                .build();
+        if (mAppDelegate != null){
+            this.mAppDelegate.onCreate(this);
+        }
+    }
+
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        if (mAppDelegate != null){
+            this.mAppDelegate.onTerminate(this);
+        }
     }
 
     @Override
     public AppComponent getAppComponent() {
-        return mAppComponent;
+        return this.mAppDelegate.getAppComponent();
     }
 
     public boolean isMainProcess() {

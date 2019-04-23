@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
+import com.ziq.base.mvp.MvpBaseActivity;
 import com.ziq.base.utils.LogUtil;
 import com.ziq.baselib.R;
 
@@ -20,7 +20,7 @@ import butterknife.OnClick;
  * Des:
  */
 
-public class DataTranslateTestActivity extends BaseActivity implements View.OnClickListener {
+public class DataTranslateTestActivity extends MvpBaseActivity implements View.OnClickListener {
     @BindView(R.id.input)
     EditText input;
     @BindView(R.id.result)

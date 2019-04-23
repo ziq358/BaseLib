@@ -5,8 +5,8 @@ import androidx.annotation.Nullable;
 
 import android.view.View;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.mvp.MvpBaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
 import com.ziq.baselib.R;
 
 import butterknife.OnClick;
@@ -17,7 +17,7 @@ import butterknife.OnClick;
  * Des:
  */
 
-public class UIBlockCheckActivity extends BaseActivity implements View.OnClickListener {
+public class UIBlockCheckActivity extends MvpBaseActivity implements View.OnClickListener {
 
     @Override
     public int initLayoutResourceId() {

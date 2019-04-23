@@ -1,4 +1,4 @@
-package com.ziq.base.mvp;
+package com.ziq.base.baserx;
 
 import android.os.Bundle;
 import androidx.annotation.CheckResult;
@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.View;
 
-import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.FragmentEvent;

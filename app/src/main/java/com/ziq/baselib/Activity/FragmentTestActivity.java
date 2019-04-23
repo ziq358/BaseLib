@@ -6,9 +6,9 @@ import androidx.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.BaseActivity;
-import com.ziq.base.mvp.BaseFragment;
+import com.ziq.base.mvp.MvpBaseFragment;
+import com.ziq.base.baserx.dagger.component.AppComponent;
+import com.ziq.base.mvp.MvpBaseActivity;
 import com.ziq.baselib.R;
 
 import butterknife.BindView;
@@ -17,7 +17,7 @@ import butterknife.BindView;
  * @author wuyanqiang
  * @date 2018/10/12
  */
-public class FragmentTestActivity extends BaseActivity {
+public class FragmentTestActivity extends MvpBaseActivity {
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_fragment_test;
@@ -34,7 +34,7 @@ public class FragmentTestActivity extends BaseActivity {
     }
 
 
-    public static class MyFragment extends BaseFragment{
+    public static class MyFragment extends MvpBaseFragment {
 
         @BindView(R.id.label)
         TextView mTv;

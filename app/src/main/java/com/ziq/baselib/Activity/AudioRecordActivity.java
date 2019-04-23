@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.mvp.MvpBaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
 import com.ziq.base.utils.LogUtil;
 import com.ziq.base.utils.audio.AudioRecorder;
 import com.ziq.base.utils.audio.AudioRecorderManager;
@@ -34,7 +34,7 @@ import butterknife.OnClick;
  * Des:
  */
 
-public class AudioRecordActivity extends BaseActivity implements View.OnClickListener, AudioRecorderManager.AudioDataCallback {
+public class AudioRecordActivity extends MvpBaseActivity implements View.OnClickListener, AudioRecorderManager.AudioDataCallback {
     @BindView(R.id.result)
     TextView result;
 

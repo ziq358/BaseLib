@@ -13,8 +13,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
+import com.ziq.base.mvp.MvpBaseActivity;
 import com.ziq.baselib.Constants;
 import com.ziq.baselib.R;
 
@@ -34,7 +34,7 @@ import butterknife.OnClick;
  * Des:
  */
 
-public class MediacodecActivity extends BaseActivity {
+public class MediacodecActivity extends MvpBaseActivity {
 
     public static final String TAG = "Mediacodec";
     private static final long TIMEOUT_US = 10000;

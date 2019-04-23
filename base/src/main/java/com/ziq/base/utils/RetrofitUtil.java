@@ -7,6 +7,8 @@ import com.google.gson.GsonBuilder;
 
 import org.jose4j.lang.StringUtil;
 
+import javax.inject.Inject;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -19,25 +21,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitUtil {
 
-    private static RetrofitUtil sInstance;
-
     private Retrofit mRetrofit;
 
-    public static RetrofitUtil getInstance(){
-        if(sInstance == null){
-            synchronized (RetrofitUtil.class){
-                if(sInstance == null){
-                    sInstance = new RetrofitUtil();
-                }
-            }
-        }
-        return sInstance;
-    }
 
-
-
-
-    private RetrofitUtil() {
+    @Inject
+    public RetrofitUtil() {
     }
 
     public void init(String baseUrl){

@@ -1,8 +1,21 @@
-package com.ziq.base.mvp;
+package com.ziq.base.mvvm;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.kaopiz.kprogresshud.KProgressHUD;
+import com.ziq.base.baserx.BaseRxFragment;
+import com.ziq.base.baserx.dagger.App;
+import com.ziq.base.baserx.dagger.component.AppComponent;
+import com.ziq.base.mvp.IBasePresenter;
+import com.ziq.base.mvp.IBaseView;
+
+import javax.inject.Inject;
+
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -10,31 +23,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.kaopiz.kprogresshud.KProgressHUD;
-import com.ziq.base.mvp.dagger.App;
-import com.ziq.base.mvp.dagger.component.AppComponent;
-
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
  * @author wuyanqiang
  */
-public abstract class BaseFragment<P extends IBasePresenter> extends BaseRxFragment implements IBaseView{
+public abstract class MvvmBaseFragment extends BaseRxFragment implements IBaseView{
 
     protected View mContentView;
     protected FragmentManager mChildFragmentManager;
 
     private Unbinder mUnbinder;
     protected KProgressHUD pd;
-    @Inject
-    protected P mPresenter;
 
     @Nullable
     @Override
@@ -117,10 +118,6 @@ public abstract class BaseFragment<P extends IBasePresenter> extends BaseRxFragm
         if(mUnbinder != null){
             mUnbinder.unbind();
             mUnbinder = null;
-        }
-        if(mPresenter != null){
-            mPresenter.destroy();
-            mPresenter = null;
         }
         super.onDestroy();
     }

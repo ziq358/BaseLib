@@ -11,8 +11,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.ziq.base.mvp.dagger.App;
-import com.ziq.base.mvp.dagger.component.AppComponent;
+import com.ziq.base.baserx.BaseRxActivity;
+import com.ziq.base.baserx.dagger.App;
+import com.ziq.base.baserx.dagger.component.AppComponent;
 import com.ziq.base.utils.LogUtil;
 
 import javax.inject.Inject;
@@ -26,7 +27,7 @@ import butterknife.Unbinder;
  * Des:
  */
 
-public abstract class BaseActivity<P extends IBasePresenter> extends BaseRxActivity implements IBaseView{
+public abstract class MvpBaseActivity<P extends IBasePresenter> extends BaseRxActivity implements IBaseView{
 //    生命周期
 //    onCreate –> onContentChanged –> onStart –> onPostCreate –> onResume –> onPostResume –> onAttachedToWindow
 //    onPause -> onSaveInstanceState -> onStop 显示后台任务按钮时

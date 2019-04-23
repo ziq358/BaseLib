@@ -4,8 +4,8 @@ import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.ziq.base.mvp.ActivityLifecycleProvider;
-import com.ziq.base.mvp.FragmentLifecycleProvider;
+import com.ziq.base.baserx.ActivityLifecycleProvider;
+import com.ziq.base.baserx.FragmentLifecycleProvider;
 
 public class LifecycleUtil {
 

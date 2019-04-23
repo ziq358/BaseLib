@@ -6,8 +6,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
+import com.ziq.base.mvp.MvpBaseActivity;
 import com.ziq.base.utils.LogUtil;
 import com.ziq.base.utils.NetworkUtil;
 import com.ziq.baselib.Activity.AesEncryptionActivity;
@@ -31,7 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends MvpBaseActivity {
 
     private static final String TAG = "MainActivity";
 

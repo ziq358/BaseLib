@@ -5,8 +5,8 @@ import androidx.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.mvp.MvpBaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
 import com.ziq.base.utils.FileUtil;
 import com.ziq.base.utils.IntentUtil;
 import com.ziq.baselib.R;
@@ -20,7 +20,7 @@ import butterknife.OnClick;
  * Des:
  */
 
-public class InstallApkActivity extends BaseActivity implements View.OnClickListener {
+public class InstallApkActivity extends MvpBaseActivity implements View.OnClickListener {
     @BindView(R.id.input_install)
     EditText inputInstall;
     @BindView(R.id.input_uninstall)

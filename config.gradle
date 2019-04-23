@@ -26,8 +26,9 @@ ext {
 
     dependencies = [
             //support
-            "appcompat-v7"                  : "androidx.appcompat:appcompat:1.0.0-beta01",
-            "recyclerview-v7"               : "androidx.recyclerview:recyclerview:1.0.0-beta01",
+            "appcompat"                      : "androidx.appcompat:appcompat:1.0.0-beta01",
+            "recyclerview"                   : "androidx.recyclerview:recyclerview:1.0.0-beta01",
+            "cardview"                      : "androidx.cardview:cardview:1.0.0",
 
             "dagger2"                       : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",
             "dagger2-compiler"              : "com.google.dagger:dagger-compiler:${version["dagger2SdkVersion"]}",

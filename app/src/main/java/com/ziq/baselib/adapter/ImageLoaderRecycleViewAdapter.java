@@ -1,15 +1,11 @@
 package com.ziq.baselib.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.ziq.base.recycleView.BaseViewHolder;
-import com.ziq.base.recycleView.adapter.ListRecyclerAdapter;
-import com.ziq.baselib.MainActivity;
+import com.ziq.base.recycleview.BaseViewHolder;
+import com.ziq.base.recycleview.adapter.ListRecyclerAdapter;
 import com.ziq.baselib.R;
 
 import java.util.List;

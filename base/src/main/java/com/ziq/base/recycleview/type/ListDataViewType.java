@@ -1,8 +1,8 @@
-package com.ziq.base.recycleView.type;
+package com.ziq.base.recycleview.type;
 
-import com.ziq.base.recycleView.BaseViewHolder;
-import com.ziq.base.recycleView.BaseViewType;
-import com.ziq.base.recycleView.adapter.ListRecyclerAdapter;
+import com.ziq.base.recycleview.BaseViewHolder;
+import com.ziq.base.recycleview.BaseViewType;
+import com.ziq.base.recycleview.adapter.ListRecyclerAdapter;
 
 /**
  * @author john.

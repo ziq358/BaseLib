@@ -1,5 +1,6 @@
 package com.ziq.baselib.dagger.module;
 
+import com.ziq.base.baserx.dagger.ActivityScope;
 import com.ziq.baselib.presenter.RetrofitActivityPresenter;
 
 import dagger.Module;
@@ -18,6 +19,7 @@ public class RetrofitModule {
     }
 
     @Provides
+    @ActivityScope
     public RetrofitActivityPresenter.View getView(){
         return view;
     }

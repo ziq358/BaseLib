@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ziq.base.recycleView.BaseViewHolder;
-import com.ziq.base.recycleView.adapter.ListRecyclerAdapter;
+import com.ziq.base.recycleview.BaseViewHolder;
+import com.ziq.base.recycleview.adapter.ListRecyclerAdapter;
 
 import java.util.List;
 

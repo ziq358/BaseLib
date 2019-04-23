@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
+import com.ziq.base.mvp.MvpBaseActivity;
 import com.ziq.baselib.R;
 import com.ziq.baselib.adapter.ImageLoaderRecycleViewAdapter;
 
@@ -22,7 +22,7 @@ import butterknife.BindView;
  * Created by jj on 2018/7/18.
  */
 
-public class ImageLoaderTestActivity extends BaseActivity {
+public class ImageLoaderTestActivity extends MvpBaseActivity {
 
     @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;

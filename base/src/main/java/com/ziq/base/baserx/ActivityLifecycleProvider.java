@@ -1,4 +1,4 @@
-package com.ziq.base.mvp;
+package com.ziq.base.baserx;
 
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;

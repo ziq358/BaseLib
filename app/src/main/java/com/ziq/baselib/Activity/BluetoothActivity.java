@@ -14,12 +14,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
+import com.ziq.base.mvp.MvpBaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
 import com.ziq.base.event.BluetoothFoundEvent;
 import com.ziq.base.event.BluetoothSearchFinishedEvent;
 import com.ziq.base.event.BluetoothSearchStartEvent;
 import com.ziq.base.manager.BaseBluetoothManager;
-import com.ziq.base.mvp.BaseActivity;
 import com.ziq.base.utils.LogUtil;
 import com.ziq.baselib.R;
 import com.ziq.baselib.adapter.BluetoothRecycleViewAdapter;
@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * Des:
  */
 
-public class BluetoothActivity extends BaseActivity implements View.OnClickListener {
+public class BluetoothActivity extends MvpBaseActivity implements View.OnClickListener {
 
     private static final String TAG = "BluetoothActivity";
     BluetoothDevice selectDevice;

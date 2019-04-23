@@ -4,8 +4,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import android.view.View;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.mvp.MvpBaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
 import com.ziq.base.utils.DeviceInfoUtil;
 import com.ziq.base.utils.LogUtil;
 import com.ziq.baselib.R;
@@ -20,7 +20,7 @@ import butterknife.OnClick;
  * Des:
  */
 
-public class TestActivity extends BaseActivity implements View.OnClickListener {
+public class TestActivity extends MvpBaseActivity implements View.OnClickListener {
     @BindView(R.id.tlv)
     TranslateLoadingView mTranslateLoadingView;
 

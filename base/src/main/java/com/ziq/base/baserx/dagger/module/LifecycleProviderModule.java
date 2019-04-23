@@ -1,4 +1,4 @@
-package com.ziq.base.mvp.dagger.module;
+package com.ziq.base.baserx.dagger.module;
 
 import com.trello.rxlifecycle2.LifecycleProvider;
 

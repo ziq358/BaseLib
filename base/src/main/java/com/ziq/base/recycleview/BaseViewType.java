@@ -1,4 +1,4 @@
-package com.ziq.base.recycleView;
+package com.ziq.base.recycleview;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -2,11 +2,9 @@ package com.ziq.baselib.presenter;
 
 import android.util.Log;
 
-import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.ziq.base.baserx.dagger.bean.IRepositoryManager;
 import com.ziq.base.mvp.BasePresenter;
-import com.ziq.base.mvp.IBasePresenter;
 import com.ziq.base.mvp.IBaseView;
-import com.ziq.base.utils.RetrofitUtil;
 import com.ziq.baselib.model.PandaTvDataBean;
 import com.ziq.baselib.model.VideoHttpResult;
 import com.ziq.baselib.service.VideoService;
@@ -32,6 +30,9 @@ public class RetrofitActivityPresenter extends BasePresenter {
 
     @Inject
     RetrofitActivityPresenter.View mView;
+
+    @Inject
+    IRepositoryManager mRepositoryManager;
 
     @Inject
     public RetrofitActivityPresenter() {
@@ -67,8 +68,8 @@ public class RetrofitActivityPresenter extends BasePresenter {
     }
 
     public void getVideo(){
-        RetrofitUtil.getInstance().getRetrofit()
-                .create(VideoService.class)
+        mRepositoryManager
+                .createService(VideoService.class)
                 .getVideList("lol", 1, 20, 1, "3.3.1.5978")
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Consumer<Disposable>() {

@@ -1,12 +1,12 @@
-package com.ziq.base.recycleView.adapter;
+package com.ziq.base.recycleview.adapter;
 
 import android.content.Context;
 import androidx.annotation.LayoutRes;
 
-import com.ziq.base.recycleView.BaseAdapter;
-import com.ziq.base.recycleView.BaseViewHolder;
-import com.ziq.base.recycleView.BaseViewType;
-import com.ziq.base.recycleView.type.ListDataViewType;
+import com.ziq.base.recycleview.BaseAdapter;
+import com.ziq.base.recycleview.BaseViewHolder;
+import com.ziq.base.recycleview.BaseViewType;
+import com.ziq.base.recycleview.type.ListDataViewType;
 
 import java.util.List;
 

@@ -4,8 +4,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import android.widget.TextView;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
+import com.ziq.base.mvp.MvpBaseActivity;
 import com.ziq.baselib.R;
 
 import java.lang.reflect.Field;
@@ -17,7 +17,7 @@ import butterknife.BindView;
  * @author wuyanqiang
  * @date 2018/9/19
  */
-public class TestByteBufferActivity extends BaseActivity {
+public class TestByteBufferActivity extends MvpBaseActivity {
 
     @BindView(R.id.tv_content)
     TextView mTvContent;

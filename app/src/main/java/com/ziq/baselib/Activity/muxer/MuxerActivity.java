@@ -16,8 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ziq.base.mvp.dagger.component.AppComponent;
-import com.ziq.base.mvp.BaseActivity;
+import com.ziq.base.baserx.dagger.component.AppComponent;
+import com.ziq.base.mvp.MvpBaseActivity;
 import com.ziq.base.utils.CameraUtils;
 import com.ziq.baselib.Constants;
 import com.ziq.baselib.R;
@@ -34,7 +34,7 @@ import butterknife.OnClick;
  * Des:
  */
 
-public class MuxerActivity extends BaseActivity implements Camera.PreviewCallback {
+public class MuxerActivity extends MvpBaseActivity implements Camera.PreviewCallback {
 
     public static final String TAG = "Muxer";
     private static final long TIMEOUT_US = 10000;

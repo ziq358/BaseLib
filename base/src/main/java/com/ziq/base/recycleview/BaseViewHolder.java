@@ -1,4 +1,4 @@
-package com.ziq.base.recycleView;
+package com.ziq.base.recycleview;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.SparseArray;
