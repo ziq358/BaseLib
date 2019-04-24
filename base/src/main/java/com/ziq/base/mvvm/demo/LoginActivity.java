@@ -18,7 +18,7 @@ public class LoginActivity extends MvvmBaseActivity {
 
     @Override
     public int initLayoutResourceId() {
-        return R.layout.activity_login;
+        return R.layout.demo_activity_login;
     }
 
     @Override
