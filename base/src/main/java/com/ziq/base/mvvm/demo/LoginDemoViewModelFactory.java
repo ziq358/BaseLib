@@ -8,21 +8,21 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-public class LoginViewModelFactory extends ViewModelProvider.NewInstanceFactory{
+public class LoginDemoViewModelFactory extends ViewModelProvider.NewInstanceFactory{
     @Inject
     Application application;
 
     @Inject
-    LoginViewModel loginViewModel;
+    LoginDemoViewModel loginViewModel;
 
     @Inject
-    public LoginViewModelFactory() {
+    public LoginDemoViewModelFactory() {
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if(modelClass.isAssignableFrom(LoginViewModel.class)){
+        if(modelClass.isAssignableFrom(LoginDemoViewModel.class)){
             return (T)loginViewModel;
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

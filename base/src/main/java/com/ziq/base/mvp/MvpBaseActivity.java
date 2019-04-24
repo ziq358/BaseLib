@@ -65,7 +65,6 @@ public abstract class MvpBaseActivity<P extends IBasePresenter> extends BaseRxAc
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        LogUtil.isDebug = true;
         super.onCreate(savedInstanceState);
         setContentView(initLayoutResourceId());
         mUnbinder = ButterKnife.bind(this);

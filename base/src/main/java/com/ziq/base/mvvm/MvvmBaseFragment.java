@@ -31,23 +31,14 @@ import butterknife.Unbinder;
  */
 public abstract class MvvmBaseFragment extends BaseRxFragment implements IBaseView{
 
-    protected View mContentView;
     protected FragmentManager mChildFragmentManager;
 
-    private Unbinder mUnbinder;
     protected KProgressHUD pd;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(initLayoutResourceId(), container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mContentView = view;
-        mUnbinder = ButterKnife.bind(this, mContentView);
+        return initView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -61,12 +52,12 @@ public abstract class MvvmBaseFragment extends BaseRxFragment implements IBaseVi
                 initForInject(((App) applicationContext).getAppComponent());
             }
         }
-        initData(mContentView, savedInstanceState);
+        initData(savedInstanceState);
     }
 
-    public abstract @LayoutRes int initLayoutResourceId();
+    public abstract View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);
     public abstract void initForInject(AppComponent appComponent);
-    public abstract void initData(@NonNull View view, @Nullable Bundle savedInstanceState);
+    public abstract void initData(@Nullable Bundle savedInstanceState);
 
 
     @Override
@@ -111,15 +102,6 @@ public abstract class MvvmBaseFragment extends BaseRxFragment implements IBaseVi
 
     public void onCancelProgress() {
 
-    }
-
-    @Override
-    public void onDestroy() {
-        if(mUnbinder != null){
-            mUnbinder.unbind();
-            mUnbinder = null;
-        }
-        super.onDestroy();
     }
 
     public void addFragment(@IdRes int contentId, Fragment fragment, String tag, boolean isAddToBackStack) {

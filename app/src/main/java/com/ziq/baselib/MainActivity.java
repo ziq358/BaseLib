@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ziq.base.baserx.dagger.component.AppComponent;
 import com.ziq.base.mvp.MvpBaseActivity;
-import com.ziq.base.mvvm.demo.LoginActivity;
+import com.ziq.base.mvvm.demo.LoginDemoActivity;
 import com.ziq.base.utils.LogUtil;
 import com.ziq.base.utils.NetworkUtil;
 import com.ziq.baselib.Activity.AesEncryptionActivity;
@@ -82,7 +82,7 @@ public class MainActivity extends MvpBaseActivity {
         dataList.add(new DemoListItem("DEMO-test-bytebuffer", TestByteBufferActivity.class));
         dataList.add(new DemoListItem("FragmentTestActivity", FragmentTestActivity.class));
         dataList.add(new DemoListItem("卡顿检测", UIBlockCheckActivity.class));
-        dataList.add(new DemoListItem("login", LoginActivity.class));
+        dataList.add(new DemoListItem("login", LoginDemoActivity.class));
 
     }
 

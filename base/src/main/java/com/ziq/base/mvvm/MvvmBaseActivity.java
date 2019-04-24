@@ -59,15 +59,12 @@ public abstract class MvvmBaseActivity extends BaseRxActivity implements IBaseVi
 //              onStop -> onDestroy -> onDetachedFromWindow
 
     protected FragmentManager mFragmentManager;
-    private Unbinder mUnbinder;
     protected KProgressHUD pd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        LogUtil.isDebug = true;
         super.onCreate(savedInstanceState);
-        setContentView(initLayoutResourceId());
-        mUnbinder = ButterKnife.bind(this);
+        initView(savedInstanceState);
         mFragmentManager = getSupportFragmentManager();
         Context applicationContext = getApplicationContext();
         if(applicationContext instanceof App){
@@ -76,7 +73,7 @@ public abstract class MvvmBaseActivity extends BaseRxActivity implements IBaseVi
         initData(savedInstanceState);
     }
 
-    public abstract @LayoutRes int initLayoutResourceId();
+    public abstract void initView(@Nullable Bundle savedInstanceState);
     public abstract void initForInject(AppComponent appComponent);
     public abstract void initData(@Nullable Bundle savedInstanceState);
 
@@ -122,15 +119,6 @@ public abstract class MvvmBaseActivity extends BaseRxActivity implements IBaseVi
 
     public void onCancelProgress() {
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(mUnbinder != null){
-            mUnbinder.unbind();
-            mUnbinder = null;
-        }
-        super.onDestroy();
     }
 
     public void addFragment(@IdRes int contentId, Fragment fragment, String tag, boolean isAddToBackStack) {

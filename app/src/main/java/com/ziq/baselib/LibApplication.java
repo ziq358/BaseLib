@@ -3,6 +3,7 @@ package com.ziq.baselib;
 import android.widget.Toast;
 
 import com.ziq.base.baserx.BaseApplication;
+import com.ziq.base.utils.LogUtil;
 import com.ziq.base.utils.performance.BlockDetectByChoreographer;
 import com.ziq.base.utils.performance.UIBlockMonitor;
 
@@ -15,6 +16,7 @@ public class LibApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        LogUtil.isDebug = true;
         //UI 卡顿 监控
         BlockDetectByChoreographer.start();
         UIBlockMonitor.setListener(new UIBlockMonitor.UIBlockListener() {

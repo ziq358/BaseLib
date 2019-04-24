@@ -53,7 +53,7 @@
         <activity android:name=".Activity.FragmentTestActivity"/>
         <activity android:name=".Activity.RetrofitActivity"/>
         <activity android:name=".test.TestByteBufferActivity"/>
-        <activity android:name="com.ziq.base.mvvm.demo.LoginActivity"/>
+        <activity android:name="com.ziq.base.mvvm.demo.LoginDemoActivity"/>
 
         <receiver android:name=".receive.BootBroadcastReceiver" >
             <intent-filter >
