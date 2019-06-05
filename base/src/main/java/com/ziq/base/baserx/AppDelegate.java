@@ -32,6 +32,8 @@ public class AppDelegate implements App {
                 .application(application)//提供application
                 .globalConfigModule(getGlobalConfigModule(application, mModules))
                 .build();
+        //异常捕捉
+        CrashHandler.getInstance().init(application);
     }
 
     public void onTerminate(@NonNull Application application){
