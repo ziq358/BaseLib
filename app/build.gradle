@@ -53,5 +53,8 @@ dependencies {
     }
     api 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
+    annotationProcessor (rootProject.ext.dependencies["glide-compiler"]){
+        exclude module: 'jsr305'
+    }
 
 }

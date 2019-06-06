@@ -91,7 +91,9 @@ dependencies {
     api (rootProject.ext.dependencies["glide"]){
         exclude group: "com.android.support"
     }
-    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+    annotationProcessor (rootProject.ext.dependencies["glide-compiler"]){
+        exclude module: 'jsr305'
+    }
     api rootProject.ext.dependencies["kprogresshud"]
 
     api rootProject.ext.dependencies["rxlifecycle"]
