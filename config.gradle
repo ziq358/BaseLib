@@ -22,6 +22,7 @@ ext {
             adapterRxjava2SdkVersion          : "2.4.0",
             converterGsonSdkVersion           : "2.4.0",
             loggingInterceptorSdkVersion      : "3.9.0",
+            rxpermissionsVersion              : "0.10.2",
     ]
 
     dependencies = [
@@ -50,6 +51,7 @@ ext {
             "rxlifecycle"                   : "com.trello.rxlifecycle2:rxlifecycle:2.2.2",
             "rxlifecycle-android"           : "com.trello.rxlifecycle2:rxlifecycle-android:2.2.2",
             "rxlifecycle-components"        : "com.trello.rxlifecycle2:rxlifecycle-components:2.2.2",
+            "rxpermissions"                 : "com.github.tbruyelle:rxpermissions:${version["rxpermissionsVersion"]}",
     ]
 
 

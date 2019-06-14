@@ -20,6 +20,7 @@ import com.ziq.baselib.Activity.ImageLoaderTestActivity;
 import com.ziq.baselib.Activity.InstallApkActivity;
 import com.ziq.baselib.Activity.MediacodecActivity;
 import com.ziq.baselib.Activity.NetSpeedActivity;
+import com.ziq.baselib.Activity.PermissionActivity;
 import com.ziq.baselib.Activity.RetrofitActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 import com.ziq.baselib.Activity.TestActivity;
@@ -67,6 +68,7 @@ public class MainActivity extends MvpBaseActivity {
     }
 
     private void initData() {
+        dataList.add(new DemoListItem("DEMO-权限检查", PermissionActivity.class));
         dataList.add(new DemoListItem("DEMO-监听网速", NetSpeedActivity.class));
         dataList.add(new DemoListItem("DEMO-测试retrofit", RetrofitActivity.class));
         dataList.add(new DemoListItem("DEMO-安装apk", InstallApkActivity.class));

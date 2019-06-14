@@ -99,6 +99,7 @@ dependencies {
     api rootProject.ext.dependencies["rxlifecycle"]
     api rootProject.ext.dependencies["rxlifecycle-android"]
     api rootProject.ext.dependencies["rxlifecycle-components"]
+    api rootProject.ext.dependencies["rxpermissions"]
 }
 
 publish {
