@@ -12,7 +12,7 @@ import java.io.File;
 
 public class Constants {
 
-    public static final String BASE_URL = "http://api.m.panda.tv/";
+    public static final String BASE_URL = "http://193.112.65.251:1234";
 
 
     public static String getDataDirPath(Context context, String dir) {

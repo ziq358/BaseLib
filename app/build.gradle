@@ -56,5 +56,5 @@ dependencies {
     annotationProcessor (rootProject.ext.dependencies["glide-compiler"]){
         exclude module: 'jsr305'
     }
-
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
 }

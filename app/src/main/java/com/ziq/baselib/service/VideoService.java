@@ -1,11 +1,14 @@
 package com.ziq.baselib.service;
 
-import com.ziq.baselib.model.PandaTvDataBean;
-import com.ziq.baselib.model.VideoHttpResult;
+import com.ziq.baselib.model.BaseResponse;
+import com.ziq.baselib.model.LiveListItemBean;
+import com.ziq.baselib.model.ZQPlayerVideoListRequest;
+
+import java.util.ArrayList;
 
 import io.reactivex.Observable;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 
 /**
  * author: wuyanqiang
@@ -13,11 +16,7 @@ import retrofit2.http.Query;
  */
 public interface VideoService {
 
-    @GET("ajax_get_live_list_by_cate")
-    Observable<VideoHttpResult<PandaTvDataBean>> getVideList(@Query("cate") String cate,
-                                                             @Query("pageno") int pageno,
-                                                             @Query("pagenum") int pagenum,
-                                                             @Query("room") int room,
-                                                             @Query("version") String version);
+    @POST("/live/list")
+    Observable<BaseResponse<ArrayList<LiveListItemBean>>> getZQVideoList(@Body ZQPlayerVideoListRequest zqPlayerVideoListRequest);
 
 }

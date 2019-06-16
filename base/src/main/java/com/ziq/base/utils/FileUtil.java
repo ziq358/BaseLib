@@ -44,6 +44,21 @@ public class FileUtil {
     }
 
     /**
+     * 获取保存图片的目录
+     *
+     * @return
+     */
+    public static File getAlbumDir() {
+        File dir = new File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                "picture");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        return dir;
+    }
+
+    /**
      * 需要申请读写 sd卡 的权限， 不然目录、文件无法建立
      *
      * @param context 上下文

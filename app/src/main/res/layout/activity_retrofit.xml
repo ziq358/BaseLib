@@ -4,31 +4,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_get_video"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="请求video 看log"
-        />
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_test_lifecycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="test_lifecycle"
+            />
 
-    <Button
-        android:id="@+id/btn_test_lifecycle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="test_lifecycle 看log"
-        />
+        <Button
+            android:id="@+id/btn_download_speed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="下载速度"
+            />
+        <Button
+            android:id="@+id/btn_upload_speed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="上传速度"
+            />
 
-    <Button
-        android:id="@+id/btn_download_speed"
+    </LinearLayout>
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="下载速度"
-        />
-    <Button
-        android:id="@+id/btn_upload_speed"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="上传速度"
-        />
+        android:layout_height="match_parent"
+        >
+        <!--<androidx.core.widget.NestedScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical"-->
+            <!--&gt;-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="视频列表"
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+        <!--</androidx.core.widget.NestedScrollView>-->
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 
 </LinearLayout>

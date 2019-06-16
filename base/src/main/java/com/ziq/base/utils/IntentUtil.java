@@ -93,49 +93,9 @@ public class IntentUtil {
     }
 
 
-    public static boolean takePhoto(Activity activity, int requestCode, File output) {
-        if (activity != null) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
-            activity.startActivityForResult(intent, requestCode);
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean selectPhoto(Activity activity, int requestCode) {
-        if (activity != null) {
-            Intent intentPicture = new Intent(Intent.ACTION_PICK, null);
-            intentPicture.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
-            List<ResolveInfo> resolveInfos = activity.getPackageManager().queryIntentActivities(intentPicture, PackageManager.MATCH_DEFAULT_ONLY);
-            if (resolveInfos != null && !resolveInfos.isEmpty()) {
-                activity.startActivityForResult(intentPicture, requestCode);
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    public static void getCroppedPhoto(Activity activity, int requestCode, Uri inputUri, Uri outputUri, int outputWight, int outputHeight) {
-        if (activity != null) {
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setDataAndType(inputUri, IntentUtil.IMAGE_UNSPECIFIED);
-            intent.putExtra("crop", "true");
-            intent.putExtra("aspectX", 1);
-            intent.putExtra("aspectY", 1);
-            intent.putExtra("outputX", outputWight);
-            intent.putExtra("outputY", outputHeight);
-            intent.putExtra("return-data", false);
-            intent.putExtra("noFaceDetection", true);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
-            List<ResolveInfo> resolveInfos = activity.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-            if (resolveInfos != null && !resolveInfos.isEmpty()) {
-                activity.startActivityForResult(intent, requestCode);
-            }
-        }
-    }
-
+    /**
+     * 拨号
+     */
     public static void openDialer(Context context, String phoneNumber) {
         Intent phone = new Intent(Intent.ACTION_DIAL, Uri.parse(String.format("tel:%s", phoneNumber)));
         phone.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

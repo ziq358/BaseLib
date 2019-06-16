@@ -5,10 +5,12 @@ import android.util.Log;
 import com.ziq.base.baserx.dagger.bean.IRepositoryManager;
 import com.ziq.base.mvp.BasePresenter;
 import com.ziq.base.mvp.IBaseView;
-import com.ziq.baselib.model.PandaTvDataBean;
-import com.ziq.baselib.model.VideoHttpResult;
+import com.ziq.baselib.model.BaseResponse;
+import com.ziq.baselib.model.LiveListItemBean;
+import com.ziq.baselib.model.ZQPlayerVideoListRequest;
 import com.ziq.baselib.service.VideoService;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -67,15 +69,22 @@ public class RetrofitActivityPresenter extends BasePresenter {
                 });
     }
 
-    public void getVideo(){
+    int currentPage = 0;
+    public void getVideo(boolean isRefresh){
+        if(isRefresh){
+            currentPage = 0;
+        }
+        ZQPlayerVideoListRequest request = new ZQPlayerVideoListRequest();
+        request.setOffset(String.valueOf(currentPage * 20));
+        request.setLimit("20");
+        request.setGame_type("ow");
         mRepositoryManager
                 .createService(VideoService.class)
-                .getVideList("lol", 1, 20, 1, "3.3.1.5978")
+                .getZQVideoList(request)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-                        Log.e("ziq", "doOnSubscribe: "+Thread.currentThread().getName());
                         mView.showLoading();
                     }
                 })
@@ -84,21 +93,22 @@ public class RetrofitActivityPresenter extends BasePresenter {
                 .doFinally(new Action() { // 位置 影响所在线程 放 observeOn后
                     @Override
                     public void run() throws Exception {
-                        Log.e("ziq", "doFinally: "+Thread.currentThread().getName());
                         mView.hideLoading();
                     }
                 })
                 .compose(getDestroyLifecycleTransformer())
-                .subscribe(new Observer<VideoHttpResult<PandaTvDataBean>>() {
+                .subscribe(new Observer<BaseResponse<ArrayList<LiveListItemBean>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(VideoHttpResult<PandaTvDataBean> pandaTvDataBeanVideoHttpResult) {
-                        Log.e("ziq", "onNext: "+Thread.currentThread().getName());
-                        mView.update();
+                    public void onNext(BaseResponse<ArrayList<LiveListItemBean>> response) {
+                        if(response.isSuccess()){
+                            currentPage++;
+                            mView.update(response.getData(), isRefresh);
+                        }
                     }
 
                     @Override
@@ -119,7 +129,7 @@ public class RetrofitActivityPresenter extends BasePresenter {
     }
 
     public interface View extends IBaseView{
-        void update();
+        void update(ArrayList<LiveListItemBean> dataList , boolean isRefresh);
     }
 
 }
