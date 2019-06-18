@@ -2,7 +2,7 @@ package com.ziq.base.opengl;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.opengl.GLES20;
+import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
@@ -73,21 +73,21 @@ public class FullViewRenderer implements GLSurfaceView.Renderer {
         if (mProgramId == 0) {
             return;
         }
-        mPositionHandle = GLES20.glGetAttribLocation(mProgramId, "position");
+        mPositionHandle = GLES30.glGetAttribLocation(mProgramId, "position");
         OpenGlUtil.checkGlError("glGetAttribLocation position");
         if (mPositionHandle == -1) {
             throw new RuntimeException("Could not get attrib location for position");
         }
-        mTextureCoordinateHandle = GLES20.glGetAttribLocation(mProgramId, "texcoord");
+        mTextureCoordinateHandle = GLES30.glGetAttribLocation(mProgramId, "texcoord");
         OpenGlUtil.checkGlError("glGetAttribLocation aTextureCoord");
         if (mTextureCoordinateHandle == -1) {
             throw new RuntimeException("Could not get attrib location for texcoord");
         }
 
-        sTextureSamplerHandle= GLES20.glGetUniformLocation(mProgramId,"s_texture");
+        sTextureSamplerHandle= GLES30.glGetUniformLocation(mProgramId,"s_texture");
         OpenGlUtil.checkGlError("glGetUniformLocation uniform s_texture");
 
-        uMVPMatrixHandle= GLES20.glGetUniformLocation(mProgramId,"uMVPMatrix");
+        uMVPMatrixHandle= GLES30.glGetUniformLocation(mProgramId,"uMVPMatrix");
         OpenGlUtil.checkGlError("glGetUniformLocation uMVPMatrix");
     }
 
@@ -110,7 +110,7 @@ public class FullViewRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame() {
         if(imageTextureId == 0){
             int[] textureObjectIds=new int[1];
-            GLES20.glGenTextures(1,textureObjectIds,0);
+            GLES30.glGenTextures(1,textureObjectIds,0);
             if (textureObjectIds[0]!=0){
                 imageTextureId = textureObjectIds[0];
             }
@@ -123,57 +123,58 @@ public class FullViewRenderer implements GLSurfaceView.Renderer {
 
         if(bitmap != null){
             //对imageTextureId 进行配置
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, imageTextureId);
-            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
-                    GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
-                    GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
-            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
-                    GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
-            GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D,
-                    GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
-            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D,0,bitmap,0);
+            GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, imageTextureId);
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,
+                    GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR);
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,
+                    GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_LINEAR);
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,
+                    GLES30.GL_TEXTURE_WRAP_S, GLES30.GL_CLAMP_TO_EDGE);
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,
+                    GLES30.GL_TEXTURE_WRAP_T, GLES30.GL_CLAMP_TO_EDGE);
+            GLUtils.texImage2D(GLES30.GL_TEXTURE_2D,0,bitmap,0);
             bitmap.recycle();
             bitmap = null;
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,0);
+            GLES30.glBindTexture(GLES30.GL_TEXTURE_2D,0);
         }
 
 
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        GLES20.glClear( GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
+        GLES30.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        GLES30.glClear( GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
 
-        GLES20.glUseProgram(mProgramId);
+        GLES30.glUseProgram(mProgramId);
         Matrix.setIdentityM(projectionMatrix,0);
 
-        GLES20.glViewport(0,0,surfaceWidth,surfaceHeight);
-        GLES20.glEnable(GLES20.GL_BLEND);
-        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        GLES30.glViewport(0,0,surfaceWidth,surfaceHeight);
+        GLES30.glEnable(GLES30.GL_BLEND);
+//        OpenGL glBlendFunc() 设置颜色混合 透明度叠加计算
+        GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE_MINUS_SRC_ALPHA);
 
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, imageTextureId);
-        GLES20.glUniform1i(sTextureSamplerHandle, 0);
+        GLES30.glActiveTexture(GLES30.GL_TEXTURE0);
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, imageTextureId);
+        GLES30.glUniform1i(sTextureSamplerHandle, 0);
 
         mTexCoordinateBuffer.position(0);
-        GLES20.glVertexAttribPointer(mTextureCoordinateHandle, 2, GLES20.GL_FLOAT, false, 0, mTexCoordinateBuffer);
+        GLES30.glVertexAttribPointer(mTextureCoordinateHandle, 2, GLES30.GL_FLOAT, false, 0, mTexCoordinateBuffer);
         OpenGlUtil.checkGlError("glVertexAttribPointer mTextureCoordinateHandle");
-        GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
+        GLES30.glEnableVertexAttribArray(mTextureCoordinateHandle);
         OpenGlUtil.checkGlError("glEnableVertexAttribArray mTextureCoordinateHandle");
 
         mVerticesBuffer.position(0);
-        GLES20.glVertexAttribPointer(mPositionHandle, 3, GLES20.GL_FLOAT, false, 0, mVerticesBuffer);
+        GLES30.glVertexAttribPointer(mPositionHandle, 3, GLES30.GL_FLOAT, false, 0, mVerticesBuffer);
         OpenGlUtil.checkGlError("glVertexAttribPointer mPositionHandle");
-        GLES20.glEnableVertexAttribArray(mPositionHandle);
+        GLES30.glEnableVertexAttribArray(mPositionHandle);
         OpenGlUtil.checkGlError("glEnableVertexAttribArray mPositionHandle");
 
         Matrix.setIdentityM(projectionMatrix,0);
-        GLES20.glUniformMatrix4fv(uMVPMatrixHandle, 1, false, projectionMatrix, 0);
+        GLES30.glUniformMatrix4fv(uMVPMatrixHandle, 1, false, projectionMatrix, 0);
 
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
+        GLES30.glDrawArrays(GLES30.GL_TRIANGLE_STRIP, 0, 4);
 
-        GLES20.glDisable(GLES20.GL_BLEND);
+        GLES30.glDisable(GLES30.GL_BLEND);
     }
 
     public void onDestry(){
-        GLES20.glDeleteProgram(mProgramId);
+        GLES30.glDeleteProgram(mProgramId);
     }
 }

@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.ziq.base.baserx.dagger.component.AppComponent;
 import com.ziq.base.mvp.MvpBaseActivity;
 import com.ziq.base.opengl.FullViewRenderer;
+import com.ziq.base.opengl.TriangleBufferRenderer;
 import com.ziq.base.utils.PictureUtil;
 import com.ziq.baselib.R;
 
@@ -29,7 +30,7 @@ public class OpenglTestActivity extends MvpBaseActivity{
     @BindView(R.id.glSurfaceView)
     GLSurfaceView glSurfaceView;
     private String filePath="images/texture_360_n.jpg";
-    GLSurfaceView.Renderer myRenderer;
+    TriangleBufferRenderer myRenderer;
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_opengl_test;
@@ -42,17 +43,15 @@ public class OpenglTestActivity extends MvpBaseActivity{
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        myRenderer = new FullViewRenderer(OpenglTestActivity.this);
+        myRenderer = new TriangleBufferRenderer(OpenglTestActivity.this);
         glSurfaceView.setEGLContextClientVersion(2);
         glSurfaceView.setRenderer(myRenderer);
-        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ((FullViewRenderer)myRenderer).setBitmap(PictureUtil.loadBitmapFromAssets(getBaseContext(), filePath));
-                glSurfaceView.requestRender();
-            }
-        }, 1000);
+        glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
     }
 
+    @Override
+    protected void onDestroy() {
+        myRenderer.onDestry();
+        super.onDestroy();
+    }
 }

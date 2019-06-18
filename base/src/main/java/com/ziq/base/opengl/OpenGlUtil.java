@@ -3,7 +3,7 @@ package com.ziq.base.opengl;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.opengl.GLES20;
+import android.opengl.GLES30;
 import android.util.Log;
 
 import androidx.annotation.RawRes;
@@ -23,28 +23,28 @@ public class OpenGlUtil {
     }
 
     public static int createProgram(String vertexSource, String fragmentSource) {
-        int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexSource);
+        int vertexShader = loadShader(GLES30.GL_VERTEX_SHADER, vertexSource);
         if (vertexShader == 0) {
             return 0;
         }
-        int pixelShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentSource);
+        int pixelShader = loadShader(GLES30.GL_FRAGMENT_SHADER, fragmentSource);
         if (pixelShader == 0) {
             return 0;
         }
 
-        int program = GLES20.glCreateProgram();
+        int program = GLES30.glCreateProgram();
         if (program != 0) {
-            GLES20.glAttachShader(program, vertexShader);
+            GLES30.glAttachShader(program, vertexShader);
             checkGlError("glAttachShader");
-            GLES20.glAttachShader(program, pixelShader);
+            GLES30.glAttachShader(program, pixelShader);
             checkGlError("glAttachShader");
-            GLES20.glLinkProgram(program);
+            GLES30.glLinkProgram(program);
             int[] linkStatus = new int[1];
-            GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, linkStatus, 0);
-            if (linkStatus[0] != GLES20.GL_TRUE) {
+            GLES30.glGetProgramiv(program, GLES30.GL_LINK_STATUS, linkStatus, 0);
+            if (linkStatus[0] != GLES30.GL_TRUE) {
                 Log.e(TAG, "Could not link program: ");
-                Log.e(TAG, GLES20.glGetProgramInfoLog(program));
-                GLES20.glDeleteProgram(program);
+                Log.e(TAG, GLES30.glGetProgramInfoLog(program));
+                GLES30.glDeleteProgram(program);
                 program = 0;
             }
         }
@@ -75,16 +75,16 @@ public class OpenGlUtil {
     }
 
     public static int loadShader(int shaderType, String source) {
-        int shader = GLES20.glCreateShader(shaderType);
+        int shader = GLES30.glCreateShader(shaderType);
         if (shader != 0) {
-            GLES20.glShaderSource(shader, source);
-            GLES20.glCompileShader(shader);
+            GLES30.glShaderSource(shader, source);
+            GLES30.glCompileShader(shader);
             int[] compiled = new int[1];
-            GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, compiled, 0);
+            GLES30.glGetShaderiv(shader, GLES30.GL_COMPILE_STATUS, compiled, 0);
             if (compiled[0] == 0) {
                 Log.e(TAG, "Could not compile shader " + shaderType + ":");
-                Log.e(TAG, GLES20.glGetShaderInfoLog(shader));
-                GLES20.glDeleteShader(shader);
+                Log.e(TAG, GLES30.glGetShaderInfoLog(shader));
+                GLES30.glDeleteShader(shader);
                 shader = 0;
             }
         }
@@ -93,7 +93,7 @@ public class OpenGlUtil {
 
     public static void checkGlError(String label) {
         int error;
-        while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
+        while ((error = GLES30.glGetError()) != GLES30.GL_NO_ERROR) {
             Log.e(TAG, label + ": glError " + error);
             throw new RuntimeException(label + ": glError " + error);
         }
