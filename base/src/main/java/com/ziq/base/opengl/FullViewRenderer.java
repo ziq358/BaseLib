@@ -124,14 +124,12 @@ public class FullViewRenderer implements GLSurfaceView.Renderer {
         if(bitmap != null){
             //对imageTextureId 进行配置
             GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, imageTextureId);
-            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,
-                    GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR);
-            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,
-                    GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_LINEAR);
-            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,
-                    GLES30.GL_TEXTURE_WRAP_S, GLES30.GL_CLAMP_TO_EDGE);
-            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D,
-                    GLES30.GL_TEXTURE_WRAP_T, GLES30.GL_CLAMP_TO_EDGE);
+            // 为当前绑定的纹理对象设置方大放小 过滤 线性过滤
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR);
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_LINEAR);
+            // 为当前绑定的纹理对象设置环绕 重复
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_S, GLES30.GL_REPEAT);
+            GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_T, GLES30.GL_REPEAT);
             GLUtils.texImage2D(GLES30.GL_TEXTURE_2D,0,bitmap,0);
             bitmap.recycle();
             bitmap = null;
