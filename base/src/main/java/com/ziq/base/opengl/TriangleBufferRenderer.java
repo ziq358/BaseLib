@@ -39,15 +39,29 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
     int mPositionHandle;
 
     String vertexshader =
-            "attribute vec4 position;\n" +
-            "void main() {\n" +
-            "    gl_Position = position;\n" +
-            "}\n";
+            "#version 300 es\n" +
+            "precision highp float;\n" +
+            "in vec3 position; \n" +
+            "\n" +
+            "out vec4 vertexColor;\n" +
+            "\n" +
+            "void main()\n" +
+            "{\n" +
+            "    gl_Position = vec4(position, 1.0);\n" +
+            "    vertexColor = vec4(0.5, 0.0, 0.0, 1.0);\n" +
+            "}";
 
     String fragmentshader =
-            "void main() {\n" +
-            "    gl_FragColor = vec4(1.0, 0.5, 0.2, 1.0);\n" +
-            "}\n";
+            "#version 300 es\n" +
+            "precision highp float;\n" +
+            "in vec4 vertexColor;\n" +
+            "\n" +
+            "out vec4 color;\n" +
+            "\n" +
+            "void main()\n" +
+            "{\n" +
+            "    color = vertexColor;\n" +
+            "}";
 
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
