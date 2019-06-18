@@ -38,6 +38,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Activity.OpenglTestActivity"/>
         <activity android:name=".Activity.InstallApkActivity"/>
         <activity android:name=".Activity.UIBlockCheckActivity"/>
         <activity android:name=".Activity.PermissionActivity"/>

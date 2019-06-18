@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -22,6 +23,7 @@ import android.provider.MediaStore;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import static com.ziq.base.utils.IntentUtil.IMAGE_UNSPECIFIED;
@@ -228,6 +230,20 @@ public class PictureUtil {
             }
         }
         return result;
+    }
+
+    public static Bitmap loadBitmapFromAssets(Context context, String filePath){
+        InputStream inputStream = null;
+        try {
+            inputStream = context.getResources().getAssets().open(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(inputStream==null) return null;
+        BitmapFactory.Options options=new BitmapFactory.Options();
+        options.inScaled=false;
+        Bitmap bitmap= BitmapFactory.decodeStream(inputStream);
+        return bitmap;
     }
 
 }
