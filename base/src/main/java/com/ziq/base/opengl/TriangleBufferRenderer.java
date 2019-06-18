@@ -25,6 +25,7 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
     public TriangleBufferRenderer(Context context) {
     }
 
+    int VAO;
     int VBO;
     int mProgramId;
     int mPositionHandle;
@@ -53,7 +54,13 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
             throw new RuntimeException("Could not get attrib location for position");
         }
 
+        //VAO
+        final int vaos[] = new int[1];
+        GLES30.glGenVertexArrays(1, vaos, 0);
+        VAO = vaos[0];
+        GLES30.glBindVertexArray(VAO);
 
+        //VBO
         // 第一步，我们向OpenGL服务端申请创建缓冲区
         final int buffers[] = new int[1];
         GLES30.glGenBuffers(buffers.length, buffers, 0);
@@ -73,9 +80,13 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
         mVerticesBuffer.position(0);
         // 把native的数据绑定保存到缓存区，注意长度为字节单位。用途是为GL_STATIC_DRAW
         GLES30.glBufferData(GL_ARRAY_BUFFER, mVerticesBuffer.capacity()*4, mVerticesBuffer, GLES30.GL_STATIC_DRAW);
+        GLES30.glVertexAttribPointer(mPositionHandle, 3, GLES30.GL_FLOAT, false, 0, 0);
+        OpenGlUtil.checkGlError("glVertexAttribPointer mPositionHandle");
+        GLES30.glEnableVertexAttribArray(mPositionHandle);
+        OpenGlUtil.checkGlError("glEnableVertexAttribArray mPositionHandle");
         // 告诉OpenGL 解绑缓冲区的操作。
         GLES30.glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+        GLES30.glBindVertexArray(0);
 
     }
 
@@ -91,20 +102,14 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
     }
 
     public void onDrawFrame() {
-
         GLES30.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         GLES30.glClear( GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
         //分成 4份，左下角显示
         GLES30.glViewport(0,0,surfaceWidth / 2,surfaceHeight/2);
         GLES30.glUseProgram(mProgramId);
-
-        GLES30.glBindBuffer(GL_ARRAY_BUFFER,VBO);
-        GLES30.glVertexAttribPointer(mPositionHandle, 3, GLES30.GL_FLOAT, false, 0, 0);
-        OpenGlUtil.checkGlError("glVertexAttribPointer mPositionHandle");
-        GLES30.glEnableVertexAttribArray(mPositionHandle);
-        OpenGlUtil.checkGlError("glEnableVertexAttribArray mPositionHandle");
+        GLES30.glBindVertexArray(VAO);
         GLES30.glDrawArrays(GLES30.GL_TRIANGLE_STRIP, 0, 3);
-        GLES30.glBindBuffer(GL_ARRAY_BUFFER, 0);
+        GLES30.glBindVertexArray(0);
     }
 
     public void onDestry(){
