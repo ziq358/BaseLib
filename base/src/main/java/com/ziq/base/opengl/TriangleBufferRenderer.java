@@ -29,10 +29,10 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
     };
 
     private final float texCoords[] = {
-            1.0f, 1.0f,   // 右上角
-            1.0f, 0.0f,   // 右下角
+            2.0f, 2.0f,   // 右上角
+            2.0f, 0.0f,   // 右下角
             0.0f, 0.0f,   // 左下角
-            0.0f, 1.0f    // 左上角
+            0.0f, 2.0f    // 左上角
     };
 
     int indexs[] = { // 起始于0!
@@ -49,10 +49,13 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
     int VBO_vertices;
     int VBO_texCoords;
     int EBO;
-    int imageTextureId;
+    int imageTextureId1;
+    int imageTextureId2;
     int mProgramId;
     int mPositionHandle;
     int mTexCoordHandle;
+    int ourTextureSamplerHandle1;
+    int ourTextureSamplerHandle2;
 
     String vertexshader =
             "#version 300 es\n" +
@@ -73,11 +76,12 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
             "precision highp float;\n" +
             "in vec4 vertexColor;\n" +
             "in vec2 TexCoord;\n" +
-            "uniform sampler2D ourTexture;\n" +
+            "uniform sampler2D ourTexture1;\n" +
+            "uniform sampler2D ourTexture2;\n" +
             "out vec4 color;\n" +
             "void main()\n" +
             "{\n" +
-            "    color = texture(ourTexture, TexCoord);\n" +
+            "    color = mix(texture(ourTexture1, TexCoord), texture(ourTexture2, TexCoord), 0.2);\n" +
             "}";
 
     @Override
@@ -89,12 +93,13 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
         }
         mPositionHandle = GLES30.glGetAttribLocation(mProgramId, "position");
         mTexCoordHandle = GLES30.glGetAttribLocation(mProgramId, "texCoord");
-        if (mPositionHandle == -1) {
-            throw new RuntimeException("Could not get attrib location for position");
-        }
-        if (mTexCoordHandle == -1) {
-            throw new RuntimeException("Could not get attrib location for texCoord");
-        }
+        ourTextureSamplerHandle1= GLES30.glGetUniformLocation(mProgramId,"ourTexture1");
+        ourTextureSamplerHandle2= GLES30.glGetUniformLocation(mProgramId,"ourTexture2");
+        if (mPositionHandle == -1) { throw new RuntimeException("Could not get attrib location for position"); }
+        if (mTexCoordHandle == -1) { throw new RuntimeException("Could not get attrib location for texCoord"); }
+        if (ourTextureSamplerHandle1 == -1) { throw new RuntimeException("Could not get attrib location for ourTexture1"); }
+        if (ourTextureSamplerHandle2 == -1) { throw new RuntimeException("Could not get attrib location for ourTexture2"); }
+
         final int buffers[] = new int[3];
         GLES30.glGenBuffers(buffers.length, buffers, 0);
         if (buffers[0] == 0) {
@@ -155,15 +160,14 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
         // 告诉OpenGL 解绑缓冲区的操作。
         GLES30.glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-        if(imageTextureId == 0){
-            int[] textureObjectIds=new int[1];
-            GLES30.glGenTextures(1,textureObjectIds,0);
-            if (textureObjectIds[0]!=0){
-                imageTextureId = textureObjectIds[0];
-            }
+        if(imageTextureId1 == 0){
+            int[] textureObjectIds=new int[2];
+            GLES30.glGenTextures(textureObjectIds.length ,textureObjectIds,0);
+            imageTextureId1 = textureObjectIds[0];
+            imageTextureId2 = textureObjectIds[1];
 
-            if(imageTextureId != 0){
-                GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, imageTextureId);
+            if(imageTextureId1 != 0){
+                GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, imageTextureId1);
                 // 为当前绑定的纹理对象设置方大放小 过滤 线性过滤
                 GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR);
                 GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_LINEAR);
@@ -176,9 +180,22 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
                 bitmap = null;
                 GLES30.glBindTexture(GLES30.GL_TEXTURE_2D,0);
             }
+            if(imageTextureId2 != 0){
+                GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, imageTextureId2);
+                // 为当前绑定的纹理对象设置方大放小 过滤 线性过滤
+                GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR);
+                GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_LINEAR);
+                // 为当前绑定的纹理对象设置环绕 重复
+                GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_S, GLES30.GL_REPEAT);
+                GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_T, GLES30.GL_REPEAT);
+                Bitmap bitmap = PictureUtil.loadBitmapFromAssets(context, "images/awesomeface.png");
+                GLUtils.texImage2D(GLES30.GL_TEXTURE_2D,0, bitmap,0);
+                bitmap.recycle();
+                bitmap = null;
+                GLES30.glBindTexture(GLES30.GL_TEXTURE_2D,0);
+            }
+
         }
-
-
 
         GLES30.glBindVertexArray(0);
 
@@ -201,8 +218,16 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
         //分成 4份，左下角显示
         GLES30.glViewport(0,0,surfaceWidth,surfaceHeight);
         GLES30.glUseProgram(mProgramId);
-        //自动把纹理赋值给片段着色器的采样器
-        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, imageTextureId);
+        //当只有一个采样时，自动把纹理赋值给片段着色器的采样器,多个采样时 需要 赋值指定
+//        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, imageTextureId);
+        GLES30.glActiveTexture(GLES30.GL_TEXTURE0);
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, imageTextureId1);
+        GLES30.glUniform1i(ourTextureSamplerHandle1, 0);
+
+        GLES30.glActiveTexture(GLES30.GL_TEXTURE1);
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, imageTextureId2);
+        GLES30.glUniform1i(ourTextureSamplerHandle2, 1);
+
         GLES30.glBindVertexArray(VAO);
         GLES30.glDrawElements(GLES30.GL_TRIANGLES, 6, GLES30.GL_UNSIGNED_INT, 0);
         //解绑
