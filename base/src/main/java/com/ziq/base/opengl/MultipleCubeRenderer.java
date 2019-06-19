@@ -266,8 +266,13 @@ public class MultipleCubeRenderer implements GLSurfaceView.Renderer {
         Matrix.setIdentityM(projectionMatrix,0);
         //旋转 跟 摄像机 的位置 会影响 显示效果，有可能部分直接不显示，得调整好距离
         //设置了透视投影，摄像机 的位置 需要改变
+        angle = angle + 1;
+        float radius = 10.0f;
+        double result = angle / 360 * 2 * Math.PI;
+        float camX = (float)Math.sin(result) * radius;
+        float camZ = (float) Math.cos(result) * radius;
         Matrix.setLookAtM(viewMatrix, 0,
-                0.0f, 0.0f, 5.0f,
+                camX, 0.0f, camZ,
                 0.0f, 0.0f,0.0f,
                 0.0f, 1.0f, 0.0f);
         float ratio = (float)surfaceWidth / (float)surfaceHeight;
@@ -287,7 +292,7 @@ public class MultipleCubeRenderer implements GLSurfaceView.Renderer {
         {
             Matrix.setIdentityM(modelMatrix,0);// 单位矩阵
             Matrix.translateM(modelMatrix, 0, cubePositions[i][0], cubePositions[i][1], cubePositions[i][2]);
-            angle = 20.0f * i;
+            float angle = 20.0f * i;
             Matrix.rotateM(modelMatrix, 0, angle, 1.0f, 0.3f, 0.5f);
             int modelLoc = GLES30.glGetUniformLocation(mProgramId, "model");
             GLES30.glUniformMatrix4fv(modelLoc, 1, false, modelMatrix, 0);
