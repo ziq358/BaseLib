@@ -2,9 +2,11 @@ package com.ziq.base.opengl;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
+import android.opengl.Matrix;
 
 import com.ziq.base.utils.PictureUtil;
 
@@ -57,6 +59,10 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
     int ourTextureSamplerHandle1;
     int ourTextureSamplerHandle2;
 
+    private float[] modelMatrix = new float[16];//世界
+    private float[] viewMatrix = new float[16];//视察
+    private float[] projectionMatrix = new float[16];//投影
+
     String vertexshader =
             "#version 300 es\n" +
             "precision highp float;\n" +
@@ -64,9 +70,13 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
             "in vec2 texCoord; \n" +
             "out vec4 vertexColor;\n" +
             "out vec2 TexCoord;\n" +
+            "\n" +
+            "uniform mat4 model;\n" +
+            "uniform mat4 view;\n" +
+            "uniform mat4 projection;\n" +
             "void main()\n" +
             "{\n" +
-            "    gl_Position = vec4(position, 1.0);\n" +
+            "    gl_Position = projection * view * model * vec4(position, 1.0);\n" +
             "    vertexColor = vec4(0.5, 0.0, 0.0, 1.0);\n" +
             "    TexCoord = texCoord;\n" +
             "}";
@@ -215,7 +225,8 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame() {
         GLES30.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         GLES30.glClear( GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
-        //分成 4份，左下角显示
+        GLES30.glEnable(GLES20.GL_DEPTH_TEST);
+        //分成 4份，左下角 是 0,0
         GLES30.glViewport(0,0,surfaceWidth,surfaceHeight);
         GLES30.glUseProgram(mProgramId);
         //当只有一个采样时，自动把纹理赋值给片段着色器的采样器,多个采样时 需要 赋值指定
@@ -228,11 +239,35 @@ public class TriangleBufferRenderer implements GLSurfaceView.Renderer {
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, imageTextureId2);
         GLES30.glUniform1i(ourTextureSamplerHandle2, 1);
 
+        //矩阵 变换
+        Matrix.setIdentityM(modelMatrix,0);// 单位矩阵
+        Matrix.setIdentityM(viewMatrix, 0);
+        Matrix.setIdentityM(projectionMatrix,0);
+        //旋转 跟 摄像机 的位置 会影响 显示效果，有可能部分直接不显示，得调整好距离
+        Matrix.rotateM(modelMatrix, 0, -45, 1.0f, 0.0f, 0.0f);
+        //设置了透视投影，摄像机 的位置 需要改变
+        Matrix.setLookAtM(viewMatrix, 0,
+                0.0f, 0.0f, 3.0f,
+                0.0f, 0.0f,0.0f,
+                0.0f, 1.0f, 0.0f);
+        float ratio = (float)surfaceWidth / (float)surfaceHeight;
+        //设置了投影 离 镜头 0.1 - 100 的东西能看到
+        Matrix.perspectiveM(projectionMatrix, 0, 45, ratio, 0.1f, 100.0f);
+
+        int modelLoc = GLES30.glGetUniformLocation(mProgramId, "model");
+        GLES30.glUniformMatrix4fv(modelLoc, 1, false, modelMatrix, 0);
+        int viewLoc = GLES30.glGetUniformLocation (mProgramId, "view");
+        GLES30.glUniformMatrix4fv(viewLoc, 1, false, viewMatrix, 0);
+        int projectionLoc = GLES30.glGetUniformLocation (mProgramId, "projection");
+        GLES30.glUniformMatrix4fv(projectionLoc, 1, false, projectionMatrix, 0);
+
+        //绑定vao， 绘制时 使用vao中记录的数据
         GLES30.glBindVertexArray(VAO);
         GLES30.glDrawElements(GLES30.GL_TRIANGLES, 6, GLES30.GL_UNSIGNED_INT, 0);
         //解绑
         GLES30.glBindVertexArray(0);
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, 0);
+        GLES30.glDisable(GLES20.GL_DEPTH_TEST);
     }
 
     public void onDestry(){
