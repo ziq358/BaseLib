@@ -272,8 +272,8 @@ public class MultipleCubeRenderer implements GLSurfaceView.Renderer {
         float camX = (float)Math.sin(result) * radius;
         float camZ = (float) Math.cos(result) * radius;
         Matrix.setLookAtM(viewMatrix, 0,
-                camX, 0.0f, camZ,
-                0.0f, 0.0f,0.0f,
+                camX, 0.0f, camZ,  //位置
+                0.0f, 0.0f,-100.0f, //望向的点
                 0.0f, 1.0f, 0.0f);
         float ratio = (float)surfaceWidth / (float)surfaceHeight;
         //设置了投影 离 镜头 0.1 - 100 的东西能看到
