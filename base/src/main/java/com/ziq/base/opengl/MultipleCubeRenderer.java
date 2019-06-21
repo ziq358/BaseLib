@@ -102,6 +102,8 @@ public class MultipleCubeRenderer implements GLSurfaceView.Renderer {
     private float[] viewMatrix = new float[16];//视察
     private float[] projectionMatrix = new float[16];//投影
 
+    public float mDeltaX = 0;
+    public float mDeltaY = 0;
     float angle = 0f;
 
     String vertexshader =
@@ -272,7 +274,7 @@ public class MultipleCubeRenderer implements GLSurfaceView.Renderer {
         float camX = (float)Math.sin(result) * radius;
         float camZ = (float) Math.cos(result) * radius;
         Matrix.setLookAtM(viewMatrix, 0,
-                camX, 0.0f, camZ,  //位置
+                0.0f, 0.0f, 10.f,  //位置
                 0.0f, 0.0f,0.0f, //望向的点
                 0.0f, 1.0f, 0.0f);
         float ratio = (float)surfaceWidth / (float)surfaceHeight;
@@ -291,6 +293,9 @@ public class MultipleCubeRenderer implements GLSurfaceView.Renderer {
         for(int i = 0; i < 10; i++)
         {
             Matrix.setIdentityM(modelMatrix,0);// 单位矩阵
+            //转动
+            Matrix.rotateM(modelMatrix, 0, mDeltaY, 1.0f, 0.0f, 0.0f);
+            Matrix.rotateM(modelMatrix, 0, mDeltaX, 0.0f, 1.0f, 0.0f);
             Matrix.translateM(modelMatrix, 0, cubePositions[i][0], cubePositions[i][1], cubePositions[i][2]);
             float angle = 20.0f * i;
             Matrix.rotateM(modelMatrix, 0, angle, 1.0f, 0.3f, 0.5f);
