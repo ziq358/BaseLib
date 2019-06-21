@@ -47,7 +47,7 @@ public class SphereRenderer implements GLSurfaceView.Renderer {
     private float[] viewMatrix = new float[16];//视察
     private float[] projectionMatrix = new float[16];//投影
 
-    public float mDeltaX = 0;
+    public float mDeltaX = -90;// 起点  是 x = 1 的位置，中间点是x = -1 面向的方向是x=0，所以差90 度
     public float mDeltaY = 0;
     float angle = 0f;
 
@@ -201,7 +201,7 @@ public class SphereRenderer implements GLSurfaceView.Renderer {
                 0.0f, 1.0f, 0.0f);
         float ratio = (float)surfaceWidth / (float)surfaceHeight;
 //        //设置了投影 离 镜头 0.1 - 100 的东西能看到
-        float currentDegree= (float) (Math.toDegrees(Math.atan(1))*2);
+        float currentDegree= (float) (Math.toDegrees(Math.atan(1))*2);//90 视野  越大看得越多
         Matrix.perspectiveM(projectionMatrix, 0, currentDegree, ratio, 0.1f, 500.0f);
 
         int modelLoc = GLES30.glGetUniformLocation(mProgramId, "model");
@@ -253,13 +253,13 @@ public class SphereRenderer implements GLSurfaceView.Renderer {
             int t = 0, v = 0;
             for(r = 0; r < rings + 1; r++) {
                 for(s = 0; s < sectors + 1; s++) {
+
+                    texcoords[t++] = s*S;// 0 -> 1 所以 纹理是 从 下往上 ，左到右
+                    texcoords[t++] = r*R;// 0 -> 1
+
                     x = (float) (Math.cos(2*PI * s * S) * Math.sin( PI * r * R ));
-                    y = (float) Math.sin( -PI_2 + PI * r * R );
+                    y = -1 * (float) Math.sin( -PI_2 + PI * r * R );
                     z = (float) (Math.sin(2*PI * s * S) * Math.sin( PI * r * R ));
-
-                    texcoords[t++] = s*S;
-                    texcoords[t++] = r*R;
-
                     vertexs[v++] = x * radius;
                     vertexs[v++] = y * radius;
                     vertexs[v++] = z * radius;
@@ -268,15 +268,15 @@ public class SphereRenderer implements GLSurfaceView.Renderer {
 
             //点是 从上端到下端 ， 一环接一环 共rings 环，每环sectors + 1个点， 每环从右边x = 1 开始环绕一周
             //new Sphere(18,75,150);为例子
-            // 150 149 ... 2   1   0           第一环
-            // 301 300 ... 153 152 151          第二环
-            // 452 451 ... 304 303 302          第三环
+            // 302 303 304 ... 451 452              第三环
+            // 151 152 153 ... 300 301             第二环
+            // 0    1   2  ... 149 150           第一环
 
             //形成的三角形是
-            // 0 151 1，     第一条 环
-            // 1 151 152，
-            // 151 302 152，    第二条 环
             // 152 302 303，
+            // 151 302 152，    第二条 环
+            // 1 151 152，
+            // 0 151 1，     第一条 环
 
 
 
