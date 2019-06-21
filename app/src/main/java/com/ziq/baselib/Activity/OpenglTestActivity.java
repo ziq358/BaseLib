@@ -17,6 +17,7 @@ import com.ziq.base.mvp.MvpBaseActivity;
 import com.ziq.base.opengl.CubeRenderer;
 import com.ziq.base.opengl.FullViewRenderer;
 import com.ziq.base.opengl.MultipleCubeRenderer;
+import com.ziq.base.opengl.SphereRenderer;
 import com.ziq.base.opengl.TriangleBufferRenderer;
 import com.ziq.base.utils.PictureUtil;
 import com.ziq.baselib.R;
@@ -35,7 +36,7 @@ public class OpenglTestActivity extends MvpBaseActivity{
     @BindView(R.id.glSurfaceView)
     GLSurfaceView glSurfaceView;
     private String filePath="images/texture_360_n.jpg";
-    MultipleCubeRenderer myRenderer;
+    SphereRenderer myRenderer;
     GestureDetector gestureDetector;
     private static final float sDensity =  Resources.getSystem().getDisplayMetrics().density;
     private static final float sDamping = 0.2f;//阻尼
@@ -51,7 +52,7 @@ public class OpenglTestActivity extends MvpBaseActivity{
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        myRenderer = new MultipleCubeRenderer(OpenglTestActivity.this);
+        myRenderer = new SphereRenderer(OpenglTestActivity.this);
         glSurfaceView.setEGLContextClientVersion(2);
         glSurfaceView.setRenderer(myRenderer);
         glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
