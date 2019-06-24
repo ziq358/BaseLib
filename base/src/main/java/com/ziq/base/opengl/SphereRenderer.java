@@ -26,8 +26,10 @@ public class SphereRenderer implements GLSurfaceView.Renderer {
 
     Context context;
     private Sphere mSphere;
-    public SphereRenderer(Context context) {
+    private String filePath;
+    public SphereRenderer(Context context, String filePath) {
         this.context = context;
+        this.filePath = filePath;
         mSphere = new Sphere(18,75,150);
     }
 
@@ -150,7 +152,7 @@ public class SphereRenderer implements GLSurfaceView.Renderer {
                 // 为当前绑定的纹理对象设置环绕 重复
                 GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_S, GLES30.GL_REPEAT);
                 GLES30.glTexParameterf(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_T, GLES30.GL_REPEAT);
-                Bitmap bitmap = PictureUtil.loadBitmapFromAssets(context, "images/texture_360_n.jpg");
+                Bitmap bitmap = PictureUtil.loadBitmapFromAssets(context, filePath);
                 GLUtils.texImage2D(GLES30.GL_TEXTURE_2D,0, bitmap,0);
                 bitmap.recycle();
                 bitmap = null;

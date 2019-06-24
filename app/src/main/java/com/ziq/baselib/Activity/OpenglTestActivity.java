@@ -40,7 +40,7 @@ public class OpenglTestActivity extends MvpBaseActivity implements SensorEventLi
 
     @BindView(R.id.glSurfaceView)
     GLSurfaceView glSurfaceView;
-    private String filePath="images/texture_360_n.jpg";
+    String filePath="images/cinema.jpg";
     SphereRenderer myRenderer;
     GestureDetector gestureDetector;
     private static final float sDensity =  Resources.getSystem().getDisplayMetrics().density;
@@ -64,7 +64,7 @@ public class OpenglTestActivity extends MvpBaseActivity implements SensorEventLi
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        myRenderer = new SphereRenderer(OpenglTestActivity.this);
+        myRenderer = new SphereRenderer(OpenglTestActivity.this, filePath);
         glSurfaceView.setEGLContextClientVersion(2);
         glSurfaceView.setRenderer(myRenderer);
         glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
