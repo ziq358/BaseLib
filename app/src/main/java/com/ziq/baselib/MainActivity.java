@@ -26,6 +26,7 @@ import com.ziq.baselib.Activity.RetrofitActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 import com.ziq.baselib.Activity.TestActivity;
 import com.ziq.baselib.Activity.UIBlockCheckActivity;
+import com.ziq.baselib.Activity.WorkManagerActivity;
 import com.ziq.baselib.Activity.muxer.MuxerActivity;
 import com.ziq.baselib.test.TestByteBufferActivity;
 
@@ -69,6 +70,7 @@ public class MainActivity extends MvpBaseActivity {
     }
 
     private void initData() {
+        dataList.add(new DemoListItem("DEMO-WorkManager", WorkManagerActivity.class));
         dataList.add(new DemoListItem("DEMO-OpenGl", OpenglTestActivity.class));
         dataList.add(new DemoListItem("DEMO-权限检查", PermissionActivity.class));
         dataList.add(new DemoListItem("DEMO-监听网速", NetSpeedActivity.class));
