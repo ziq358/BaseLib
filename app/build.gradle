@@ -59,4 +59,7 @@ dependencies {
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     api "android.arch.work:work-runtime:1.0.1"
     api "android.arch.work:work-firebase:1.0.+"
+
+    api "android.arch.persistence.room:runtime:1.1.1"
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 }

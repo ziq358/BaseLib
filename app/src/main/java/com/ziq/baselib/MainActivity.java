@@ -23,6 +23,7 @@ import com.ziq.baselib.Activity.NetSpeedActivity;
 import com.ziq.baselib.Activity.OpenglTestActivity;
 import com.ziq.baselib.Activity.PermissionActivity;
 import com.ziq.baselib.Activity.RetrofitActivity;
+import com.ziq.baselib.Activity.RoomActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 import com.ziq.baselib.Activity.SocketActivity;
 import com.ziq.baselib.Activity.TestActivity;
@@ -71,6 +72,7 @@ public class MainActivity extends MvpBaseActivity {
     }
 
     private void initData() {
+        dataList.add(new DemoListItem("DEMO-Room", RoomActivity.class));
         dataList.add(new DemoListItem("DEMO-Socket", SocketActivity.class));
         dataList.add(new DemoListItem("DEMO-WorkManager", WorkManagerActivity.class));
         dataList.add(new DemoListItem("DEMO-OpenGl", OpenglTestActivity.class));
