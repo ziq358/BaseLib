@@ -14,7 +14,7 @@ import com.ziq.base.utils.NetworkUtil;
 import com.ziq.baselib.Activity.AesEncryptionActivity;
 import com.ziq.baselib.Activity.AudioRecordActivity;
 import com.ziq.baselib.Activity.BluetoothActivity;
-import com.ziq.baselib.Activity.CameraActivity;
+import com.ziq.baselib.Activity.Camera2Activity;
 import com.ziq.baselib.Activity.DataTranslateTestActivity;
 import com.ziq.baselib.Activity.FragmentTestActivity;
 import com.ziq.baselib.Activity.ImageLoaderTestActivity;
@@ -73,7 +73,7 @@ public class MainActivity extends MvpBaseActivity {
     }
 
     private void initData() {
-        dataList.add(new DemoListItem("DEMO-Camera", CameraActivity.class));
+        dataList.add(new DemoListItem("DEMO-Camera2", Camera2Activity.class));
         dataList.add(new DemoListItem("DEMO-Room", RoomActivity.class));
         dataList.add(new DemoListItem("DEMO-Socket", SocketActivity.class));
         dataList.add(new DemoListItem("DEMO-WorkManager", WorkManagerActivity.class));
