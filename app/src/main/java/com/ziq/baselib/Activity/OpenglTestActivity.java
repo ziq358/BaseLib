@@ -65,7 +65,7 @@ public class OpenglTestActivity extends MvpBaseActivity implements SensorEventLi
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         myRenderer = new SphereRenderer(OpenglTestActivity.this, filePath);
-        glSurfaceView.setEGLContextClientVersion(2);
+        glSurfaceView.setEGLContextClientVersion(3);
         glSurfaceView.setRenderer(myRenderer);
         glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 

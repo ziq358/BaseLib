@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.ziq.base.baserx.dagger.component.AppComponent;
 import com.ziq.base.mvp.MvpBaseActivity;
 import com.ziq.base.utils.CameraUtils;
+import com.ziq.base.utils.FileUtil;
 import com.ziq.baselib.Constants;
 import com.ziq.baselib.R;
 
@@ -45,7 +46,6 @@ public class MuxerActivity extends MvpBaseActivity implements Camera.PreviewCall
     @BindView(R.id.surface_view)
     SurfaceView mSurfaceView;
 
-    Camera mCamera;
     SurfaceHolder mSurfaceHolder;
 
     MuxerThread mMuxerThread;
@@ -80,27 +80,22 @@ public class MuxerActivity extends MvpBaseActivity implements Camera.PreviewCall
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 mSurfaceHolder = holder;
-
-                mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
-                CameraUtils.setCameraDisplayOrientation(MuxerActivity.this, Camera.CameraInfo.CAMERA_FACING_BACK, mCamera);
-                CameraUtils.initPreviewSize(MuxerActivity.this, mCamera, mSurfaceView.getWidth(), mSurfaceView.getHeight());
                 try {
-                    mCamera.setPreviewDisplay(holder);
-                    mCamera.setPreviewCallback(MuxerActivity.this);
-                    mCamera.startPreview();
-                } catch (IOException e) {
+                    CameraUtils.openCamera(MuxerActivity.this, false, mSurfaceView.getWidth(), mSurfaceView.getHeight());
+                    CameraUtils.setCameraDisplayOrientation(MuxerActivity.this);
+                    CameraUtils.startPreviewDisplay(holder, MuxerActivity.this);
+                } catch (Exception e) {
                 }
             }
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
                 mSurfaceHolder = holder;
-                mCamera.stopPreview();
                 try {
-                    mCamera.setPreviewDisplay(holder);
-                    mCamera.setPreviewCallback(MuxerActivity.this);
-                    mCamera.startPreview();
-                } catch (IOException e) {
+                    CameraUtils.stopPreview();
+                    CameraUtils.setCameraDisplayOrientation(MuxerActivity.this);
+                    CameraUtils.startPreviewDisplay(holder, MuxerActivity.this);
+                } catch (Exception e) {
                 }
             }
 
@@ -113,7 +108,16 @@ public class MuxerActivity extends MvpBaseActivity implements Camera.PreviewCall
         mSurfaceView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                CameraUtils.doFocus(mCamera, event, mSurfaceView.getWidth(), mSurfaceView.getHeight(), MuxerActivity.this);
+                try {
+                    CameraUtils.doFocus(event, new Camera.AutoFocusCallback() {
+                        @Override
+                        public void onAutoFocus(boolean success, Camera camera) {
+                            Toast.makeText(MuxerActivity.this, "onAutoFocus:\n" + success, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return false;
             }
         });
@@ -147,11 +151,11 @@ public class MuxerActivity extends MvpBaseActivity implements Camera.PreviewCall
     }
 
     private void start() {
-        String filePath = Constants.getDataDirPath(this, "muxer") + File.separator + System.currentTimeMillis() + ".mp4";
+        String filePath = FileUtil.getInnerSDCardAppPath(this) + File.separator + System.currentTimeMillis() + ".mp4";
         Log.e(TAG, "filePath: " + filePath);
         mTvPath.setText(filePath);
-        if (mCamera != null) {
-            mMuxerThread = new MuxerThread(filePath, mCamera.getParameters().getPreviewSize().width, mCamera.getParameters().getPreviewSize().height);
+        if (CameraUtils.getCamera() != null) {
+            mMuxerThread = new MuxerThread(filePath, CameraUtils.getCamera().getParameters().getPreviewSize().width, CameraUtils.getCamera().getParameters().getPreviewSize().height);
             mMuxerThread.startMuxer();
         }
     }

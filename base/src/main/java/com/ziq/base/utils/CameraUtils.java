@@ -8,8 +8,10 @@ import android.hardware.Camera;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +20,121 @@ import java.util.List;
  */
 
 public class CameraUtils {
-    public static final int AREA_SIZE = 100;
+    private static final int AREA_SIZE = 100;
+    private static int sCameraID = Camera.CameraInfo.CAMERA_FACING_BACK;//默认后置摄像头
+    private static Camera sCamera;
+    private static int sSurfaceWidth;
+    private static int sSurfaceHeight;
+
+    public static int getCameraID() {
+        return sCameraID;
+    }
+
+    public static Camera getCamera() {
+        return sCamera;
+    }
+
+    /**
+     * 开始预览
+     */
+    public static void startPreview() {
+        if (sCamera != null) {
+            sCamera.startPreview();
+        }
+    }
+
+    /**
+     * 停止预览
+     */
+    public static void stopPreview() {
+        if (sCamera != null) {
+            sCamera.stopPreview();
+        }
+    }
+    /**
+     * 释放相机
+     */
+    public static void releaseCamera() {
+        if (sCamera != null) {
+            sCamera.stopPreview();
+            sCamera.release();
+            sCamera = null;
+        }
+    }
+
+
+    public static void openCamera(Context context, int cameraID, int surfaceWidth, int surfaceHeight) throws Exception {
+        checkCameraInitStatus();
+        sSurfaceWidth = surfaceWidth;
+        sSurfaceHeight = surfaceHeight;
+        sCamera = Camera.open(cameraID);
+        Camera.CameraInfo info = new Camera.CameraInfo();
+        Camera.getCameraInfo(cameraID, info);
+        sCameraID = info.facing;
+        initCamera(context);
+    }
+
+    public static void openCamera(Context context, boolean isFront, int surfaceWidth, int surfaceHeight) throws Exception {
+        checkCameraInitStatus();
+        sSurfaceWidth = surfaceWidth;
+        sSurfaceHeight = surfaceHeight;
+        int targetFacing = isFront ? Camera.CameraInfo.CAMERA_FACING_FRONT : Camera.CameraInfo.CAMERA_FACING_BACK;
+        Camera.CameraInfo info = new Camera.CameraInfo();
+        int numCameras = Camera.getNumberOfCameras();
+        for (int i = 0; i < numCameras; i++) {
+            Camera.getCameraInfo(i, info);
+            if (info.facing == targetFacing) {
+                sCamera = Camera.open(i);
+                sCameraID = info.facing;
+                break;
+            }
+        }
+        // 没有摄像头时，抛出异常
+        checkCamera();
+        initCamera(context);
+    }
+
+    private static void checkCamera() throws Exception {
+        if (sCamera == null) {
+            throw new Exception("Unable to open camera");
+        }
+    }
+
+    private static void checkCameraInitStatus() throws Exception {
+        if (sCamera != null) {
+            throw new Exception("Camera already initialized!");
+        }
+    }
+
+    private static void initCamera(Context context){
+        initPreviewSize(context, sCamera, sSurfaceWidth, sSurfaceHeight);
+        initPictureSize(context, sCamera, sSurfaceWidth, sSurfaceHeight);
+    }
+
+    //设置预览大小
+    public static void initPreviewSize(Context context, android.hardware.Camera camera, int surfaceWidth, int surfaceHeight){
+        android.hardware.Camera.Parameters parameters = camera.getParameters();
+        Log.i("CameraUtils", "initPreviewSize: ---"+parameters.getPreviewSize().width+" "+parameters.getPreviewSize().height);
+        android.hardware.Camera.Size size = getCloselySize(isPortrait(context), surfaceWidth, surfaceHeight, parameters.getSupportedPreviewSizes());
+        Log.i("CameraUtils", "initPreviewSize: --- target "+size.width+" "+size.height);
+        parameters.setPreviewSize(size.width, size.height);
+        camera.setParameters(parameters);
+    }
+
+    public static void initPictureSize(Context context, android.hardware.Camera camera, int surfaceWidth, int surfaceHeight){
+        android.hardware.Camera.Parameters parameters = camera.getParameters();
+        Log.i("CameraUtils", "initPictureSize: ---"+parameters.getPictureSize().width+" "+parameters.getPictureSize().height);
+        android.hardware.Camera.Size size = getCloselySize(isPortrait(context), surfaceWidth, surfaceHeight, parameters.getSupportedPictureSizes());
+        Log.i("CameraUtils", "initPictureSize: --- target "+size.width+" "+size.height);
+        parameters.setPictureSize(size.width, size.height);
+        camera.setParameters(parameters);
+    }
 
     //旋转角度
+    public static int setCameraDisplayOrientation(Activity activity) throws Exception {
+        checkCamera();
+        return setCameraDisplayOrientation(activity, sCameraID, sCamera);
+    }
     public static int setCameraDisplayOrientation(Activity activity, int cameraId, android.hardware.Camera camera) {
         android.hardware.Camera.CameraInfo info =
                 new android.hardware.Camera.CameraInfo();
@@ -41,30 +155,11 @@ public class CameraUtils {
         } else {  // back-facing
             result = (info.orientation - degrees + 360) % 360;
         }
-        Log.e("ziq", "mCameraRestOrientation: "+result);
-        camera.setDisplayOrientation(result);
+        Log.i("CameraUtils", "mCameraRestOrientation: "+result);
+        if(camera != null){
+            camera.setDisplayOrientation(result);
+        }
         return result;
-    }
-
-
-
-    public static void initPictureSize(Context context, android.hardware.Camera camera, int surfaceWidth, int surfaceHeight){
-        android.hardware.Camera.Parameters parameters = camera.getParameters();
-
-        Log.e("CameraUtils", "initPictureSize: ---"+parameters.getPictureSize().width+" "+parameters.getPictureSize().height);
-        android.hardware.Camera.Size size = getCloselySize(isPortrait(context), surfaceWidth, surfaceHeight, parameters.getSupportedPictureSizes());
-        Log.e("CameraUtils", "initPictureSize: --- target "+size.width+" "+size.height);
-        parameters.setPictureSize(size.width, size.height);
-        camera.setParameters(parameters);
-    }
-
-    public static void initPreviewSize(Context context, android.hardware.Camera camera, int surfaceWidth, int surfaceHeight){
-        android.hardware.Camera.Parameters parameters = camera.getParameters();
-        Log.e("CameraUtils", "initPreviewSize: ---"+parameters.getPreviewSize().width+" "+parameters.getPreviewSize().height);
-        android.hardware.Camera.Size size = getCloselySize(isPortrait(context), surfaceWidth, surfaceHeight, parameters.getSupportedPreviewSizes());
-        Log.e("CameraUtils", "initPreviewSize: --- target "+size.width+" "+size.height);
-        parameters.setPreviewSize(size.width, size.height);
-        camera.setParameters(parameters);
     }
 
     //activity 方向
@@ -74,7 +169,7 @@ public class CameraUtils {
     }
 
     public static android.hardware.Camera.Size getCloselySize(boolean isPortrait, int surfaceWidth, int surfaceHeight, List<android.hardware.Camera.Size> sizeList) {
-        Log.e("ziq", "getCloselySize: ----- surfaceWidth "+surfaceWidth+" surfaceHeight "+surfaceHeight);
+        Log.i("CameraUtils", "getCloselySize: ----- surfaceWidth "+surfaceWidth+" surfaceHeight "+surfaceHeight);
         android.hardware.Camera.Size targetSize = null;
         int reqTmpWidth;
         int reqTmpHeight;
@@ -88,7 +183,7 @@ public class CameraUtils {
         }
         if(sizeList != null){
             for (android.hardware.Camera.Size size:sizeList){
-                Log.e("ziq", "getCloselySize: "+size.width+" "+size.height);
+                Log.i("CameraUtils", "getCloselySize: "+size.width+" "+size.height);
                 if((size.width == reqTmpWidth) && (size.height == reqTmpHeight)){
                     return size;
                 }
@@ -112,7 +207,29 @@ public class CameraUtils {
     }
 
 
-    public static void doFocus(Camera mCamera, MotionEvent event, int surfaceWidth, int surfaceHeight, final Context context){
+
+
+
+    /**
+     * 开始预览
+     */
+    public static void startPreviewDisplay(SurfaceHolder holder, Camera.PreviewCallback cb) throws Exception {
+        checkCamera();
+        sCamera.setPreviewDisplay(holder);
+        sCamera.setPreviewCallback(cb);
+        sCamera.startPreview();
+    }
+
+    /**
+     * 对焦
+     */
+    public static void doFocus(MotionEvent event, Camera.AutoFocusCallback callback) throws Exception {
+        checkCamera();
+        doFocus(sCamera, event, sSurfaceWidth, sSurfaceHeight, callback);
+    }
+
+
+    public static void doFocus(Camera mCamera, MotionEvent event, int surfaceWidth, int surfaceHeight, Camera.AutoFocusCallback callback){
         mCamera.cancelAutoFocus();
         android.hardware.Camera.Parameters parameters = mCamera.getParameters();
         parameters.setFocusMode(android.hardware.Camera.Parameters.FOCUS_MODE_AUTO);
@@ -136,15 +253,10 @@ public class CameraUtils {
             parameters.setMeteringAreas(areaList);
         }
         mCamera.setParameters(parameters);
-        mCamera.autoFocus(new android.hardware.Camera.AutoFocusCallback() {
-            @Override
-            public void onAutoFocus(boolean success, android.hardware.Camera camera) {
-                Toast.makeText(context, "onAutoFocus:\n" + success, Toast.LENGTH_LONG).show();
-            }
-        });
+        mCamera.autoFocus(callback);
     }
 
-    public static int clamp(int x, int min, int max) {//保证坐标必须在min到max之内，否则异常
+    private static int clamp(int x, int min, int max) {//保证坐标必须在min到max之内，否则异常
         if (x > max) {
             return max;
         }

@@ -39,6 +39,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Activity.CameraActivity"/>
         <activity android:name=".Activity.RoomActivity"/>
         <activity android:name=".Activity.SocketActivity"/>
         <activity android:name=".Activity.WorkManagerActivity"/>
