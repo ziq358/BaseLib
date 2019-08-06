@@ -57,6 +57,7 @@ public class CameraUtils {
     public static void releaseCamera() {
         if (sCamera != null) {
             sCamera.stopPreview();
+            sCamera.setPreviewCallback(null);
             sCamera.release();
             sCamera = null;
         }
