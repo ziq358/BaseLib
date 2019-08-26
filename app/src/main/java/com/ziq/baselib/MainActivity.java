@@ -29,6 +29,7 @@ import com.ziq.baselib.Activity.RoomActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 import com.ziq.baselib.Activity.SocketActivity;
 import com.ziq.baselib.Activity.UIBlockCheckActivity;
+import com.ziq.baselib.Activity.UiDrawActivity;
 import com.ziq.baselib.Activity.WorkManagerActivity;
 import com.ziq.baselib.Activity.muxer.MuxerActivity;
 import com.ziq.baselib.test.TestByteBufferActivity;
@@ -73,7 +74,7 @@ public class MainActivity extends MvpBaseActivity {
     }
 
     private void initData() {
-        dataList.add(new DemoListItem("DEMO-UI绘制", Camera2Activity.class));
+        dataList.add(new DemoListItem("DEMO-UI绘制", UiDrawActivity.class));
         dataList.add(new DemoListItem("DEMO-Camera2", Camera2Activity.class));
         dataList.add(new DemoListItem("DEMO-Room", RoomActivity.class));
         dataList.add(new DemoListItem("DEMO-Socket", SocketActivity.class));

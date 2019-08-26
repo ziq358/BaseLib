@@ -2,8 +2,43 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    >
 
+    <com.ziq.baselib.widget.UiDrawView
+        android:id="@+id/v_ui"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/ui_background"
+        android:orientation="vertical"
+        >
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginTop="-100dp"
+            android:text="button"
+            />
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:text="button"
+            />
+        <Button
+            android:id="@+id/btn3"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="-100dp"
+            android:layout_gravity="bottom"
+            android:text="button"
+            />
 
+    </com.ziq.baselib.widget.UiDrawView>
 
 </FrameLayout>
