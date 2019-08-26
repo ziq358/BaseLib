@@ -39,6 +39,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Activity.UiDrawActivity"/>
         <activity android:name=".Activity.Camera2Activity"/>
         <activity android:name=".Activity.RoomActivity"/>
         <activity android:name=".Activity.SocketActivity"/>
@@ -55,9 +56,9 @@
         <activity android:name=".Activity.DataTranslateTestActivity"/>
         <activity android:name=".Activity.AesEncryptionActivity"/>
         <activity android:name=".Activity.BluetoothActivity"/>
-        <activity android:name=".Activity.TestActivity"/>
+        <activity android:name=".Activity.DeviceInfoActivity"/>
         <activity android:name=".Activity.NetSpeedActivity"/>
-        <activity android:name=".Activity.FragmentTestActivity"/>
+        <activity android:name=".Activity.MvpFragmentTestActivity"/>
         <activity android:name=".Activity.RetrofitActivity"/>
         <activity android:name=".test.TestByteBufferActivity"/>
         <activity android:name="com.ziq.base.mvvm.demo.LoginDemoActivity"/>

@@ -17,7 +17,7 @@ import butterknife.BindView;
  * @author wuyanqiang
  * @date 2018/10/12
  */
-public class FragmentTestActivity extends MvpBaseActivity {
+public class MvpFragmentTestActivity extends MvpBaseActivity {
     @Override
     public int initLayoutResourceId() {
         return R.layout.activity_fragment_test;

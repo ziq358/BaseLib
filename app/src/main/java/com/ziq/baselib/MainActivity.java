@@ -16,7 +16,8 @@ import com.ziq.baselib.Activity.AudioRecordActivity;
 import com.ziq.baselib.Activity.BluetoothActivity;
 import com.ziq.baselib.Activity.Camera2Activity;
 import com.ziq.baselib.Activity.DataTranslateTestActivity;
-import com.ziq.baselib.Activity.FragmentTestActivity;
+import com.ziq.baselib.Activity.DeviceInfoActivity;
+import com.ziq.baselib.Activity.MvpFragmentTestActivity;
 import com.ziq.baselib.Activity.ImageLoaderTestActivity;
 import com.ziq.baselib.Activity.InstallApkActivity;
 import com.ziq.baselib.Activity.MediacodecActivity;
@@ -27,7 +28,6 @@ import com.ziq.baselib.Activity.RetrofitActivity;
 import com.ziq.baselib.Activity.RoomActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
 import com.ziq.baselib.Activity.SocketActivity;
-import com.ziq.baselib.Activity.TestActivity;
 import com.ziq.baselib.Activity.UIBlockCheckActivity;
 import com.ziq.baselib.Activity.WorkManagerActivity;
 import com.ziq.baselib.Activity.muxer.MuxerActivity;
@@ -73,13 +73,16 @@ public class MainActivity extends MvpBaseActivity {
     }
 
     private void initData() {
+        dataList.add(new DemoListItem("DEMO-UI绘制", Camera2Activity.class));
         dataList.add(new DemoListItem("DEMO-Camera2", Camera2Activity.class));
         dataList.add(new DemoListItem("DEMO-Room", RoomActivity.class));
         dataList.add(new DemoListItem("DEMO-Socket", SocketActivity.class));
         dataList.add(new DemoListItem("DEMO-WorkManager", WorkManagerActivity.class));
+        dataList.add(new DemoListItem("DEMO-test-bytebuffer", TestByteBufferActivity.class));
         dataList.add(new DemoListItem("DEMO-OpenGl", OpenglTestActivity.class));
         dataList.add(new DemoListItem("DEMO-权限检查", PermissionActivity.class));
         dataList.add(new DemoListItem("DEMO-监听网速", NetSpeedActivity.class));
+        dataList.add(new DemoListItem("DEMO-卡顿检测", UIBlockCheckActivity.class));
         dataList.add(new DemoListItem("DEMO-测试retrofit", RetrofitActivity.class));
         dataList.add(new DemoListItem("DEMO-安装apk", InstallApkActivity.class));
         dataList.add(new DemoListItem("DEMO-Shell命令", ShellCmdActivity.class));
@@ -90,11 +93,9 @@ public class MainActivity extends MvpBaseActivity {
         dataList.add(new DemoListItem("DEMO-录音", AudioRecordActivity.class));
         dataList.add(new DemoListItem("DEMO-解码MediaCodec", MediacodecActivity.class));
         dataList.add(new DemoListItem("DEMO-Muxer", MuxerActivity.class));
-        dataList.add(new DemoListItem("DEMO-test", TestActivity.class));
-        dataList.add(new DemoListItem("DEMO-test-bytebuffer", TestByteBufferActivity.class));
-        dataList.add(new DemoListItem("FragmentTestActivity", FragmentTestActivity.class));
-        dataList.add(new DemoListItem("卡顿检测", UIBlockCheckActivity.class));
-        dataList.add(new DemoListItem("login", LoginDemoActivity.class));
+        dataList.add(new DemoListItem("DEMO-设备信息", DeviceInfoActivity.class));
+        dataList.add(new DemoListItem("DEMO-MVP-FragmentTestActivity", MvpFragmentTestActivity.class));
+        dataList.add(new DemoListItem("DEMO-MVVM-login", LoginDemoActivity.class));
 
     }
 
