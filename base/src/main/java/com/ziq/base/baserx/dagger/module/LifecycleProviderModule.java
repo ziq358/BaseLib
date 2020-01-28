@@ -1,6 +1,6 @@
 package com.ziq.base.baserx.dagger.module;
 
-import com.trello.rxlifecycle2.LifecycleProvider;
+import com.trello.rxlifecycle3.LifecycleProvider;
 
 import dagger.Module;
 import dagger.Provides;

@@ -1,7 +1,7 @@
 package com.ziq.base.mvp;
 
-import com.trello.rxlifecycle2.LifecycleProvider;
-import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle3.LifecycleProvider;
+import com.trello.rxlifecycle3.LifecycleTransformer;
 import com.ziq.base.utils.LifecycleUtil;
 
 import javax.inject.Inject;

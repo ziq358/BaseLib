@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -102,12 +101,15 @@ dependencies {
     api rootProject.ext.dependencies["rxpermissions"]
 }
 
-publish {
-    userOrg = 'zaiqiangxiaohuli'
-    repoName = 'anZhuo'
-    groupId = 'com.ziq.base'
-    artifactId = 'base'
-    publishVersion = rootProject.ext.android["versionName"]
-    desc = 'zaiqiang base lib for android develop'
-    website = 'https://github.com/ziq358/BaseLib'
-}
+apply from: './bintrayUpload.gradle'
+
+//apply plugin: 'com.novoda.bintray-release'
+//publish {
+//    userOrg = 'zaiqiangxiaohuli'
+//    repoName = 'anZhuo'
+//    groupId = 'com.ziq.base'
+//    artifactId = 'base'
+//    publishVersion = rootProject.ext.android["versionName"]
+//    desc = 'zaiqiang base lib for android develop'
+//    website = 'https://github.com/ziq358/BaseLib'
+//}

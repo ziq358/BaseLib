@@ -4,15 +4,14 @@ ext {
             buildToolsVersion: "29.0.1",
             minSdkVersion    : 19,
             targetSdkVersion : 29,
-            versionCode      : 324,
-            versionName      : "3.2.4"
+            versionCode      : 327,
+            versionName      : "3.2.7"
     ]
 
     version = [
             glideSdkVersion                   : "4.8.0",
             butterknifeSdkVersion             : "10.1.0",
             rxlifecycleSdkVersion             : "1.0",
-            rxlifecycle2SdkVersion            : "2.2.1",
             dagger2SdkVersion                 : "2.21",
             espressoSdkVersion                : "3.0.1",
             canarySdkVersion                  : "1.5.4",
@@ -23,6 +22,7 @@ ext {
             converterGsonSdkVersion           : "2.4.0",
             loggingInterceptorSdkVersion      : "3.9.0",
             rxpermissionsVersion              : "0.10.2",
+            rxlifecycleVersion                : "3.1.0",
     ]
 
     dependencies = [
@@ -48,9 +48,9 @@ ext {
             "glide-compiler"                : "com.github.bumptech.glide:compiler:${version["glideSdkVersion"]}",
             "baseRecyclerViewAdapterHelper" : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30",
             "kprogresshud"                  : "com.kaopiz:kprogresshud:1.2.0",
-            "rxlifecycle"                   : "com.trello.rxlifecycle2:rxlifecycle:2.2.2",
-            "rxlifecycle-android"           : "com.trello.rxlifecycle2:rxlifecycle-android:2.2.2",
-            "rxlifecycle-components"        : "com.trello.rxlifecycle2:rxlifecycle-components:2.2.2",
+            "rxlifecycle"                   : "com.trello.rxlifecycle3:rxlifecycle:${version["rxlifecycleVersion"]}",
+            "rxlifecycle-android"           : "com.trello.rxlifecycle3:rxlifecycle-android:${version["rxlifecycleVersion"]}",
+            "rxlifecycle-components"        : "com.trello.rxlifecycle3:rxlifecycle-components:${version["rxlifecycleVersion"]}",
             "rxpermissions"                 : "com.github.tbruyelle:rxpermissions:${version["rxpermissionsVersion"]}",
     ]
 
