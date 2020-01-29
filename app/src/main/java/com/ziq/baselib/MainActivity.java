@@ -2,6 +2,7 @@ package com.ziq.baselib;
 
 import android.net.NetworkInfo;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,13 +18,12 @@ import com.ziq.baselib.Activity.BluetoothActivity;
 import com.ziq.baselib.Activity.Camera2Activity;
 import com.ziq.baselib.Activity.DataTranslateTestActivity;
 import com.ziq.baselib.Activity.DeviceInfoActivity;
-import com.ziq.baselib.Activity.MvpFragmentTestActivity;
 import com.ziq.baselib.Activity.ImageLoaderTestActivity;
 import com.ziq.baselib.Activity.InstallApkActivity;
 import com.ziq.baselib.Activity.MediacodecActivity;
+import com.ziq.baselib.Activity.MvpFragmentTestActivity;
 import com.ziq.baselib.Activity.NetSpeedActivity;
 import com.ziq.baselib.Activity.OpenglTestActivity;
-import com.ziq.baselib.Activity.PermissionActivity;
 import com.ziq.baselib.Activity.RetrofitActivity;
 import com.ziq.baselib.Activity.RoomActivity;
 import com.ziq.baselib.Activity.ShellCmdActivity;
@@ -81,7 +81,6 @@ public class MainActivity extends MvpBaseActivity {
         dataList.add(new DemoListItem("DEMO-WorkManager", WorkManagerActivity.class));
         dataList.add(new DemoListItem("DEMO-test-bytebuffer", TestByteBufferActivity.class));
         dataList.add(new DemoListItem("DEMO-OpenGl", OpenglTestActivity.class));
-        dataList.add(new DemoListItem("DEMO-权限检查", PermissionActivity.class));
         dataList.add(new DemoListItem("DEMO-监听网速", NetSpeedActivity.class));
         dataList.add(new DemoListItem("DEMO-卡顿检测", UIBlockCheckActivity.class));
         dataList.add(new DemoListItem("DEMO-测试retrofit", RetrofitActivity.class));

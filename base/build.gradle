@@ -54,6 +54,7 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api rootProject.ext.dependencies["appcompat"]
     api rootProject.ext.dependencies["recyclerview"]
+
     api 'org.greenrobot:eventbus:3.1.1'
     api ('org.bitbucket.b_c:jose4j:0.5.2'){
         exclude group:'org.slf4j', module: 'slf4j-api'
@@ -82,7 +83,6 @@ dependencies {
     api rootProject.ext.dependencies["converter-gson"]// 必要依赖，解析json字符所用
     api rootProject.ext.dependencies["logging-interceptor"] //非必要依赖， log依赖，如果需要打印OkHttpLog需要添加
 
-    api rootProject.ext.dependencies["baseRecyclerViewAdapterHelper"]
     api (rootProject.ext.dependencies["glide"]){
         exclude group: "com.android.support"
     }
@@ -94,7 +94,6 @@ dependencies {
     api rootProject.ext.dependencies["rxlifecycle"]
     api rootProject.ext.dependencies["rxlifecycle-android"]
     api rootProject.ext.dependencies["rxlifecycle-components"]
-    api rootProject.ext.dependencies["rxpermissions"]
 }
 
 apply from: './bintrayUpload.gradle'

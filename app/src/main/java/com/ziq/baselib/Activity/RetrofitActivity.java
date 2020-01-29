@@ -71,7 +71,7 @@ public class RetrofitActivity extends MvpBaseActivity<RetrofitActivityPresenter>
     public void initData(@Nullable Bundle savedInstanceState) {
         netSpeedUtil = new NetSpeedUtil(this);
 
-        adapter = new RecommendAdapter(new ArrayList());
+        adapter = new RecommendAdapter(this, new ArrayList());
         recycleView.setAdapter(adapter);
         recycleView.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -110,13 +110,13 @@ public class RetrofitActivity extends MvpBaseActivity<RetrofitActivityPresenter>
     @Override
     public void update(ArrayList<LiveListItemBean> dataList , boolean isRefresh) {
         if (isRefresh) {
-            adapter.getData().clear();
+            adapter.setData(dataList);
             mSmartRefreshLayout.finishRefresh();
         } else {
+            adapter.addDataList(dataList);
             mSmartRefreshLayout.finishLoadMore();
         }
         mSmartRefreshLayout.setEnableLoadMore(!dataList.isEmpty());
-        adapter.getData().addAll(dataList);
         adapter.notifyDataSetChanged();
     }
 }

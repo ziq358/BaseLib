@@ -20,6 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
 
 
@@ -47,7 +48,6 @@
         <activity android:name=".Activity.OpenglTestActivity"/>
         <activity android:name=".Activity.InstallApkActivity"/>
         <activity android:name=".Activity.UIBlockCheckActivity"/>
-        <activity android:name=".Activity.PermissionActivity"/>
         <activity android:name=".Activity.ImageLoaderTestActivity"/>
         <activity android:name=".Activity.ShellCmdActivity"/>
         <activity android:name=".Activity.AudioRecordActivity"/>

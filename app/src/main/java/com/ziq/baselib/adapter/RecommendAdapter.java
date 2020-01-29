@@ -1,29 +1,36 @@
 package com.ziq.baselib.adapter;
 
+import android.content.Context;
 import android.widget.ImageView;
-
-import androidx.annotation.Nullable;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.ziq.base.glide.GlideRoundTransform;
+import com.ziq.base.recycleview.BaseViewHolder;
+import com.ziq.base.recycleview.adapter.ListRecyclerAdapter;
 import com.ziq.baselib.R;
 import com.ziq.baselib.model.LiveListItemBean;
 
 import java.util.List;
 
-public class RecommendAdapter extends BaseQuickAdapter<LiveListItemBean, BaseViewHolder> {
+public class RecommendAdapter extends ListRecyclerAdapter<LiveListItemBean> {
 
-    public RecommendAdapter(@Nullable List<LiveListItemBean> data) {
-        super(R.layout.item_recommend_live_item,data);
+    public RecommendAdapter(Context context, List<LiveListItemBean> data) {
+        super(context, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, LiveListItemBean item) {
-                helper.setText(R.id.tv_title, item.getLive_title());
-        ImageView ivCover  = helper.getView(R.id.iv_cover);
+    public int getItemLayoutRes() {
+        return R.layout.item_recommend_live_item;
+    }
+
+    @Override
+    public void bindDataViewHolder(BaseViewHolder holder, int position) {
+        final LiveListItemBean item = getItem(position);
+        TextView tv_title = holder.getViewById(R.id.tv_title);
+        tv_title.setText(item.getLive_title());
+        ImageView ivCover  = holder.getViewById(R.id.iv_cover);
         RequestOptions requestOptions  = new RequestOptions()
                 .placeholder(R.drawable.ic_picture_default_bg)
                 .error(R.drawable.ic_picture_default_bg)
