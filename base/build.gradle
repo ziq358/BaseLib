@@ -51,10 +51,6 @@ android {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
-
     api fileTree(dir: 'libs', include: ['*.jar'])
     api rootProject.ext.dependencies["appcompat"]
     api rootProject.ext.dependencies["recyclerview"]
@@ -67,8 +63,8 @@ dependencies {
     //由于 在lib中R 文件的 id 没有定， 所以 无法 通过注解绑定，也就不需要 annotationProcessor了，
     // 在application项目中 只需要 annotationProcessor 引用 编译规则编译 就行了
     api(rootProject.ext.dependencies["butterknife"]) {
-//        exclude module: 'support-annotations'
-//        exclude module: 'support-compat'
+        exclude module: 'support-annotations'
+        exclude module: 'support-compat'
     }
 
     api rootProject.ext.dependencies["dagger2"]
