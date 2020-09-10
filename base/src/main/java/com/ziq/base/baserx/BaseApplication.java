@@ -6,7 +6,6 @@ import android.content.Context;
 
 import com.ziq.base.baserx.dagger.App;
 import com.ziq.base.baserx.dagger.component.AppComponent;
-import com.ziq.base.baserx.dagger.component.DaggerAppComponent;
 
 /**
  * author: wuyanqiang

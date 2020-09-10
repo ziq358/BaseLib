@@ -10,6 +10,7 @@ android {
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 //        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
 
@@ -47,19 +48,20 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':base')
-//    api 'com.zq.base:base:3.2.8'
-    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
-//        exclude module: 'support-annotations'
+    annotationProcessor("com.google.dagger:dagger-compiler:2.24") {
+        exclude module: 'support-annotations'
+    }
+    annotationProcessor("com.jakewharton:butterknife-compiler:10.2.1") {
+        exclude module: 'support-annotations'
     }
     api 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
-    annotationProcessor (rootProject.ext.dependencies["glide-compiler"]){
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0"){
         exclude module: 'jsr305'
     }
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     api "android.arch.work:work-runtime:1.0.1"
-    api "android.arch.work:work-firebase:1.0.+"
+    api "android.arch.work:work-firebase:1.0.0-alpha11"
 
     api "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"

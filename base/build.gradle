@@ -52,10 +52,12 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api rootProject.ext.dependencies["appcompat"]
-    api rootProject.ext.dependencies["recyclerview"]
 
-    api 'org.greenrobot:eventbus:3.1.1'
+    api "androidx.appcompat:appcompat:1.3.0-alpha02"
+    api "androidx.recyclerview:recyclerview:1.2.0-alpha05"
+
+
+    api 'org.greenrobot:eventbus:3.2.0'
     api ('org.bitbucket.b_c:jose4j:0.5.2'){
         exclude group:'org.slf4j', module: 'slf4j-api'
         transitive = true
@@ -63,37 +65,39 @@ dependencies {
 
     //由于 在lib中R 文件的 id 没有定， 所以 无法 通过注解绑定，也就不需要 annotationProcessor了，
     // 在application项目中 只需要 annotationProcessor 引用 编译规则编译 就行了
-    api(rootProject.ext.dependencies["butterknife"]) {
+    api("com.jakewharton:butterknife:10.2.1") {
         exclude module: 'support-annotations'
         exclude module: 'support-compat'
     }
+    annotationProcessor("com.jakewharton:butterknife-compiler:10.2.1") {
+        exclude module: 'support-annotations'
+    }
 
-    api rootProject.ext.dependencies["dagger2"]
-    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-//    api rootProject.ext.dependencies["dagger2-android"]
-//    api rootProject.ext.dependencies["dagger2-android-support"]
-//    annotationProcessor rootProject.ext.dependencies["dagger2-android-processor"]
+    api "com.google.dagger:dagger:2.24"
+    annotationProcessor("com.google.dagger:dagger-compiler:2.24") {
+        exclude module: 'support-annotations'
+    }
 
     api 'com.itextpdf:itextg:5.5.10'
 
-    api rootProject.ext.dependencies["retrofit"]
-    api rootProject.ext.dependencies["rxjava2"]// 必要rxjava2依赖
-    api rootProject.ext.dependencies["rxandroid"]// 必要rxandrroid依赖，切线程时需要用到
-    api rootProject.ext.dependencies["adapter-rxjava2"] // 必要依赖，和Rxjava结合必须用到，下面会提到
-    api rootProject.ext.dependencies["converter-gson"]// 必要依赖，解析json字符所用
-    api rootProject.ext.dependencies["logging-interceptor"] //非必要依赖， log依赖，如果需要打印OkHttpLog需要添加
+    api "com.squareup.retrofit2:retrofit:2.8.1"
+    api "com.squareup.retrofit2:converter-gson:2.8.1"// 必要依赖，解析json字符所用
+    api "com.squareup.retrofit2:adapter-rxjava2:2.8.1" // 必要依赖，和Rxjava结合必须用到，下面会提到
+    api "io.reactivex.rxjava2:rxjava:2.2.12"// 必要rxjava2依赖
+    api "io.reactivex.rxjava2:rxandroid:2.1.1"// 必要rxandrroid依赖，切线程时需要用到
+    api "com.squareup.okhttp3:logging-interceptor:3.9.0" //非必要依赖， log依赖，如果需要打印OkHttpLog需要添加
 
-    api (rootProject.ext.dependencies["glide"]){
+    api ("com.github.bumptech.glide:glide:4.11.0"){
         exclude group: "com.android.support"
     }
-    annotationProcessor (rootProject.ext.dependencies["glide-compiler"]){
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0"){
         exclude module: 'jsr305'
     }
-    api rootProject.ext.dependencies["kprogresshud"]
+    api "com.kaopiz:kprogresshud:1.2.0"
 
-    api rootProject.ext.dependencies["rxlifecycle"]
-    api rootProject.ext.dependencies["rxlifecycle-android"]
-    api rootProject.ext.dependencies["rxlifecycle-components"]
+    api "com.trello.rxlifecycle3:rxlifecycle:3.1.0"
+    api "com.trello.rxlifecycle3:rxlifecycle-android:3.1.0"
+    api "com.trello.rxlifecycle3:rxlifecycle-components:3.1.0"
 }
 
 apply from: './bintrayUpload.gradle'
