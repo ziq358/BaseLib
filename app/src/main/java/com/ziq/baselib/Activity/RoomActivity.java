@@ -45,6 +45,7 @@ public class RoomActivity extends MvpBaseActivity {
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+
         db = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "user.db")
                 .allowMainThreadQueries()//Room不允许在主线程中访问数据库，除非在buid的时候使用allowMainThreadQueries()方法
                 .build();
