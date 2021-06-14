@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:4.1.2'
         //升级注意，版本高了bintray-release 插件 出问题
 //        classpath 'com.novoda:bintray-release:0.9'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
